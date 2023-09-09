@@ -12,7 +12,7 @@ function App() {
   );
   return (
     <div className="App">
-      <img src="/White_Logo.png" alt="logo" />
+    <img src="/White_Logo.svg" alt="logo" className="App-logo" />
       <p className="app_description">{app_description}</p>
       <div className="button-container">
         <button className="sign_button">Sign In</button>
