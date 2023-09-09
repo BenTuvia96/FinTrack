@@ -2,9 +2,15 @@
   text-align: center;
 }
 
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+  /* making the logo responsive */
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 2rem;
+  
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -35,4 +41,36 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.app_description {
+  font-size: 2rem;
+  font-weight: 300;
+  line-height: 1.5;
+  letter-spacing: 0.00938em;
+  color: #000000;
+  margin-bottom: 1rem;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.sign_button {
+  background-color: #000000;
+  color: #ffffff;
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: 0.0075em;
+  border-radius: 4px;
+  width: 150px; /* Set the width as desired */
+  height: 40px; /* Set the height as desired */
+  display: flex; /* To center text vertically within the button */
+  justify-content: center; /* To center text horizontally within the button */
+  align-items: center; /* To center text vertically within the button */
+  border: none;
+  cursor: pointer;
 }
