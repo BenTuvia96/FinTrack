@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
 import "./App.css";
 import SignInForm from "./sign_in_form";
 import SignUpForm from "./sign_up_form";
-
+import Dashboard from "./dashboard";
 
 
 function Description() {
@@ -42,6 +42,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/sign_in_form" element={<SignInForm />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/" element={<HomePage />} />
         <Route path="/sign_up_form" element={<SignUpForm />} />
       </Routes>
