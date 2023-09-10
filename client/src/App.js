@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
 import "./App.css";
 import SignInForm from "./sign_in_form";
-
+import Dashboard from "./dashboard";
 
 
 function Description() {
@@ -41,6 +41,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/sign_in_form" element={<SignInForm />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/" element={<HomePage />} />
       </Routes>
     </Router>
