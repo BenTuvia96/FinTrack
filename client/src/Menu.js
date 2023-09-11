@@ -15,9 +15,9 @@ function Menu({ toggleMenu }) {
             <i class="material-icons">person</i>Profile
           </li>
           <Link to="/dashboard">
-          <li>
+            <li>
               <i className="material-icons">wallet</i>Dashboard
-          </li>
+            </li>
           </Link>
           <li>
             <i class="material-icons">search</i>Search

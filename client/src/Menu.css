@@ -1,73 +1,90 @@
+/* Base Styles */
+nav {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 60px;
+    padding-top: 60px;
+    position: fixed;
+    right: 0;
+    z-index: 100;
+    background: rgba(0, 0, 0, .2);
+    box-shadow: -2px 0 4px rgba(0, 0, 0, .1);
+    overflow: hidden;
+    transform: translateX(0);
+    transition: all 0.3s ease-in-out, width ease .6s;
+}
 
-/* Resetting default styles for ul and li */
+nav i {
+    order: 2;
+    color: black; /* Changed color to white */
+    margin: 18px 0 0 40px;
+    padding-right: 0;
+    vertical-align: text-bottom;
+    transition: color 0.3s;
+}
+
+/* change nav i color to white when menu is checked */
+#menu:checked ~ nav i {
+    color: white;
+}
+
+
+/* Reset */
 nav ul {
-    padding: 0;
     margin: 0;
+    padding: 0;
     list-style-type: none;
 }
 
 nav li {
-    margin: 0;
-    cursor: pointer;
     display: flex;
+    flex-grow: 1;
     justify-content: flex-end;
     line-height: 60px;
-    white-space: nowrap;
     padding-right: 17px;
-    flex-grow: 1;
-    transition: background-color 0.3s, color 0.6s;  /* Added color transition */
-}
-
-/* Hover effect for list items */
-nav li:hover {
-    background-color: rgba(0, 0, 0, 0.1);
-    color: #00c3ff    ;  /* Remember to replace this with your color */
-}
-
-nav li:hover i {
-    color: #00c3ff    ;  /* Replace with your desired color */
-}
-
-input#menu {
-    display: none;
-}
-
-.icon {
+    margin: 0;
+    white-space: nowrap;
+    color: white; /* Changed color to white */
     cursor: pointer;
+    transition: background-color 0.3s, color 0.6s;
+}
+
+/* Icon Styles */
+.icon {
     display: block;
+    width: 24px;
     height: 24px;
     padding: 16px;
-    width: 24px;
-    transition: background-color 0.3s; /* Make sure transition exists for the base state */
-}
-
-label.icon {
-    position: fixed;
-    z-index: 200;
-    right: 0;
+    cursor: pointer;
+    transition: all ease-in-out 0.3s;
 }
 
 .icon .menu,
 .icon .menu::before,
 .icon .menu::after {
-    background: black;
     content: '';
     display: block;
+    width: 20px;
     height: 2px;
     position: absolute;
-    transition: background ease .3s, top ease .3s .3s, transform ease .3s;
-    width: 20px;
+    background: black;
+    transition: all ease-in-out .3s;
 }
 
-.icon:hover .menu,
-.icon:hover .menu::before,
-.icon:hover .menu::after {
-    background: #00c3ff;
+/* change to white when menu is checked */
+#menu:checked + .icon .menu,
+#menu:checked + .icon .menu::before,
+#menu:checked + .icon .menu::after {
+    background: white;
 }
+
+
+
 
 .icon .menu {
-    right: 18px;
     top: 27px;
+    right: 18px;
 }
 
 .icon .menu::before {
@@ -78,6 +95,49 @@ label.icon {
     top: 6px;
 }
 
+.icon:hover .menu,
+.icon:hover .menu::before,
+.icon:hover .menu::after {
+    background: #00c3ff;
+}
+
+#menu:checked + .icon:hover .menu::before,
+#menu:checked + .icon:hover .menu::after {
+    background: #00c3ff;
+}
+
+label.icon {
+    position: fixed;
+    right: 0;
+    z-index: 200;
+}
+
+input#menu {
+    display: none;
+}
+
+/* Hover Effects */
+nav li:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    color: #00c3ff;
+}
+
+nav li:hover i,
+.icon:hover .menu,
+.icon:hover .menu::before,
+.icon:hover .menu::after {
+    color: #00c3ff;
+}
+
+/* do the same when menu is checked */
+#menu:checked ~ nav li:hover i,
+#menu:checked + .icon:hover .menu,
+#menu:checked + .icon:hover .menu::before,
+#menu:checked + .icon:hover .menu::after {
+    color: #00c3ff;
+}
+
+/* Menu Checked */
 #menu:checked + .icon .menu {
     background: transparent;
 }
@@ -96,26 +156,11 @@ label.icon {
     transition: top ease .3s, transform ease .3s .3s;
 }
 
-nav {
-    background: rgba(0, 0, 0, .2);
-    box-shadow: -2px 0 4px rgba(0, 0, 0, .1);
-    height: 100vh;
-    padding-top: 60px;
-    position: fixed;
-    transition: width ease .6s;
-    width: 60px;
-    z-index: 100;
-    right: 0;
-    overflow: hidden;
-    transform: translateX(0);
-    display: flex;  /* Added flex display */
-    flex-direction: column;
-}
-
 #menu:checked ~ nav {
-    right: 140px;
     width: 200px;
+    right: 140px;
     transform: translateX(140px);
+    background: rgba(0, 0, 0, .6);
 }
 
 #menu:checked ~ .app-container {
@@ -123,22 +168,16 @@ nav {
 }
 
 
-nav i {
-    order: 2;
-    color: black;
-    margin-top: 18px;
-    margin-left: 40px;
-    margin-right: 0;
-    vertical-align: text-bottom;
-    padding-right: 0;
-}
-
-
+/* Side Menu Styles */
 .side-menu a {
     text-decoration: none;
+    color: #00c3ff; /* Changed color to white */
 }
 
-/* To ensure the text and icons in the link do not change color */
-.side-menu a, .side-menu a:visited, .side-menu a:hover, .side-menu a:active {
-    color: inherit;
+.side-menu a:visited,
+.side-menu a:hover,
+.side-menu a:active {
+    color: #00c3ff; /* Changed color to white */
 }
+
+

@@ -58,23 +58,26 @@ html, body {
   gap: 5rem;
 }
 
-.sign_button {
-  background-color: #1c1c1c;
-  color: #e5e5e5;
-  font-size: 1.25rem;
+.button {
+  font-size: 1.5rem;
   border-radius: 20px;
-  width: 150px; /* Set the width as desired */
-  height: 50px; /* Set the height as desired */
-  justify-content: center; /* To center text horizontally within the button */
-  align-items: center; /* To center text vertically within the button */
-  cursor: pointer;
-  margin-top: 5rem;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-    /* make the text inside the button appear centered */
-  text-align: center;
-  
+  width: 150px;
+  height: 50px;
+  margin: 0;
+  margin-top: 5rem;  
+  background-color: #090a0b;
+  color: white;
+  text-decoration: none;
+  transition: 0.3s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.button:hover {
+  background-color: #00c3ff;
+  color: black;
 }
 
 .App-logo {

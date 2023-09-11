@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Link, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 import SignInForm from "./sign_in_form";
@@ -25,8 +25,8 @@ function Description() {
 function SignInButtons() {
   return (
     <div className="button-container">
-      <Link to="/sign_in_form" className="sign_button">Sign In</Link>
-      <Link to="/sign_up_form" className="sign_button">Sign Up</Link>
+      <Link to="/sign_in_form" className="button">Sign In</Link>
+      <Link to="/sign_up_form" className="button">Sign Up</Link>
     </div>
   );
 }
@@ -42,11 +42,16 @@ function HomePage() {
 }
 
 
-function MainContent({ isMenuOpen }) {
+function MainContent({ isMenuOpen, setLocation }) {
   const location = useLocation();
 
+  // Notify the App about the current location
+  useEffect(() => {
+    setLocation(location.pathname);
+  }, [location, setLocation]);
+
   return (
-    <div className={`app-content ${isMenuOpen && location.pathname === '/' ? 'push-left' : ''}`}>
+    <div className="app-content">
       <TransitionGroup>
         <CSSTransition
           key={location.key}
@@ -67,18 +72,20 @@ function MainContent({ isMenuOpen }) {
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+  const [currentLocation, setCurrentLocation] = useState('/');  // <- New piece of state
+  
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
   return (
     <Router>
-      <Menu toggleMenu={toggleMenu} />
-      <MainContent isMenuOpen={isMenuOpen} />
+      {currentLocation !== '/' && <Menu toggleMenu={toggleMenu} />}
+      <MainContent isMenuOpen={isMenuOpen} setLocation={setCurrentLocation} />  {/* Pass the setLocation prop */}
     </Router>
   );
 }
+
 
 
 export default App;

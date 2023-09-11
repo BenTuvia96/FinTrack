@@ -38,7 +38,7 @@ function SignInForm() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <button type="submit">Sign In</button>
+          <button className="button" type="submit">Sign In</button>
         </form>
         <p>
           New to Fin Track? <Link to="/sign_up_form">Sign up now</Link>
