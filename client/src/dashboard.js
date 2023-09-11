@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import CanvasJSReact from "@canvasjs/react-charts";
 import "./dashboard.css"; // Import the CSS
+import { Link } from "react-router-dom";
 
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
@@ -41,12 +42,15 @@ class Dashboard extends Component {
       backgroundColor: "transparent",
     };
     return (
-        <div className="dashboard_container">
-          <h1>Dashboard</h1>
-          <div className="chart_container">
-            <CanvasJSChart className="chart" options={options} />
-          </div>
+      <div className="dashboard_container">
+        <Link to="/">
+          <img src="/white_logo.svg" alt="App Logo" className="app_logo" />
+        </Link>
+        <h1>Dashboard</h1>
+        <div className="chart_container">
+          <CanvasJSChart className="chart" options={options} />
         </div>
+      </div>
     );
   }
 }

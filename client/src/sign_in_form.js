@@ -14,7 +14,10 @@ function SignInForm() {
   return (
     <div className= "page_container">
       <div className="form_container">
+        {/* Link app logo to homepage on the ./ route */}
+        <Link to="/">
         <img src="/white_logo.svg" alt="App Logo" className="app_logo" />
+        </Link>
         <h2>Sign In</h2>
         <form onSubmit={handleSubmit}>
           <div className="form_group">

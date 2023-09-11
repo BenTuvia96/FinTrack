@@ -134,3 +134,11 @@ nav i {
 }
 
 
+.side-menu a {
+    text-decoration: none;
+}
+
+/* To ensure the text and icons in the link do not change color */
+.side-menu a, .side-menu a:visited, .side-menu a:hover, .side-menu a:active {
+    color: inherit;
+}

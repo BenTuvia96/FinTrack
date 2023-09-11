@@ -1,10 +1,12 @@
+import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Link, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 import SignInForm from "./sign_in_form";
 import SignUpForm from "./sign_up_form";
 import Dashboard from "./dashboard";
 import Menu from './Menu';
-import React, { useState } from "react";
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import './transitions.css';
 
 
 
@@ -45,12 +47,20 @@ function MainContent({ isMenuOpen }) {
 
   return (
     <div className={`app-content ${isMenuOpen && location.pathname === '/' ? 'push-left' : ''}`}>
-      <Routes>
-        <Route path="/sign_in_form" element={<SignInForm />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/" element={<HomePage />} />
-        <Route path="/sign_up_form" element={<SignUpForm />} />
-      </Routes>
+      <TransitionGroup>
+        <CSSTransition
+          key={location.key}
+          classNames="fade"
+          timeout={300} // Match the duration in the CSS
+        >
+          <Routes>
+            <Route path="/sign_in_form" element={<SignInForm />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/" element={<HomePage />} />
+            <Route path="/sign_up_form" element={<SignUpForm />} />
+          </Routes>
+        </CSSTransition>
+      </TransitionGroup>
     </div>
   );
 }

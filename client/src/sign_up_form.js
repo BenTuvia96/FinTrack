@@ -18,7 +18,9 @@ function SignUpForm() {
   return (
     <div className="page_container">
       <div className="form_container">
+      <Link to="/">
         <img src="/white_logo.svg" alt="App Logo" className="app_logo" />
+        </Link>
         <h2>Sign Up</h2>
         <form onSubmit={handleSignup}>
           <div className="form_group">

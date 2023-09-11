@@ -17,3 +17,8 @@ code {
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
 }
+
+/* never show scroll bar */
+::-webkit-scrollbar {
+  display: none;
+}

@@ -20,4 +20,12 @@
     }
     
 
- 
+ /* Add styles for your app logo */
+.app_logo {
+  max-width: 200px; /* Set a maximum width for responsiveness */
+  height: auto; /* Automatically adjust the height to maintain aspect ratio */
+  position: absolute; /* Position the logo absolutely */
+  top: 0; /* Position it at the top of the page */
+  left: 0; /* Position it at the left corner of the page */
+  padding: 10px; /* Add padding to create space around the logo */
+}
