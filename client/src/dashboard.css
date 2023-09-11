@@ -1,24 +1,20 @@
 .dashboard_container {
-    text-align: center; /* Center everything in the dashboard */
-    max-width: 100%;
-    margin: 0 auto; /* Horizontally centers the whole dashboard if it has a set width */
-    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* this makes sure the container takes up the full height of the viewport */
   }
   
-  .chart-container {
-    display: flex; /* Use flexbox to center the chart */
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-    width: 100%; /* Take full width of the parent */
-    height: auto; /* Adjust height as needed */
-    max-width: 600px; /* Control maximum width of the chart for responsiveness */
-    margin: 0 auto; /* Horizontally center the chart container */
+  h1 {
+    margin-bottom: 20px; /* you can adjust as needed */
   }
   
-  /* Media query for smaller screens */
-  @media (max-width: 600px) {
-    .chart-container {
-      max-width: 100%; /* Allow chart to take full width on small screens */
-    }
+  .chart_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 500px; /* Set this to the height of your chart or even larger if you want some spacing around it */
   }
-  
+    

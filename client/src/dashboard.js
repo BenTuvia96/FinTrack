@@ -39,13 +39,11 @@ class Dashboard extends Component {
           },
         ],
         backgroundColor: "transparent",
-        height: 500,
-        width: 500,
       };
     return (
       <div className="dashboard_container">
         <h1>Dashboard</h1>
-        <div className="chart-container">
+        <div className="chart_container">
           <CanvasJSChart options={options} />
         </div>
       </div>
