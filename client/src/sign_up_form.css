@@ -1,89 +1,87 @@
-/* Styles for form container */
-/* make everythnig centered veritcly */
-.body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh; /* Make the body element fill the height of the page */
-    margin: 0; /* Remove default margin */
-    font-family: Arial, Helvetica, sans-serif; /* Use a sans-serif font */
+/* make everything on the page centered */
+.page_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* Make the body element fill the height of the page */
+  margin: 0; /* Remove default margin */
+  font-family: Arial, Helvetica, sans-serif; /* Use a sans-serif font */
+  position: relative;
+
 }
+
 .form_container {
-    /* background black and semi transparent */
-    background-color: rgba(0, 0, 0, 0.9);
-    
-    color: white;
-    padding: 20px;
-    text-align: center;
-    max-width: 100%; /* Make the container responsive to its parent */
-    width: 100%; /* Set a default width */
-    max-height: 500px; /* Set a maximum height */
-    height: auto; /* Ensure that the container height adapts based on content */
-    margin: 0 auto;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  /* Styles for the "Sign In" heading */
-  .form_container h2 {
-    font-weight: bold;
-  }
-  
-  /* Styles for form groups (label + input) */
-  .form_group {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-  }
-  
-  /* Styles for labels */
-  .form_group label {
-    flex: 1;
-    margin-right: 10px;
-    text-align: left;
-  }
-  
-  /* Styles for inputs */
-  .form_group input[type="email"],
-  .form_group input[type="password"],
-  .form_group input[type="username"]
-  {
-    flex: 3;
-    width: 100%;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    background-color: #333;
-    color: white;
-  }
-  
-  /* Style the submit button as needed */
-  .form_container button[type="submit"] {
-    background-color: #00c3ff;
-    color: rgb(0, 0, 0);
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  /* Center-align the submit button */
-  .form_container button[type="submit"] {
-    margin: 0 auto;
-    display: block;
-  }
-  
+  /* background black and semi transparent */
+  background-color: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 20px;
+  text-align: center;
+  width: 20%; /* Set a default width */
+  height: auto; /* Ensure that the container height adapts based on content */
+  margin: 0;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Styles for the "Sign In" heading */
+.form_container h2 {
+  font-weight: bold;
+}
+
+/* Styles for form groups (label + input) */
+.form_group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+/* Styles for labels */
+.form_group label {
+  flex: 1;
+  margin-right: 10px;
+  text-align: left;
+}
+
+/* Styles for inputs */
+.form_group input[type="email"],
+.form_group input[type="password"],
+.form_group input[type="username"] {
+  flex: 3;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #333;
+  color: white;
+}
+
+/* Style the submit button as needed */
+.form_container button[type="submit"] {
+  background-color: #00c3ff;
+  color: rgb(0, 0, 0);
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Center-align the submit button */
+.form_container button[type="submit"] {
+  margin: 0 auto;
+  display: block;
+}
+
 /* Add styles for your app logo */
 .app_logo {
-    max-width: 200px; /* Set a maximum width for responsiveness */
-    height: auto; /* Automatically adjust the height to maintain aspect ratio */
-    position: absolute; /* Position the logo absolutely */
-    top: 0; /* Position it at the top of the page */
-    left: 0; /* Position it at the left corner of the page */
-    padding: 10px; /* Add padding to create space around the logo */
-  }
+  max-width: 200px; /* Set a maximum width for responsiveness */
+  height: auto; /* Automatically adjust the height to maintain aspect ratio */
+  position: absolute; /* Position the logo absolutely */
+  top: 0; /* Position it at the top of the page */
+  left: 0; /* Position it at the left corner of the page */
+  padding: 10px; /* Add padding to create space around the logo */
+}
