@@ -1,0 +1,136 @@
+
+/* Resetting default styles for ul and li */
+nav ul {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
+nav li {
+    margin: 0;
+    cursor: pointer;
+    display: flex;
+    justify-content: flex-end;
+    line-height: 60px;
+    white-space: nowrap;
+    padding-right: 17px;
+    flex-grow: 1;
+    transition: background-color 0.3s, color 0.6s;  /* Added color transition */
+}
+
+/* Hover effect for list items */
+nav li:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    color: #00c3ff    ;  /* Remember to replace this with your color */
+}
+
+nav li:hover i {
+    color: #00c3ff    ;  /* Replace with your desired color */
+}
+
+input#menu {
+    display: none;
+}
+
+.icon {
+    cursor: pointer;
+    display: block;
+    height: 24px;
+    padding: 16px;
+    width: 24px;
+    transition: background-color 0.3s; /* Make sure transition exists for the base state */
+}
+
+label.icon {
+    position: fixed;
+    z-index: 200;
+    right: 0;
+}
+
+.icon .menu,
+.icon .menu::before,
+.icon .menu::after {
+    background: black;
+    content: '';
+    display: block;
+    height: 2px;
+    position: absolute;
+    transition: background ease .3s, top ease .3s .3s, transform ease .3s;
+    width: 20px;
+}
+
+.icon:hover .menu,
+.icon:hover .menu::before,
+.icon:hover .menu::after {
+    background: #00c3ff;
+}
+
+.icon .menu {
+    right: 18px;
+    top: 27px;
+}
+
+.icon .menu::before {
+    top: -6px;
+}
+
+.icon .menu::after {
+    top: 6px;
+}
+
+#menu:checked + .icon .menu {
+    background: transparent;
+}
+
+#menu:checked + .icon .menu::before {
+    transform: rotate(45deg);
+}
+
+#menu:checked + .icon .menu::after {
+    transform: rotate(-45deg);
+}
+
+#menu:checked + .icon .menu::before,
+#menu:checked + .icon .menu::after {
+    top: 0;
+    transition: top ease .3s, transform ease .3s .3s;
+}
+
+nav {
+    background: rgba(0, 0, 0, .2);
+    box-shadow: -2px 0 4px rgba(0, 0, 0, .1);
+    height: 100vh;
+    padding-top: 60px;
+    position: fixed;
+    transition: width ease .6s;
+    width: 60px;
+    z-index: 100;
+    right: 0;
+    overflow: hidden;
+    transform: translateX(0);
+    display: flex;  /* Added flex display */
+    flex-direction: column;
+}
+
+#menu:checked ~ nav {
+    right: 140px;
+    width: 200px;
+    transform: translateX(140px);
+}
+
+#menu:checked ~ .app-container {
+    transform: translateX(-140px);
+}
+
+
+nav i {
+    order: 2;
+    color: black;
+    margin-top: 18px;
+    margin-left: 40px;
+    margin-right: 0;
+    vertical-align: text-bottom;
+    padding-right: 0;
+}
+
+

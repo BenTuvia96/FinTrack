@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import CanvasJSReact from "@canvasjs/react-charts";
-import './dashboard.css'; // Import the CSS
+import "./dashboard.css"; // Import the CSS
 
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
@@ -15,38 +15,38 @@ class Dashboard extends Component {
     ];
 
     const options = {
-        animationEnabled: false,
-        title: {
-          text: "Expenses",
+      animationEnabled: false,
+      title: {
+        text: "Expenses",
+        fontFamily: "tahoma",
+      },
+      subtitles: [
+        {
+          text: "*balance*",
+          verticalAlign: "center",
+          fontSize: 24,
+          dockInsidePlotArea: true,
           fontFamily: "tahoma",
         },
-        subtitles: [
-          {
-            text: "*balance*",
-            verticalAlign: "center",
-            fontSize: 24,
-            dockInsidePlotArea: true,
-            fontFamily: "tahoma",
-          },
-        ],
-        data: [
-          {
-            type: "doughnut",
-            showInLegend: true,
-            indexLabel: "{name}: {y}",
-            yValueFormatString: "#,###'%'",
-            dataPoints: data,
-          },
-        ],
-        backgroundColor: "transparent",
-      };
+      ],
+      data: [
+        {
+          type: "doughnut",
+          showInLegend: true,
+          indexLabel: "{name}: {y}",
+          yValueFormatString: "#,###'%'",
+          dataPoints: data,
+        },
+      ],
+      backgroundColor: "transparent",
+    };
     return (
-      <div className="dashboard_container">
-        <h1>Dashboard</h1>
-        <div className="chart_container">
-          <CanvasJSChart options={options} />
+        <div className="dashboard_container">
+          <h1>Dashboard</h1>
+          <div className="chart_container">
+            <CanvasJSChart className="chart" options={options} />
+          </div>
         </div>
-      </div>
     );
   }
 }

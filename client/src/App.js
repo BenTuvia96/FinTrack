@@ -1,9 +1,11 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 import SignInForm from "./sign_in_form";
 import SignUpForm from "./sign_up_form";
 import Dashboard from "./dashboard";
+import Menu from './Menu';
+import React, { useState } from "react";
+
 
 
 function Description() {
@@ -37,17 +39,36 @@ function HomePage() {
   );
 }
 
-function App() {
+
+function MainContent({ isMenuOpen }) {
+  const location = useLocation();
+
   return (
-    <Router>
+    <div className={`app-content ${isMenuOpen && location.pathname === '/' ? 'push-left' : ''}`}>
       <Routes>
         <Route path="/sign_in_form" element={<SignInForm />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/" element={<HomePage />} />
         <Route path="/sign_up_form" element={<SignUpForm />} />
       </Routes>
+    </div>
+  );
+}
+
+function App() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  return (
+    <Router>
+      <Menu toggleMenu={toggleMenu} />
+      <MainContent isMenuOpen={isMenuOpen} />
     </Router>
   );
 }
+
 
 export default App;

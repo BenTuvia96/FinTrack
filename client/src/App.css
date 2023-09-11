@@ -1,6 +1,25 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* This will prevent any horizontal scrolling if content overflows */
+}
+
+
 .App {
   text-align: center;
 }
+
+.app-content {
+  /* transform: translateX(-140px); */
+  /* padding-left: 140px;   */
+  transition: transform 0.6s ease-in-out;
+
+}
+
+.push-left {
+  transform: translateX(-140px);
+}
+
 
 .App-logo {
   height: 40vmin;
