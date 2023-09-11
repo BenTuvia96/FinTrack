@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
 import "./App.css";
 import SignInForm from "./sign_in_form";
+import SignUpForm from "./sign_up_form";
 
 
 
@@ -21,7 +22,7 @@ function SignInButtons() {
   return (
     <div className="button-container">
       <Link to="/sign_in_form" className="sign_button">Sign In</Link>
-      <Link to="/signup" className="sign_button">Sign Up</Link>
+      <Link to="/sign_up_form" className="sign_button">Sign Up</Link>
     </div>
   );
 }
@@ -42,6 +43,7 @@ function App() {
       <Routes>
         <Route path="/sign_in_form" element={<SignInForm />} />
         <Route path="/" element={<HomePage />} />
+        <Route path="/sign_up_form" element={<SignUpForm />} />
       </Routes>
     </Router>
   );

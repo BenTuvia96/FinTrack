@@ -36,7 +36,7 @@ function SignInForm() {
         </div>
         <button type="submit">Sign In</button>
       </form>
-      <p>New to Fin Track? <Link to="/signup">Sign up now</Link></p>
+      <p>New to Fin Track? <Link to="/sign_up_form">Sign up now</Link></p>
     </div>
   );
 }
