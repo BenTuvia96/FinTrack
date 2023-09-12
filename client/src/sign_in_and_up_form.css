@@ -68,15 +68,3 @@
   margin: 0 auto;
   display: block;
 }
-
-/* Add styles for your app logo */
-.app_logo {
-  max-width: 200px; /* Set a maximum width for responsiveness */
-  height: auto; /* Automatically adjust the height to maintain aspect ratio */
-  top: 0; /* Position it at the top of the page */
-  left: 0; /* Position it at the left corner of the page */
-  padding: 10px; /* Add padding to create space around the logo */
-  /* prevent the image from overlapping other stuff such as headers */
-  z-index: 1;
-  position: relative;
-}

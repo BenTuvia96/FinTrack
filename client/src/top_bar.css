@@ -1,46 +1,49 @@
 .top_bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    color: black;
-    position: relative; /* Add this line to position the h1 absolutely inside .top_bar */
-  }
-  
-  .top_bar a {
-    color: white;
-    text-decoration: none;
-  }
-  
-  .top_bar a:hover {
-    color: #00c3ff;
-  }
-  
-  .app_logo {
-    max-width: 200px;
-    height: auto;
-    position: relative;
-    z-index: 1;
-  }
-  
-  /* Flexbox styles to ensure everything is centered */
-  .left_section, .right_section {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .center_section {
-    position: absolute; /* Absolute position for center section */
-    left: 50%;  /* Center the left edge */
-    top: 50%;   /* Center the top edge */
-    transform: translate(-50%, -50%);  /* Pull back by half its width and height to center */
-    z-index: 0; /* Place it below the logo */
-  }
-  
-  /* If you don't want any content on the right side, you can simply hide the .right_section */
-  .right_section {
-    visibility: hidden;
-  }
-  
-  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  color: black;
+  position: relative; /* Add this line to position the h1 absolutely inside .top_bar */
+}
+
+.top_bar a {
+  color: white;
+  text-decoration: none;
+}
+
+.top_bar a:hover {
+  color: #00c3ff;
+}
+
+/* Flexbox styles to ensure everything is centered */
+.left_section,
+.right_section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.center_section {
+  position: absolute; /* Absolute position for center section */
+  left: 50%; /* Center the left edge */
+  top: 50%; /* Center the top edge */
+  transform: translate(
+    -50%,
+    -50%
+  ); /* Pull back by half its width and height to center */
+  z-index: 0; /* Place it below the logo */
+}
+
+/* If you don't want any content on the right side, you can simply hide the .right_section */
+.right_section {
+  visibility: hidden;
+}
+
+.app_logo {
+  max-width: 200px;
+  height: auto;
+  position: relative;
+  z-index: 1;
+  padding: 10px; /* Add padding to create space around the logo */
+}

@@ -1,5 +1,5 @@
 import React from "react";
-import "./Menu.css"; // We will create this soon
+import "./Menu.css";
 import { Link } from "react-router-dom";
 
 function Menu({ toggleMenu }) {

@@ -9,11 +9,11 @@ var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 class Dashboard extends Component {
   render() {
     const data = [
-      { name: "Unsatisfied", y: 5 },
-      { name: "Very Unsatisfied", y: 31 },
-      { name: "Very Satisfied", y: 40 },
-      { name: "Satisfied", y: 17 },
-      { name: "Neutral", y: 7 },
+      { name: "food", y: 40 },
+      { name: "rent", y: 20 },
+      { name: "bills", y: 10 },
+      { name: "entertainment", y: 10 },
+      { name: "other", y: 20 }
     ];
 
     const options = {
@@ -34,7 +34,7 @@ class Dashboard extends Component {
       data: [
         {
           type: "doughnut",
-          showInLegend: true,
+          showInLegend: false,
           indexLabel: "{name}: {y}",
           yValueFormatString: "#,###'%'",
           dataPoints: data,
