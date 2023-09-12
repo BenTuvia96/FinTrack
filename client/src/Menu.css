@@ -113,6 +113,7 @@ nav li:hover {
     color: #00C3FF;
 }
 
+
 nav li:hover i,
 .icon:hover .menu,
 .icon:hover .menu::before,
@@ -157,6 +158,25 @@ nav li:hover i,
     transform: translateX(-140px);
 }
 
+/* Hover Effects for Hamburger Icon Transformation */
+.side-menu:hover .icon .menu {
+    background: transparent;
+}
+
+.side-menu:hover .icon .menu::before {
+    transform: rotate(45deg);
+    top: 0;
+}
+
+.side-menu:hover .icon .menu::after {
+    transform: rotate(-45deg);
+    top: 0;
+}
+
+.side-menu:hover .icon .menu::before, .side-menu:hover .icon .menu::after {
+    transition: top ease .3s, transform ease .3s .3s;
+}
+
 /* Side Menu Styles */
 .side-menu a {
     text-decoration: none;
@@ -175,6 +195,11 @@ nav li:hover i,
     background: rgba(0, 0, 0, .2);
 }
 
+.side-menu.light:hover nav {
+    background: rgba(0, 0, 0, .7);
+}
+
+
 .side-menu.light nav i {
     color: black;
 }
@@ -189,7 +214,10 @@ nav li:hover i,
     background: black;
 }
 
-.side-menu.light:hover .icon .menu,
+.side-menu.light:hover .icon .menu {
+    background: transparent;
+}
+
 .side-menu.light:hover .icon .menu::before,
 .side-menu.light:hover .icon .menu::after {
     background: white;
@@ -200,13 +228,24 @@ nav li:hover i,
     background: rgba(255, 255, 255, .2);
 }
 
+.side-menu.dark:hover nav {
+    background: rgba(255, 255, 255, .6);
+}
+
+
 .side-menu.dark nav i {
     color: white;
 }
 
+
 .side-menu.dark:hover nav i {
     color: black;
 }
+
+.side-menu.dark nav li {
+    color: black;  /* Updated this line to make the text black */
+}
+
 
 .side-menu.dark .icon .menu,
 .side-menu.dark .icon .menu::before,
@@ -214,7 +253,10 @@ nav li:hover i,
     background: white;
 }
 
-.side-menu.dark:hover .icon .menu,
+.side-menu.dark:hover .icon .menu {
+    background: transparent;
+}
+
 .side-menu.dark:hover .icon .menu::before,
 .side-menu.dark:hover .icon .menu::after {
     background: black;
