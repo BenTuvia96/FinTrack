@@ -168,3 +168,54 @@ nav li:hover i,
 .side-menu a:active {
     color: #00C3FF;
 }
+
+
+/* Light theme styles (default) */
+.side-menu.light nav {
+    background: rgba(0, 0, 0, .2);
+}
+
+.side-menu.light nav i {
+    color: black;
+}
+
+.side-menu.light:hover nav i {
+    color: white;
+}
+
+.side-menu.light .icon .menu,
+.side-menu.light .icon .menu::before,
+.side-menu.light .icon .menu::after {
+    background: black;
+}
+
+.side-menu.light:hover .icon .menu,
+.side-menu.light:hover .icon .menu::before,
+.side-menu.light:hover .icon .menu::after {
+    background: white;
+}
+
+/* Dark theme styles */
+.side-menu.dark nav {
+    background: rgba(255, 255, 255, .2);
+}
+
+.side-menu.dark nav i {
+    color: white;
+}
+
+.side-menu.dark:hover nav i {
+    color: black;
+}
+
+.side-menu.dark .icon .menu,
+.side-menu.dark .icon .menu::before,
+.side-menu.dark .icon .menu::after {
+    background: white;
+}
+
+.side-menu.dark:hover .icon .menu,
+.side-menu.dark:hover .icon .menu::before,
+.side-menu.dark:hover .icon .menu::after {
+    background: black;
+}

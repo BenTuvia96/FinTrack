@@ -1,10 +1,12 @@
-import React from "react";
 import "./Menu.css";
 import { Link } from "react-router-dom";
+import React, { useState } from "react";
 
-function Menu({ toggleMenu }) {
+function Menu({ theme }) {
+
   return (
-    <div className="side-menu">
+    <div className={`side-menu ${theme}`}>
+
       <label className="icon">
         <div className="menu"></div>
       </label>

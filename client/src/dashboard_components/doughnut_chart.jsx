@@ -4,11 +4,27 @@ import { Doughnut } from 'react-chartjs-2';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
+
+const options = {
+  responsive: true,
+  plugins: {
+    legend: {
+      position: 'bottom',
+    },
+    title: {
+      display: true,
+      text: 'Expenses by Category',
+    },
+  },
+};
+
+
 export const data = {
-  labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+  
+  labels: ['food', 'rent', 'bills', 'entertainment', 'other', 'savings'],
   datasets: [
     {
-      label: '# of Votes',
+      label: 'amount spent in $',
       data: [12, 19, 3, 5, 2, 3],
       backgroundColor: [
         'rgba(255, 99, 132, 0.2)',
@@ -32,5 +48,6 @@ export const data = {
 };
 
 export function DoughnutChart() {
-  return <Doughnut data={data} />;
+
+  return <Doughnut options={options} data={data} />;
 }

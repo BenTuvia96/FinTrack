@@ -8,17 +8,16 @@ import { AreaChart } from "./dashboard_components/area_chart";
 class Dashboard extends Component {
   render() {
     return (
-      <div>
+      <div className="dashboard_page_container">
         <TopBar header={"Dashboard"}/>
-
         <div className="dashboard-container">
-          <div className="chart-container">
+          <div className="doughnut-container">
             <DoughnutChart />
           </div>
-          <div className="chart-container">
+          <div className="bar-container">
             <BarChart />
           </div>
-          <div className="chart-container">
+          <div className="area-container">
             <AreaChart />
           </div>
         </div>
