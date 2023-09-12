@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./sign_in_and_up_form.css";
+import TopBar from "./top_bar";
 
 function SignInForm() {
   const [email, setEmail] = useState("");
@@ -13,9 +14,7 @@ function SignInForm() {
 
   return (
     <div className="page_container">
-      <Link to="/">
-        <img src="/white_logo.svg" alt="App Logo" className="app_logo" />
-      </Link>
+      <TopBar />
       <div className="form_container">
         <h2>Sign In</h2>
         <form onSubmit={handleSubmit}>
