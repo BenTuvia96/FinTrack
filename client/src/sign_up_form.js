@@ -2,7 +2,7 @@
 // Path: client/src/sign_up_form.js
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import "./sign_up_form.css";
+import "./sign_in_and_up_form.css";
 
 // create a sign up form including: email, username and passowrd
 function SignUpForm() {
@@ -17,10 +17,10 @@ function SignUpForm() {
 
   return (
     <div className="page_container">
-      <div className="form_container">
       <Link to="/">
         <img src="/white_logo.svg" alt="App Logo" className="app_logo" />
-        </Link>
+      </Link>
+      <div className="form_container">
         <h2>Sign Up</h2>
         <form onSubmit={handleSignup}>
           <div className="form_group">
