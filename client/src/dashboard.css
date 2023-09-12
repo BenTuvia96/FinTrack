@@ -1,15 +1,12 @@
-.dashboard_container {
-  display: grid;
-  flex-direction: column;
-  /* align-items: center; */
-  /* justify-content: center; */
-  height: 100vh;
-  /* position: relative; */
+.dashboard-container {
+  display: flex;
+  justify-content: space-between; /* distributes the child items evenly along the horizontal axis */
+  align-items: center;            /* centers the child items vertically */
+  height: 100vh;                  /* takes up the full viewport height */
+  padding: 2rem;                  /* some spacing around the edges */
 }
 
-.chart_container {
-  /* display: flex; */
-  /* justify-content: center; */
-  /* align-items: center; */
-  width: 100%;
+.chart-container {
+  width: 30%;    /* width of each chart container */
+  height: 100%;  /* height of each chart container */
 }
