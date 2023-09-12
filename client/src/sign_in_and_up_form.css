@@ -19,6 +19,8 @@
   height: auto;
   display: grid;
   grid-gap: 20px;
+  transition: background-color 0.8s ease-in-out;
+
 }
 
 /* Styles for the "Sign In" heading */
@@ -50,6 +52,12 @@
   border-radius: 5px;
   background-color: #333;
   color: white;
+  transition: background-color 0.9s ease-in-out;
+}
+
+body.dark .form_group input {
+  background-color: rgba(255, 255, 255, 0.7);
+  color: black;
 }
 
 /* Style the submit button as needed */
@@ -67,4 +75,11 @@
 .form_container button[type="submit"] {
   margin: 0 auto;
   display: block;
+}
+
+
+/* dark mode styling */
+body.dark .form_container {
+  background-color: rgba(255, 255, 255, 0.7);
+  color: black;
 }

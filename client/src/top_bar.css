@@ -7,6 +7,11 @@
   position: relative; /* Add this line to position the h1 absolutely inside .top_bar */
 }
 
+/* chenge text color to white when dark mode is on */
+body.dark .top_bar {
+  color: rgb(231, 231, 231);
+}
+
 .top_bar a {
   color: white;
   text-decoration: none;

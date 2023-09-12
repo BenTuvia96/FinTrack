@@ -5,12 +5,12 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #EEEEEE;
-  background-image: url('../public/app_background.png');
+  background-image: url('../public/light_app_bg2.png');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
-  transition: background-color 0.3s ease, background-image 0.3s ease, color 0.3s ease;
+  transition: background-color 0.3s ease, background-image 0.6s ease, color 0.3s ease;
 
 }
 

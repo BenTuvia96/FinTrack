@@ -52,6 +52,12 @@ html, body {
   margin-top: 6rem;
 }
 
+/* change app description color to white when dark mode is on */
+body.dark .app_description {
+  color: rgb(231, 231, 231);
+}
+
+
 .button-container {
   display: flex;
   justify-content: center;
@@ -84,4 +90,10 @@ html, body {
   height: 40vmin;
   width: auto;
   max-width: 90%;
+}
+
+/* use black_logo as app-logo when dark mode is on */
+
+body.dark .App-logo {
+  content: url('../public/Black_Logo.svg');
 }
