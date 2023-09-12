@@ -1,13 +1,4 @@
-.dashboard_page_container {
-    background-image: url('../public/dark_app_bg3.png');
-    /* make bg image stretch to whole page */
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    height: 100vh;
-    
-  
-}
+
 
 .dashboard-container {
   display: grid;

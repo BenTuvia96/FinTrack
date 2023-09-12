@@ -47,3 +47,12 @@
   z-index: 1;
   padding: 10px; /* Add padding to create space around the logo */
 }
+
+body.light .app_logo {
+  content: url('../public/White_Logo.svg');
+}
+
+body.dark .app_logo {
+  content: url('../public/Black_Logo.svg');
+}
+

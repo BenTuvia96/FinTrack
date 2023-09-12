@@ -10,7 +10,14 @@ body {
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
+  transition: background-color 0.3s ease, background-image 0.3s ease, color 0.3s ease;
+
 }
+
+body.dark {
+  background-image: url('../public/dark_app_bg3.png');
+}
+
 
 code {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',

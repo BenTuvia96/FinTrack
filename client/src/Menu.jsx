@@ -1,12 +1,10 @@
 import "./Menu.css";
 import { Link } from "react-router-dom";
-import React, { useState } from "react";
+import React from "react";
 
-function Menu({ theme }) {
-
+function Menu({ theme, toggleTheme }) {
   return (
     <div className={`side-menu ${theme}`}>
-
       <label className="icon">
         <div className="menu"></div>
       </label>
@@ -22,6 +20,12 @@ function Menu({ theme }) {
           </Link>
           <li>
             <i class="material-icons">search</i>Search
+          </li>
+          <li onClick={toggleTheme}>
+            <i className="material-icons">
+              {theme === "dark" ? "brightness_high" : "brightness_low"}
+            </i>
+            Toggle Theme
           </li>
           <li>
             <i class="material-icons">settings</i>Settings
