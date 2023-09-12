@@ -5,8 +5,7 @@ import { Link } from "react-router-dom";
 function Menu({ toggleMenu }) {
   return (
     <div className="side-menu">
-      <input type="checkbox" id="menu" onClick={toggleMenu} />
-      <label htmlFor="menu" className="icon">
+      <label className="icon">
         <div className="menu"></div>
       </label>
       <nav>

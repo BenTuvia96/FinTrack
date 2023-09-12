@@ -17,18 +17,16 @@ nav {
 
 nav i {
     order: 2;
-    color: black; /* Changed color to white */
+    color: black;
     margin: 18px 0 0 40px;
     padding-right: 0;
     vertical-align: text-bottom;
     transition: color 0.3s;
 }
 
-/* change nav i color to white when menu is checked */
-#menu:checked ~ nav i {
+.side-menu:hover nav i {
     color: white;
 }
-
 
 /* Reset */
 nav ul {
@@ -45,7 +43,7 @@ nav li {
     padding-right: 17px;
     margin: 0;
     white-space: nowrap;
-    color: white; /* Changed color to white */
+    color: white;
     cursor: pointer;
     transition: background-color 0.3s, color 0.6s;
 }
@@ -72,15 +70,11 @@ nav li {
     transition: all ease-in-out .3s;
 }
 
-/* change to white when menu is checked */
-#menu:checked + .icon .menu,
-#menu:checked + .icon .menu::before,
-#menu:checked + .icon .menu::after {
+.side-menu:hover .icon .menu,
+.side-menu:hover .icon .menu::before,
+.side-menu:hover .icon .menu::after {
     background: white;
 }
-
-
-
 
 .icon .menu {
     top: 27px;
@@ -101,8 +95,9 @@ nav li {
     background: #00C3FF;
 }
 
-#menu:checked + .icon:hover .menu::before,
-#menu:checked + .icon:hover .menu::after {
+.side-menu:hover .icon:hover .menu,
+.side-menu:hover .icon:hover .menu::before,
+.side-menu:hover .icon:hover .menu::after {
     background: #00C3FF;
 }
 
@@ -110,10 +105,6 @@ label.icon {
     position: fixed;
     right: 0;
     z-index: 200;
-}
-
-input#menu {
-    display: none;
 }
 
 /* Hover Effects */
@@ -129,55 +120,51 @@ nav li:hover i,
     color: #00C3FF;
 }
 
-/* do the same when menu is checked */
-#menu:checked ~ nav li:hover i,
-#menu:checked + .icon:hover .menu,
-#menu:checked + .icon:hover .menu::before,
-#menu:checked + .icon:hover .menu::after {
+.side-menu:hover nav li:hover i,
+.side-menu:hover .icon:hover .menu,
+.side-menu:hover .icon:hover .menu::before,
+.side-menu:hover .icon:hover .menu::after {
     color: #00C3FF;
 }
 
-/* Menu Checked */
-#menu:checked + .icon .menu {
+/* Menu Hover */
+.side-menu:hover .icon .menu {
     background: transparent;
 }
 
-#menu:checked + .icon .menu::before {
+.side-menu:hover .icon .menu::before {
     transform: rotate(45deg);
 }
 
-#menu:checked + .icon .menu::after {
+.side-menu:hover .icon .menu::after {
     transform: rotate(-45deg);
 }
 
-#menu:checked + .icon .menu::before,
-#menu:checked + .icon .menu::after {
+.side-menu:hover .icon .menu::before,
+.side-menu:hover .icon .menu::after {
     top: 0;
     transition: top ease .3s, transform ease .3s .3s;
 }
 
-#menu:checked ~ nav {
+.side-menu:hover nav {
     width: 200px;
     right: 140px;
     transform: translateX(140px);
     background: rgba(0, 0, 0, .8);
 }
 
-#menu:checked ~ .app-container {
+.side-menu:hover .app-container {
     transform: translateX(-140px);
 }
-
 
 /* Side Menu Styles */
 .side-menu a {
     text-decoration: none;
-    color: #00C3FF; /* Changed color to white */
+    color: #00C3FF;
 }
 
 .side-menu a:visited,
 .side-menu a:hover,
 .side-menu a:active {
-    color: #00C3FF; /* Changed color to white */
+    color: #00C3FF;
 }
-
-
