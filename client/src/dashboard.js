@@ -42,13 +42,15 @@ class Dashboard extends Component {
       backgroundColor: "transparent",
     };
     return (
-      <div className="dashboard_container">
+      <div>
         <Link to="/">
           <img src="/white_logo.svg" alt="App Logo" className="app_logo" />
         </Link>
-        <h1>Dashboard</h1>
-        <div className="chart_container">
-          <CanvasJSChart className="chart" options={options} />
+        <div className="dashboard_container">
+          <h1>Dashboard</h1>
+          <div className="chart_container">
+            <CanvasJSChart className="chart" options={options} />
+          </div>
         </div>
       </div>
     );

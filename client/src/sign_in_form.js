@@ -12,12 +12,11 @@ function SignInForm() {
   };
 
   return (
-    <div className= "page_container">
-      <div className="form_container">
-        {/* Link app logo to homepage on the ./ route */}
-        <Link to="/">
+    <div className="page_container">
+      <Link to="/">
         <img src="/white_logo.svg" alt="App Logo" className="app_logo" />
-        </Link>
+      </Link>
+      <div className="form_container">
         <h2>Sign In</h2>
         <form onSubmit={handleSubmit}>
           <div className="form_group">
@@ -38,7 +37,9 @@ function SignInForm() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <button className="button" type="submit">Sign In</button>
+          <button className="button" type="submit">
+            Sign In
+          </button>
         </form>
         <p>
           New to Fin Track? <Link to="/sign_up_form">Sign up now</Link>

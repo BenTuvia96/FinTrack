@@ -1,3 +1,15 @@
+.page_container {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  display: flex; /* Make this a flex container */
+  height: 100vh; /* Ensure it takes the full viewport height */
+  align-items: center; /* Center children vertically */
+  justify-content: center; /* Center children horizontally */
+}
+
+
+
 /* Styles for form container */
 /* make everythnig centered veritcly */
 .form_container {
@@ -6,7 +18,7 @@
     color: white;
     padding: 20px;
     text-align: center;
-    max-width: 100%; /* Make the container responsive to its parent */
+    max-width: 400px; /* Make the container responsive to its parent */
     width: 100%; /* Set a default width */
     max-height: 500px; /* Set a maximum height */
     height: auto; /* Ensure that the container height adapts based on content */
@@ -16,6 +28,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    position: relative;
     
   }
   
@@ -71,10 +84,12 @@
   
 /* Add styles for your app logo */
 .app_logo {
-    max-width: 200px; /* Set a maximum width for responsiveness */
-    height: auto; /* Automatically adjust the height to maintain aspect ratio */
-    position: absolute; /* Position the logo absolutely */
-    top: 0; /* Position it at the top of the page */
-    left: 0; /* Position it at the left corner of the page */
-    padding: 10px; /* Add padding to create space around the logo */
-  }
+  max-width: 200px;
+  height: auto;
+  top: 10px; /* Adjust as per requirement */
+  left: 10px; 
+  padding: 10px;
+  z-index: 2; /* Making sure it's above other elements */
+  position: absolute; 
+}
+  

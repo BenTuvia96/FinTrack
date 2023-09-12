@@ -12,7 +12,7 @@ nav {
     box-shadow: -2px 0 4px rgba(0, 0, 0, .1);
     overflow: hidden;
     transform: translateX(0);
-    transition: all 0.3s ease-in-out, width ease .6s;
+    transition: all 0.3s ease-in-out, width ease .6s, background ease 1s;
 }
 
 nav i {
@@ -98,12 +98,12 @@ nav li {
 .icon:hover .menu,
 .icon:hover .menu::before,
 .icon:hover .menu::after {
-    background: #00c3ff;
+    background: #00C3FF;
 }
 
 #menu:checked + .icon:hover .menu::before,
 #menu:checked + .icon:hover .menu::after {
-    background: #00c3ff;
+    background: #00C3FF;
 }
 
 label.icon {
@@ -119,14 +119,14 @@ input#menu {
 /* Hover Effects */
 nav li:hover {
     background-color: rgba(0, 0, 0, 0.1);
-    color: #00c3ff;
+    color: #00C3FF;
 }
 
 nav li:hover i,
 .icon:hover .menu,
 .icon:hover .menu::before,
 .icon:hover .menu::after {
-    color: #00c3ff;
+    color: #00C3FF;
 }
 
 /* do the same when menu is checked */
@@ -134,7 +134,7 @@ nav li:hover i,
 #menu:checked + .icon:hover .menu,
 #menu:checked + .icon:hover .menu::before,
 #menu:checked + .icon:hover .menu::after {
-    color: #00c3ff;
+    color: #00C3FF;
 }
 
 /* Menu Checked */
@@ -160,7 +160,7 @@ nav li:hover i,
     width: 200px;
     right: 140px;
     transform: translateX(140px);
-    background: rgba(0, 0, 0, .6);
+    background: rgba(0, 0, 0, .8);
 }
 
 #menu:checked ~ .app-container {
@@ -171,13 +171,13 @@ nav li:hover i,
 /* Side Menu Styles */
 .side-menu a {
     text-decoration: none;
-    color: #00c3ff; /* Changed color to white */
+    color: #00C3FF; /* Changed color to white */
 }
 
 .side-menu a:visited,
 .side-menu a:hover,
 .side-menu a:active {
-    color: #00c3ff; /* Changed color to white */
+    color: #00C3FF; /* Changed color to white */
 }
 
 
