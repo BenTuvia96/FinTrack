@@ -6,7 +6,7 @@ function TopBar({ header }) {
   return (
     <div className="top_bar">
       <div className="left_section">
-        <Link to="/">          
+        <Link to="/">
           <img src="/White_Logo.svg" alt="App Logo" className="app_logo" />
         </Link>
       </div>

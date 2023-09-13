@@ -49,7 +49,9 @@ function SignUpForm() {
               onChange={(e) => setUsername(e.target.value)}
             />
           </div>
-          <button className="button" type="submit">Sign Up!</button>
+          <button className="button" type="submit">
+            Sign Up!
+          </button>
         </form>
         <p>
           Already signed up? <Link to="/sign_in_form">Sign in!</Link>

@@ -1,8 +1,8 @@
-import { createContext } from 'react';
+import { createContext } from "react";
 
 const ThemeContext = createContext({
-  theme: 'light', // default value
-  toggleTheme: () => {} // default function, will be overridden
+  theme: "light", // default value
+  toggleTheme: () => {}, // default function, will be overridden
 });
 
 export default ThemeContext;

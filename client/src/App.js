@@ -13,7 +13,7 @@ import Dashboard from "./dashboard";
 import Menu from "./Menu";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import "./transitions.css";
-import ThemeContext from './ThemeContext';
+import ThemeContext from "./ThemeContext";
 
 function Description() {
   return (
@@ -52,7 +52,7 @@ function HomePage() {
   );
 }
 
-function MainContent({  setLocation }) {
+function MainContent({ setLocation }) {
   const location = useLocation();
 
   // Notify the App about the current location
@@ -76,36 +76,30 @@ function MainContent({  setLocation }) {
   );
 }
 
-const routeThemes = {
-  // Side menu themes for each route. If not specified, the default theme is "light"
-  "/dashboard": "dark"
-};
-
 function App() {
   const [currentLocation, setCurrentLocation] = useState("/");
-  const [theme, setTheme] = useState('light');
+  const [theme, setTheme] = useState("light");
 
   const currentTheme = theme;
 
   const toggleTheme = () => {
-    setTheme(prevTheme => prevTheme === 'dark' ? 'light' : 'dark');
+    setTheme((prevTheme) => (prevTheme === "dark" ? "light" : "dark"));
   };
 
   useEffect(() => {
     // This will run every time the theme changes
-    document.body.classList.remove('light', 'dark'); // Remove both to ensure no overlap
+    document.body.classList.remove("light", "dark"); // Remove both to ensure no overlap
     document.body.classList.add(currentTheme); // Add the current theme
   }, [currentTheme]);
 
-
   return (
     <ThemeContext.Provider value={{ theme: currentTheme, toggleTheme }}>
-    <Router>
-      {currentLocation !== "/" && <Menu theme={currentTheme} toggleTheme={toggleTheme} />}
-      <MainContent
-        setLocation={setCurrentLocation}
-      />
-    </Router>
+      <Router>
+        {currentLocation !== "/" && (
+          <Menu theme={currentTheme} toggleTheme={toggleTheme} />
+        )}
+        <MainContent setLocation={setCurrentLocation} />
+      </Router>
     </ThemeContext.Provider>
   );
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -7,9 +7,9 @@ import {
   Title,
   Tooltip,
   Legend,
-} from 'chart.js';
-import { Bar } from 'react-chartjs-2';
-import { faker } from '@faker-js/faker';
+} from "chart.js";
+import { Bar } from "react-chartjs-2";
+import { faker } from "@faker-js/faker";
 
 ChartJS.register(
   CategoryScale,
@@ -24,29 +24,29 @@ export const options = {
   responsive: true,
   plugins: {
     legend: {
-      position: 'top',
+      position: "top",
     },
     title: {
       display: true,
-      text: 'Income & Outcome by Month',
+      text: "Income & Outcome by Month",
     },
   },
 };
 
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+const labels = ["January", "February", "March", "April", "May", "June", "July"];
 
 export const data = {
   labels,
   datasets: [
     {
-      label: 'income',
+      label: "income",
       data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-      backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      backgroundColor: "rgba(255, 99, 132, 0.5)",
     },
     {
-      label: 'outcome',
+      label: "outcome",
       data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-      backgroundColor: 'rgba(53, 162, 235, 0.5)',
+      backgroundColor: "rgba(53, 162, 235, 0.5)",
     },
   ],
 };

@@ -1,9 +1,10 @@
-.fade-enter, .fade-exit-done {
-    opacity: 0;
-  }
-  
-  .fade-enter-active, .fade-exit {
-    opacity: 1;
-    transition: opacity 800ms;  /* Adjust duration as needed */
-  }
-  
+.fade-enter,
+.fade-exit-done {
+  opacity: 0;
+}
+
+.fade-enter-active,
+.fade-exit {
+  opacity: 1;
+  transition: opacity 800ms; /* Adjust duration as needed */
+}

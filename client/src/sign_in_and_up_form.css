@@ -20,7 +20,6 @@
   display: grid;
   grid-gap: 20px;
   transition: background-color 0.8s ease-in-out;
-
 }
 
 /* Styles for the "Sign In" heading */
@@ -76,7 +75,6 @@ body.dark .form_group input {
   margin: 0 auto;
   display: block;
 }
-
 
 /* dark mode styling */
 body.dark .form_container {

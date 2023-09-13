@@ -54,10 +54,9 @@ body.dark .top_bar {
 }
 
 body.light .app_logo {
-  content: url('../public/White_Logo.svg');
+  content: url("../public/White_Logo.svg");
 }
 
 body.dark .app_logo {
-  content: url('../public/Black_Logo.svg');
+  content: url("../public/Black_Logo.svg");
 }
-
