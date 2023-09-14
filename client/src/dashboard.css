@@ -104,3 +104,23 @@ div.income-and-outcome-buttons-container
 .add-outcome-text {
   color: rgba(168, 71, 71);
 }
+
+/* Dark theme - Adjusting income button colors */
+.dashboard_page_container.dark .income-button-container button {
+  color: rgb(48, 171, 48); /* Bright green for dark mode */
+  border-color: rgb(48, 171, 48);
+}
+
+.dashboard_page_container.dark .add-income-text {
+  color: rgb(48, 171, 48); /* Bright green for dark mode */
+}
+
+/* Dark theme - Adjusting outcome button colors */
+.dashboard_page_container.dark .outcome-button-container button {
+  color: rgb(168, 71, 71); /* Bright red for dark mode */
+  border-color: rgb(168, 71, 71);
+}
+
+.dashboard_page_container.dark .add-outcome-text {
+  color: rgb(168, 84, 84); /* Bright red for dark mode */
+}
