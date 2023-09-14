@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react"; // Make sure to import useContext
+import ThemeContext from "../ThemeContext"; // Importing ThemeContext
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -24,34 +25,61 @@ ChartJS.register(
   Legend
 );
 
-export const options = {
-  responsive: true,
-  plugins: {
-    legend: {
-      position: "top",
-    },
-    title: {
-      display: true,
-      text: "Money Saved by Month",
-    },
-  },
-};
-
 const labels = ["January", "February", "March", "April", "May", "June", "July"];
 
-export const data = {
-  labels,
-  datasets: [
-    {
-      fill: true,
-      label: "Money Saved",
-      data: labels.map(() => faker.datatype.number({ min: -500, max: 1000 })),
-      borderColor: "rgb(53, 162, 235)",
-      backgroundColor: "rgba(53, 162, 235, 0.5)",
-    },
-  ],
-};
-
 export function AreaChart() {
+  const { theme } = useContext(ThemeContext);
+
+  const light_colors = {
+    borderColor: "rgb(53, 162, 235)",
+    backgroundColor: "rgba(53, 162, 235, 0.5)",
+  };
+
+  const dark_colors = {
+    borderColor: "rgb(53, 162, 235)",
+    backgroundColor: "rgba(53, 162, 235, 0.8)", // Made this less transparent for the dark theme
+  };
+
+  const data = {
+    labels,
+    datasets: [
+      {
+        fill: true,
+        label: "Money Saved",
+        data: labels.map(() => faker.datatype.number({ min: -500, max: 1000 })),
+        borderColor:
+          theme === "light"
+            ? light_colors.borderColor
+            : dark_colors.borderColor,
+        backgroundColor:
+          theme === "light"
+            ? light_colors.backgroundColor
+            : dark_colors.backgroundColor,
+      },
+    ],
+  };
+
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top",
+        labels: {
+          color: theme === "dark" ? "white" : "black", // Adjust legend color based on theme
+        },
+      },
+      title: {
+        display: true,
+        text: "Money Saved by Month",
+        color: theme === "dark" ? "white" : "black", // Adjust title color based on theme
+      },
+      tooltip: {
+        titleFontColor: theme === "dark" ? "white" : "black", // Adjust tooltip title color
+        bodyFontColor: theme === "dark" ? "white" : "black", // Adjust tooltip body color
+        footerFontColor: theme === "dark" ? "white" : "black", // Adjust tooltip footer color
+      },
+    },
+  };
+
   return <Line options={options} data={data} />;
 }

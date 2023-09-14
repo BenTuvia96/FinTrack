@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+import React, { Component, useContext } from "react";
+import ThemeContext from "./ThemeContext";
 import TopBar from "./top_bar";
 import { DoughnutChart } from "./dashboard_components/doughnut_chart.jsx";
 import { BarChart } from "./dashboard_components/bar_chart";
@@ -27,10 +28,14 @@ class Dashboard extends Component {
     }));
   };
 
+  static contextType = ThemeContext;
+
   render() {
+    const { theme } = this.context;
+
     return (
-      <div className="dashboard_page_container">
-        <TopBar header={"Dashboard"} />
+      <div className={`dashboard_page_container ${theme}`}>
+        <TopBar />
         <div className="dashboard-container">
           <div className="doughnut-container">
             <DoughnutChart />
