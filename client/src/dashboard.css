@@ -19,6 +19,11 @@
   grid-area: 2 / 3 / 3 / 3;
 }
 
+.input-form-container
+{
+  grid-area: 1 / 2 / 2 / 3;
+}
+
 /* income and outcome container and icons */
 
 .income-and-outcome-buttons-container {
