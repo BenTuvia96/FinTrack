@@ -2,22 +2,105 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(2, 1fr);
-  grid-column-gap: 20px;
-  grid-row-gap: 20px;
-  height: 100%;
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+  height: 90vh;
 }
 
 .doughnut-container {
   grid-area: 1 / 1 / 3 / 2;
-  margin-top: 5%;
 }
 .bar-container {
-  margin-top: 5%;
   margin-right: 15%;
-  grid-area: 1 / 3 / 3 / 3;
+  grid-area: 1 / 3 / 2 / 3;
 }
 .area-container {
-  margin-top: 5%;
   margin-right: 15%;
   grid-area: 2 / 3 / 3 / 3;
+}
+
+/* income and outcome container and icons */
+
+.income-and-outcome-buttons-container {
+  grid-area: 2 / 2 / 2 / 3;
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+}
+
+.income-button-container,
+.outcome-button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.income-button-container {
+  grid-area: 1 / 1 / 3 / 2;
+}
+
+.outcome-button-container {
+  grid-area: 1 / 2 / 3 / 3;
+}
+
+/* General style for both buttons */
+.income-button-container button,
+.outcome-button-container button {
+  width: 90px; /* Width of the circle */
+  height: 90px; /* Height of the circle */
+  border-radius: 50%; /* Make it a circle */
+  display: flex; /* Center the icon */
+  justify-content: center; /* Center the icon horizontally */
+  align-items: center; /* Center the icon vertically */
+  overflow: hidden; /* Ensure nothing goes outside the circle */
+  border: 4px outset;
+}
+
+/* Icon specific styles */
+button.material-icons {
+  font-size: 80px; /* Adjust size of the icon */
+}
+
+/* Styles for income button only */
+.income-button-container button {
+  color: rgba(48, 171, 48, 0.6);
+  background: transparent;
+  border-color: rgba(48, 171, 48, 0.6);
+}
+
+/* Styles for outcome button only */
+.outcome-button-container button {
+  color: rgba(168, 71, 71, 0.6);
+  background: transparent;
+  border-color: rgba(168, 71, 71, 0.6);
+}
+
+button.material-icons {
+  transition: transform 0.5s;
+}
+
+/* Rotate the icon 360 degrees on hover */
+div.income-and-outcome-buttons-container
+  div.income-button-container
+  button.material-icons:hover,
+div.income-and-outcome-buttons-container
+  div.outcome-button-container
+  button.material-icons:hover {
+  transform: rotate(360deg);
+}
+
+.add-income-text,
+.add-outcome-text {
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.add-income-text {
+  color: rgb(43, 105, 43);
+}
+.add-outcome-text {
+  color: rgba(168, 71, 71);
 }
