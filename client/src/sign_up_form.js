@@ -1,7 +1,7 @@
 // create a sign up form
 // Path: client/src/sign_up_form.js
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./sign_in_and_up_form.css";
 import TopBar from "./top_bar";
 import axios, { Axios } from "axios";
@@ -12,8 +12,11 @@ function SignUpForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const navigate = useNavigate();
+
   const handleSignup = (e) => {
     e.preventDefault();
+
     axios
       .post("http://localhost:3001/addUser", {
         username: username,
@@ -22,6 +25,10 @@ function SignUpForm() {
       })
       .then((response) => {
         console.log(response.data);
+        navigate("/dashboard");
+      })
+      .catch((error) => {
+        console.error("Error during signup:", error);
       });
   };
 
