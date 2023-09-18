@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./sign_in_and_up_form.css";
 import TopBar from "./top_bar";
+import axios, { Axios } from "axios";
 
 // create a sign up form including: email, username and passowrd
 function SignUpForm() {
@@ -13,7 +14,15 @@ function SignUpForm() {
 
   const handleSignup = (e) => {
     e.preventDefault();
-    // Handle sign-in logic here (e.g., call an API)
+    axios
+      .post("http://localhost:3001/addUser", {
+        username: username,
+        email: email,
+        password: password,
+      })
+      .then((response) => {
+        console.log(response.data);
+      });
   };
 
   return (
@@ -26,6 +35,7 @@ function SignUpForm() {
             <label htmlFor="email">Email:</label>
             <input
               type="email"
+              placeholder="example@example.com"
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
