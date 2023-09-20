@@ -4,8 +4,8 @@ import TopBar from "./top_bar";
 import { DoughnutChart } from "./dashboard_components/doughnut_chart.jsx";
 import { BarChart } from "./dashboard_components/bar_chart";
 import { AreaChart } from "./dashboard_components/area_chart";
-import OutcomeInput from "./dashboard_components/add_expanse";
-import IncomeInput from "./dashboard_components/add_income"; // Create a component for income input
+import OutcomeInput from "./dashboard_components/add_expense";
+import IncomeInput from "./dashboard_components/add_income";
 import "./dashboard.css";
 
 class Dashboard extends Component {

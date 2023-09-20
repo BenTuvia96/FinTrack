@@ -23,6 +23,15 @@ app.get("/getUsers", async (req, res) => {
   }
 });
 
+app.get("/getTransactions", async (req, res) => {
+  try {
+    const transactions = await TransactionsModels.find({});
+    res.json(transactions);
+  } catch (err) {
+    res.json(err);
+  }
+});
+
 app.post("/addUser", async (req, res) => {
   try {
     const newUser = new UserModels({
