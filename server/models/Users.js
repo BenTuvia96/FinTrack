@@ -10,7 +10,7 @@ const UserSchema = new mongoose.Schema({
     required: [true, "Please enter an email"],
     unique: true,
     match: [
-      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, //TODO: fix verification to suit DB verification
       "Please enter a valid email",
     ],
   },

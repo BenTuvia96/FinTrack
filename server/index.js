@@ -37,6 +37,23 @@ app.post("/addUser", async (req, res) => {
   }
 });
 
+app.post("/addExpense", async (req, res) => {
+  try {
+    const newExpense = new TransactionsModels({
+      user_id: req.body.user_id,
+      amount: req.body.amount,
+      category: req.body.category,
+      date: req.body.date,
+      note: req.body.note,
+      kind: req.body.kind,
+    });
+    await newExpense.save();
+    res.json(newExpense);
+  } catch (err) {
+    res.json(err);
+  }
+});
+
 app.listen(3001, () => {
   console.log("server running on port 3001");
 });

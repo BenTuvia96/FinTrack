@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./sign_in_and_up_form.css";
 import TopBar from "./top_bar";
-import axios, { Axios } from "axios";
+import axios from "axios";
 
 // create a sign up form including: email, username and passowrd
 function SignUpForm() {
@@ -41,7 +41,7 @@ function SignUpForm() {
           <div className="form_group">
             <label htmlFor="email">Email:</label>
             <input
-              type="email"
+              type="email" //TODO: make verification suit DB verificaion (.com stuff)
               placeholder="example@example.com"
               id="email"
               value={email}
@@ -51,7 +51,7 @@ function SignUpForm() {
           <div className="form_group">
             <label htmlFor="password">Password:</label>
             <input
-              type="password"
+              type="password" //TODO: make verification suit DB verificaion (at least 6 characters)
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -60,7 +60,7 @@ function SignUpForm() {
           <div className="form_group">
             <label htmlFor="username">Username:</label>
             <input
-              type="username"
+              type="username" //TODO: make verification suit DB verificaion (verify if username is taken)
               id="username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}

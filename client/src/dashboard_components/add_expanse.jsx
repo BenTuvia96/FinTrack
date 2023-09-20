@@ -1,21 +1,19 @@
 import React, { Component } from "react";
-import "./add_expanse.css"; // Import your CSS styles for this component
+import axios from "axios";
+import "./add_expanse.css";
 
 class AddExpense extends Component {
   state = {
     amount: "",
     hasEnteredAmount: false,
-    selectedCategory: "", // Add a state variable for the selected category
-    selectedDate: "", // Add a state variable for the selected date
-    note: "", // Add a state variable for the note input
+    selectedCategory: "",
+    selectedDate: "",
+    note: "",
   };
 
   componentDidMount() {
-    // Set the default date to the current date when the component is mounted
-    if (!this.state.selectedDate) {
-      const currentDate = new Date().toISOString().substr(0, 10);
-      this.setState({ selectedDate: currentDate });
-    }
+    const currentDate = new Date().toISOString().substr(0, 10);
+    this.setState({ selectedDate: currentDate });
   }
 
   handleAmountChange = (event) => {
@@ -24,12 +22,6 @@ class AddExpense extends Component {
 
   handleAmountSubmit = (event) => {
     event.preventDefault();
-    const { amount } = this.state;
-
-    // Perform any necessary actions with the 'amount' data here
-    // For example, you can send it to your backend or update your application's state
-
-    // Update the state to indicate that the user has entered the amount
     this.setState({ hasEnteredAmount: true });
   };
 
@@ -45,6 +37,28 @@ class AddExpense extends Component {
     this.setState({ note: event.target.value });
   };
 
+  handleFinalSubmit = (event) => {
+    event.preventDefault();
+
+    const { amount, selectedCategory, selectedDate, note } = this.state;
+
+    axios
+      .post("http://localhost:3001/addExpense", {
+        user_id: "65087d99df86740bb4873eb8", //TODO: Add acutal user id from 'session'
+        amount: amount,
+        category: selectedCategory,
+        date: selectedDate,
+        note: note,
+        kind: "outcome",
+      })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error("Error during expense addition:", error);
+      });
+  };
+
   render() {
     const { amount, hasEnteredAmount, selectedCategory, selectedDate, note } =
       this.state;
@@ -54,7 +68,7 @@ class AddExpense extends Component {
         {hasEnteredAmount ? (
           <>
             <h2>Choose a Category</h2>
-            <form onSubmit={this.handleCategorySubmit}>
+            <form onSubmit={this.handleFinalSubmit}>
               <label>
                 Category:
                 <select
@@ -62,13 +76,12 @@ class AddExpense extends Component {
                   onChange={this.handleCategoryChange}
                 >
                   <option value="food">Food</option>
-                  <option value="rent">Transportation</option>
+                  <option value="transportation">Transportation</option>
                   <option value="entertainment">Entertainment</option>
                   <option value="bills">Bills</option>
-                  <option value="rent">rent</option>
+                  <option value="rent">Rent</option>
                   <option value="other">Other</option>
                   <option value="add-category">Add</option>
-                  {/* Add more category options as needed */}
                 </select>
               </label>
               <label>
@@ -103,7 +116,7 @@ class AddExpense extends Component {
                   onChange={this.handleAmountChange}
                 />
               </label>
-              <button type="submit">Submit</button>
+              <button type="submit">Next</button>
             </form>
           </>
         )}
