@@ -72,6 +72,11 @@ button:hover[type="submit"] {
   border-color: #555; /* Slightly brighter border for dark mode */
 }
 
+.dashboard_page_container.dark select option {
+  background-color: #555; /* Dark background for options in dark mode */
+  color: #eee; /* Brighter text color for options in dark mode */
+}
+
 .dashboard_page_container.dark button[type="submit"] {
   background-color: #ffffff66; /* Brighter button color for dark mode */
   color: rgb(255, 255, 255); /* Dark text for the bright button */

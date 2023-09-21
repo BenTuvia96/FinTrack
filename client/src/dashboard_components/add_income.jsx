@@ -86,6 +86,7 @@ class AddIncome extends Component {
               <label>
                 Category:
                 <select
+                  className="category-selector"
                   value={selectedCategory}
                   onChange={this.handleCategoryChange}
                 >
