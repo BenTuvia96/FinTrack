@@ -23,7 +23,7 @@ const dark_theme_colors = [
   "rgba(255, 159, 64, 0.75)",
 ];
 
-export function DoughnutChart({ transactionsVersion }) {
+export function DoughnutChart({ transactionsVersion, kind }) {
   const { theme } = useContext(ThemeContext);
 
   // State for the fetched data
@@ -34,14 +34,19 @@ export function DoughnutChart({ transactionsVersion }) {
     fetch("/getTransactions")
       .then((response) => response.json())
       .then((transactions) => {
-        // Filter out only 'outcome' transactions
-        const outcomeTransactions = transactions.filter(
-          (transaction) => transaction.kind === "outcome"
-        );
+        // Filter out only 'outcome' or transactions
+        const displayedTransactions =
+          kind === "outcome"
+            ? transactions.filter(
+                (transaction) => transaction.kind === "outcome"
+              )
+            : transactions.filter(
+                (transaction) => transaction.kind === "income"
+              );
 
         // Create an object to tally amounts by category
         let amountsByCategory = {};
-        outcomeTransactions.forEach((transaction) => {
+        displayedTransactions.forEach((transaction) => {
           if (!amountsByCategory[transaction.category]) {
             amountsByCategory[transaction.category] = 0;
           }
@@ -70,7 +75,7 @@ export function DoughnutChart({ transactionsVersion }) {
           ],
         });
       });
-  }, [theme, transactionsVersion]);
+  }, [theme, transactionsVersion, kind]);
 
   const options = {
     responsive: true,
@@ -83,7 +88,7 @@ export function DoughnutChart({ transactionsVersion }) {
       },
       title: {
         display: true,
-        text: "Expenses by Category",
+        text: kind === "outcome" ? "Expense by Category" : "Income by Category",
         color: theme === "dark" ? "white" : "black",
       },
       tooltip: {

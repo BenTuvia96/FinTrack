@@ -89,6 +89,7 @@ class AddIncome extends Component {
                   value={selectedCategory}
                   onChange={this.handleCategoryChange}
                 >
+                  <option value=""></option>
                   <option value="salary">Salary</option>
                   <option value="deposit">Deposit</option>
                   <option value="savings">Savings</option>

@@ -7,12 +7,15 @@ import { AreaChart } from "./dashboard_components/area_chart";
 import OutcomeInput from "./dashboard_components/add_expense";
 import IncomeInput from "./dashboard_components/add_income";
 import "./dashboard.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 
 class Dashboard extends Component {
   state = {
     showOutcomeInput: false,
     showIncomeInput: false,
     transactionsVersion: 0,
+    selectedKind: "outcome",
   };
 
   toggleOutcomeInput = () => {
@@ -45,6 +48,12 @@ class Dashboard extends Component {
 
   static contextType = ThemeContext;
 
+  handleToggleClick = () => {
+    this.setState((prevState) => ({
+      selectedKind: prevState.selectedKind === "income" ? "outcome" : "income",
+    }));
+  };
+
   render() {
     const { theme } = this.context;
 
@@ -55,7 +64,25 @@ class Dashboard extends Component {
           <div className="doughnut-container">
             <DoughnutChart
               transactionsVersion={this.state.transactionsVersion}
+              kind={this.state.selectedKind}
             />
+            <section className="toggle-container">
+              <button
+                className={`toggle ${
+                  this.state.selectedKind === "income" ? "active" : ""
+                }`}
+                onClick={this.handleToggleClick}
+              >
+                <div className="icons">
+                  <FontAwesomeIcon icon={faMinus} />
+                  <FontAwesomeIcon icon={faPlus} />
+                </div>
+                <FontAwesomeIcon
+                  icon={this.state.selectedKind === "income" ? faPlus : faMinus}
+                  className="round"
+                />
+              </button>
+            </section>
           </div>
           <div className="bar-container">
             <BarChart />

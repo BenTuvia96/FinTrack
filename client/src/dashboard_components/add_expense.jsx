@@ -89,6 +89,7 @@ class AddExpense extends Component {
                   value={selectedCategory}
                   onChange={this.handleCategoryChange}
                 >
+                  <option value=""></option>
                   <option value="food">Food</option>
                   <option value="transportation">Transportation</option>
                   <option value="entertainment">Entertainment</option>
