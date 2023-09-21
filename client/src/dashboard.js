@@ -7,8 +7,6 @@ import { AreaChart } from "./dashboard_components/area_chart";
 import OutcomeInput from "./dashboard_components/add_expense";
 import IncomeInput from "./dashboard_components/add_income";
 import "./dashboard.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 
 class Dashboard extends Component {
   state = {
@@ -69,18 +67,28 @@ class Dashboard extends Component {
             <section className="toggle-container">
               <button
                 className={`toggle ${
-                  this.state.selectedKind === "income" ? "active" : ""
+                  this.state.selectedKind === "income" ? "income" : "outcome"
                 }`}
                 onClick={this.handleToggleClick}
               >
                 <div className="icons">
-                  <FontAwesomeIcon icon={faMinus} />
-                  <FontAwesomeIcon icon={faPlus} />
+                  <i className="material-icons">remove</i>
+                  <i className="material-icons">add</i>
                 </div>
-                <FontAwesomeIcon
-                  icon={this.state.selectedKind === "income" ? faPlus : faMinus}
-                  className="round"
-                />
+                <i
+                  className={`material-icons round ${
+                    this.state.selectedKind === "income" ? "show" : "hide"
+                  }`}
+                >
+                  add
+                </i>
+                <i
+                  className={`material-icons round ${
+                    this.state.selectedKind === "income" ? "hide" : "show"
+                  }`}
+                >
+                  remove
+                </i>
               </button>
             </section>
           </div>

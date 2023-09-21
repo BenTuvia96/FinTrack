@@ -1,5 +1,5 @@
-import React, { useContext } from "react"; // Make sure to import useContext
-import ThemeContext from "../ThemeContext"; // Importing ThemeContext
+import React, { useContext } from "react";
+import ThemeContext from "../ThemeContext";
 import {
   Chart as ChartJS,
   CategoryScale,

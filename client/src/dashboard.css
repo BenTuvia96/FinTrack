@@ -129,6 +129,7 @@ div.income-and-outcome-buttons-container
   background: #ffffff;
   box-shadow: inset 0.5em 0.5em 1em #d9d9d9, inset -0.5em -0.5em 1em #f5f5f5;
   cursor: pointer;
+  transition: background-color 0.5s ease;
 }
 
 .toggle .icons {
@@ -158,12 +159,12 @@ div.income-and-outcome-buttons-container
   transition: all 0.5s ease;
 }
 
-.toggle.active .round {
+.toggle.income .round {
   left: calc(3.3vw + 31px); /* reduced from 11vw */
   background: linear-gradient(145deg, #7fff7f, #4cff4c);
 }
 
-.dashboard_page_container.dark .toggle.active .round {
+.dashboard_page_container.dark .toggle.income .round {
   left: calc(3.3vw + 31px); /* reduced from 11vw */
   background: linear-gradient(145deg, #4cbe4c, #037502);
 }
@@ -202,4 +203,17 @@ div.income-and-outcome-buttons-container
 
 .dashboard_page_container.dark .add-outcome-text {
   color: rgb(168, 84, 84); /* Bright red for dark mode */
+}
+
+.round {
+  transition: opacity 0.5s;
+  position: absolute;
+}
+
+.show {
+  opacity: 1;
+}
+
+.hide {
+  opacity: 0;
 }
