@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import "./add_expanse.css";
+import "./add_income_or_expense_form.css";
 
 class AddExpense extends Component {
   state = {
@@ -73,13 +73,12 @@ class AddExpense extends Component {
   };
 
   // TODO: add back button to go back to the previous form
-  // TODO: add dark theme to font text
   render() {
     const { amount, hasEnteredAmount, selectedCategory, selectedDate, note } =
       this.state;
 
     return (
-      <div className="add-expense-container">
+      <div className="income-outcome-form-container">
         {hasEnteredAmount ? (
           <>
             <h2>Choose a Category</h2>

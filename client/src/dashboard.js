@@ -36,6 +36,13 @@ class Dashboard extends Component {
     }));
   };
 
+  handleIncomeFormSubmission = () => {
+    this.toggleIncomeInput();
+    this.setState((prevState) => ({
+      transactionsVersion: prevState.transactionsVersion + 1,
+    }));
+  };
+
   static contextType = ThemeContext;
 
   render() {
@@ -60,8 +67,9 @@ class Dashboard extends Component {
             {this.state.showOutcomeInput && (
               <OutcomeInput onFormSubmit={this.handleOutcomeFormSubmission} />
             )}
-            {this.state.showIncomeInput && <IncomeInput />}{" "}
-            {/* You can do something similar for IncomeInput if necessary */}
+            {this.state.showIncomeInput && (
+              <IncomeInput onFormSubmit={this.handleIncomeFormSubmission} />
+            )}
           </div>
           <div className="income-and-outcome-buttons-container">
             <div className="income-button-container">
