@@ -72,6 +72,8 @@ class AddExpense extends Component {
       });
   };
 
+  // TODO: add back button to go back to the previous form
+  // TODO: add dark theme to font text
   render() {
     const { amount, hasEnteredAmount, selectedCategory, selectedDate, note } =
       this.state;

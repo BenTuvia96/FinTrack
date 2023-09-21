@@ -1,12 +1,7 @@
 /* AddExpense.css */
 
 .add-expense-container {
-  background-color: rgba(
-    255,
-    255,
-    255,
-    0
-  ); /* Use rgba with an alpha value (0.8 for 80% opacity) */
+  background-color: rgba(255, 255, 255, 0);
   padding: 20px;
   max-width: 300px;
   margin: 0 auto;
@@ -61,4 +56,34 @@ button[type="submit"] {
 button:hover[type="submit"] {
   background-color: #00c3ff;
   color: black;
+}
+
+/* Dark mode styles for the form */
+
+.dashboard_page_container.dark h2,
+.dashboard_page_container.dark label {
+  color: #ccc; /* Brighter text for dark mode */
+}
+
+.dashboard_page_container.dark input[type="text"],
+.dashboard_page_container.dark select {
+  background-color: #ffffff15; /* Darker input background for dark mode */
+  color: #eee; /* Brighter text color for inputs and selects in dark mode */
+  border-color: #555; /* Slightly brighter border for dark mode */
+}
+
+.dashboard_page_container.dark button[type="submit"] {
+  background-color: #ffffff66; /* Brighter button color for dark mode */
+  color: rgb(255, 255, 255); /* Dark text for the bright button */
+}
+
+.dashboard_page_container.dark button:hover[type="submit"] {
+  background-color: #3083ad; /* Slightly darker hue on hover for contrast */
+  color: white; /* White text on hover */
+}
+
+/* change bg color of date input to transparent on dark mode */
+.dashboard_page_container.dark input[type="date"] {
+  background-color: rgba(255, 255, 255, 0.236);
+  color: #eee;
 }
