@@ -93,7 +93,7 @@ class Dashboard extends Component {
             </section>
           </div>
           <div className="bar-container">
-            <BarChart />
+            <BarChart transactionsVersion={this.state.transactionsVersion} />
           </div>
           <div className="area-container">
             <AreaChart />
