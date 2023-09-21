@@ -96,7 +96,7 @@ class Dashboard extends Component {
             <BarChart transactionsVersion={this.state.transactionsVersion} />
           </div>
           <div className="area-container">
-            <AreaChart />
+            <AreaChart transactionsVersion={this.state.transactionsVersion} />
           </div>
           <div className="input-form-container">
             {this.state.showOutcomeInput && (
