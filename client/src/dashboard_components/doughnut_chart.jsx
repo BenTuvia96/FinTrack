@@ -58,7 +58,7 @@ export function DoughnutChart({ transactionsVersion, kind }) {
           labels: Object.keys(amountsByCategory),
           datasets: [
             {
-              label: "amount spent in $",
+              label: kind === "outcome" ? "amount spent" : "amount earned",
               data: Object.values(amountsByCategory),
               backgroundColor:
                 theme === "light" ? light_theme_colors : dark_theme_colors,

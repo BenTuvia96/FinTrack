@@ -111,6 +111,31 @@ app.get("/getMonthlyBalances/:userId/:year", async (req, res) => {
   }
 });
 
+// Get monthly balance for a given user for current and previous year
+app.get("/getYearlyComparisonBalances/:userId/:year", async (req, res) => {
+  try {
+    const currentYear = parseInt(req.params.year);
+    const previousYear = currentYear - 1;
+
+    const currentYearBalances = await BalancesModels.find({
+      user_id: req.params.userId,
+      year: currentYear,
+    });
+
+    const previousYearBalances = await BalancesModels.find({
+      user_id: req.params.userId,
+      year: previousYear,
+    });
+
+    res.json({
+      currentYear: currentYearBalances,
+      previousYear: previousYearBalances,
+    });
+  } catch (err) {
+    res.json(err);
+  }
+});
+
 // Get yearly balance for a given user
 app.get("/getYearlyBalance/:userId/:year", async (req, res) => {
   try {

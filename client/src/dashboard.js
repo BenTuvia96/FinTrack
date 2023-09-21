@@ -4,6 +4,8 @@ import TopBar from "./top_bar";
 import { DoughnutChart } from "./dashboard_components/doughnut_chart.jsx";
 import { BarChart } from "./dashboard_components/bar_chart";
 import { AreaChart } from "./dashboard_components/area_chart";
+import { YearlyComparisonChart } from "./dashboard_components/yearly_comparison_chart";
+
 import OutcomeInput from "./dashboard_components/add_expense";
 import IncomeInput from "./dashboard_components/add_income";
 import "./dashboard.css";
@@ -64,7 +66,7 @@ class Dashboard extends Component {
               transactionsVersion={this.state.transactionsVersion}
               kind={this.state.selectedKind}
             />
-            <section className="toggle-container">
+            <div className="toggle-container">
               <button
                 className={`toggle ${
                   this.state.selectedKind === "income" ? "income" : "outcome"
@@ -90,13 +92,15 @@ class Dashboard extends Component {
                   remove
                 </i>
               </button>
-            </section>
+            </div>
           </div>
           <div className="bar-container">
             <BarChart transactionsVersion={this.state.transactionsVersion} />
           </div>
           <div className="area-container">
-            <AreaChart transactionsVersion={this.state.transactionsVersion} />
+            <YearlyComparisonChart
+              transactionsVersion={this.state.transactionsVersion}
+            />
           </div>
           <div className="input-form-container">
             {this.state.showOutcomeInput && (
