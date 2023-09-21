@@ -35,6 +35,9 @@ async function updateBalance(userId, amount, date, kind) {
   const year = date.getFullYear();
   const month = date.getMonth();
 
+  // Ensure amount is a number
+  const numericAmount = parseFloat(amount);
+
   let balance = await BalancesModels.findOne({
     user_id: userId,
     year: year,
@@ -50,9 +53,9 @@ async function updateBalance(userId, amount, date, kind) {
   }
 
   if (kind === "income") {
-    balance.income += amount;
+    balance.income += numericAmount;
   } else if (kind === "expense") {
-    balance.outcome += amount;
+    balance.outcome += numericAmount;
   }
 
   balance.balance = balance.income - balance.outcome;
