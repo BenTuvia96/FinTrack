@@ -37,6 +37,17 @@ class AddExpense extends Component {
     this.setState({ note: event.target.value });
   };
 
+  resetForm = () => {
+    const currentDate = new Date().toISOString().substr(0, 10);
+    this.setState({
+      amount: "",
+      hasEnteredAmount: false,
+      selectedCategory: "",
+      selectedDate: currentDate,
+      note: "",
+    });
+  };
+
   handleFinalSubmit = (event) => {
     event.preventDefault();
 
@@ -53,6 +64,8 @@ class AddExpense extends Component {
       })
       .then((response) => {
         console.log(response.data);
+        this.resetForm();
+        this.props.onFormSubmit && this.props.onFormSubmit();
       })
       .catch((error) => {
         console.error("Error during expense addition:", error);
@@ -116,7 +129,7 @@ class AddExpense extends Component {
                   onChange={this.handleAmountChange}
                 />
               </label>
-              <button type="submit">Next</button>
+              <button type="submit"> Next</button>
             </form>
           </>
         )}

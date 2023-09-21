@@ -1,4 +1,4 @@
-import React, { Component, useContext } from "react";
+import React, { Component } from "react";
 import ThemeContext from "./ThemeContext";
 import TopBar from "./top_bar";
 import { DoughnutChart } from "./dashboard_components/doughnut_chart.jsx";
@@ -12,6 +12,7 @@ class Dashboard extends Component {
   state = {
     showOutcomeInput: false,
     showIncomeInput: false,
+    transactionsVersion: 0,
   };
 
   toggleOutcomeInput = () => {
@@ -28,6 +29,13 @@ class Dashboard extends Component {
     }));
   };
 
+  handleOutcomeFormSubmission = () => {
+    this.toggleOutcomeInput();
+    this.setState((prevState) => ({
+      transactionsVersion: prevState.transactionsVersion + 1,
+    }));
+  };
+
   static contextType = ThemeContext;
 
   render() {
@@ -38,7 +46,9 @@ class Dashboard extends Component {
         <TopBar />
         <div className="dashboard-container">
           <div className="doughnut-container">
-            <DoughnutChart />
+            <DoughnutChart
+              transactionsVersion={this.state.transactionsVersion}
+            />
           </div>
           <div className="bar-container">
             <BarChart />
@@ -47,8 +57,11 @@ class Dashboard extends Component {
             <AreaChart />
           </div>
           <div className="input-form-container">
-            {this.state.showOutcomeInput && <OutcomeInput />}
-            {this.state.showIncomeInput && <IncomeInput />}
+            {this.state.showOutcomeInput && (
+              <OutcomeInput onFormSubmit={this.handleOutcomeFormSubmission} />
+            )}
+            {this.state.showIncomeInput && <IncomeInput />}{" "}
+            {/* You can do something similar for IncomeInput if necessary */}
           </div>
           <div className="income-and-outcome-buttons-container">
             <div className="income-button-container">

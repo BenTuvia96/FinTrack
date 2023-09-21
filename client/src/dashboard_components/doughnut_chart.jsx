@@ -23,7 +23,7 @@ const dark_theme_colors = [
   "rgba(255, 159, 64, 0.75)",
 ];
 
-export function DoughnutChart() {
+export function DoughnutChart({ transactionsVersion }) {
   const { theme } = useContext(ThemeContext);
 
   // State for the fetched data
@@ -70,7 +70,7 @@ export function DoughnutChart() {
           ],
         });
       });
-  }, [theme]); // Refetch data if theme changes, or remove theme from dependency if you don't want to refetch
+  }, [theme, transactionsVersion]);
 
   const options = {
     responsive: true,
