@@ -230,6 +230,19 @@ function verifyToken(req, res, next) {
   }
 }
 
+app.get("/getUserDetails", verifyToken, async (req, res) => {
+  try {
+    const user = await UserModels.findById(req.user.id);
+    if (user) {
+      res.json({ username: user.username, email: user.email });
+    } else {
+      res.status(404).json({ error: "User not found" });
+    }
+  } catch (err) {
+    res.json(err);
+  }
+});
+
 app.listen(3001, () => {
   console.log("server running on port 3001");
 });

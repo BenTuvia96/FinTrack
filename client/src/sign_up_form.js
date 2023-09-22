@@ -1,5 +1,3 @@
-// create a sign up form
-// Path: client/src/sign_up_form.js
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./sign_in_and_up_form.css";
@@ -28,7 +26,7 @@ function SignUpForm() {
       })
       .then((response) => {
         console.log(response.data);
-        navigate("/dashboard");
+        navigate("/sign_in_form");
       })
       .catch((error) => {
         console.error("Error during signup:", error);

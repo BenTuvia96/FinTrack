@@ -1,8 +1,19 @@
-import "./Menu.css";
-import { Link } from "react-router-dom";
 import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import "./Menu.css";
 
 function Menu({ theme, toggleTheme }) {
+  const navigate = useNavigate();
+
+  const signOut = () => {
+    // Remove token from local storage
+    localStorage.removeItem("token");
+
+    // Optionally, clear any user-specific state data here
+
+    navigate("/");
+  };
+
   return (
     <div className={`side-menu ${theme}`}>
       <label className="icon">
@@ -11,7 +22,7 @@ function Menu({ theme, toggleTheme }) {
       <nav>
         <ul>
           <li>
-            <i class="material-icons">person</i>Profile
+            <i className="material-icons">person</i>Profile
           </li>
           <Link to="/dashboard">
             <li>
@@ -19,7 +30,7 @@ function Menu({ theme, toggleTheme }) {
             </li>
           </Link>
           <li>
-            <i class="material-icons">search</i>Search
+            <i className="material-icons">search</i>Search
           </li>
           <li onClick={toggleTheme}>
             <i className="material-icons">
@@ -28,10 +39,10 @@ function Menu({ theme, toggleTheme }) {
             Toggle Theme
           </li>
           <li>
-            <i class="material-icons">settings</i>Settings
+            <i className="material-icons">settings</i>Settings
           </li>
-          <li>
-            <i class="material-icons">logout</i>Sign Out
+          <li onClick={signOut}>
+            <i className="material-icons">logout</i>Sign Out
           </li>{" "}
         </ul>
       </nav>

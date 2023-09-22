@@ -16,7 +16,36 @@ class Dashboard extends Component {
     showIncomeInput: false,
     transactionsVersion: 0,
     selectedKind: "outcome",
+    user: {
+      username: null,
+      email: null,
+    },
   };
+
+  componentDidMount() {
+    // Assuming you store the token in localStorage after login
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      fetch("/getUserDetails", {
+        headers: {
+          Authorization: token,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.username) {
+            this.setState({
+              user: {
+                username: data.username,
+                email: data.email,
+              },
+            });
+          }
+        })
+        .catch((error) => console.error("Error fetching user details:", error));
+    }
+  }
 
   toggleOutcomeInput = () => {
     this.setState((prevState) => ({
@@ -61,7 +90,7 @@ class Dashboard extends Component {
     return (
       <div className={`dashboard_page_container ${theme}`}>
         <TopBar />
-        <h2>hello {userName}</h2>
+        <h2>hello {this.state.user.username || "dude"}</h2>
         <div className="dashboard-container">
           <div className="doughnut-container">
             <DoughnutChart
