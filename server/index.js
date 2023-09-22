@@ -24,14 +24,41 @@ app.get("/getUsers", async (req, res) => {
 });
 
 app.post("/addUser", async (req, res) => {
+  const { username, email, password } = req.body;
+  // Check if the username already exists in the database
+  const existingUser = await UserModels.findOne({ username });
+
+  if (existingUser) {
+    // Username already exists, send an error response
+    return res.status(400).json({ error: "Username already in use" });
+  }
+
   try {
     const newUser = new UserModels({
-      username: req.body.username,
-      email: req.body.email,
-      password: req.body.password,
+      username,
+      email,
+      password,
     });
     await newUser.save();
-    res.json(newUser);
+    res.status(201).json(newUser);
+  } catch (err) {
+    res.status(500).json({ error: "Error while adding user" });
+  }
+});
+
+app.post("/checkUsername", async (req, res) => {
+  try {
+    const existingUser = await UserModels.findOne({
+      username: req.body.username,
+    });
+
+    if (existingUser) {
+      // Username is already in use
+      res.json({ error: "Username is already taken" });
+    } else {
+      // Username is available
+      res.json({ success: true });
+    }
   } catch (err) {
     res.json(err);
   }

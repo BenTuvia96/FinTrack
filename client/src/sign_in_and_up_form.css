@@ -33,6 +33,7 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 15px;
+  position: relative;
 }
 
 /* Styles for labels */
@@ -80,4 +81,24 @@ body.dark .form_group input {
 body.dark .form_container {
   background-color: rgba(255, 255, 255, 0.7);
   color: black;
+}
+
+/* CSS for the validation messages */
+/* Style for the validation message container */
+.validation_message {
+  position: absolute;
+  top: -20px; /* Adjust the distance from the input */
+  right: 0;
+  background-color: rgba(255, 255, 255, 0.7);
+  border: 1px solid #080707; /* Border for the message box */
+  padding: 4px 8px; /* Padding for the message box */
+  border-radius: 4px; /* Rounded corners */
+  color: red; /* Text color for error messages */
+  font-size: 0.6rem; /* Font size for small messages */
+  display: none;
+}
+
+/* Style to show the validation message when needed */
+.validation_message.show {
+  display: block;
 }

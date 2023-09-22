@@ -19,8 +19,7 @@
   grid-area: 2 / 3 / 3 / 3;
 }
 
-.input-form-container
-{
+.input-form-container {
   grid-area: 1 / 2 / 2 / 3;
 }
 

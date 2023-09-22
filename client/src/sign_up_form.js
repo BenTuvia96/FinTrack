@@ -11,6 +11,9 @@ function SignUpForm() {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [usernameError, setUsernameError] = useState("");
 
   const navigate = useNavigate();
 
@@ -32,6 +35,40 @@ function SignUpForm() {
       });
   };
 
+  const validateEmail = () => {
+    if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(email)) {
+      setEmailError("Invalid email");
+    } else {
+      setEmailError(""); // Clear the error when email is valid
+    }
+  };
+
+  const validatePassword = () => {
+    if (password.length < 6) {
+      setPasswordError("at least 6 characters required");
+    } else {
+      setPasswordError(""); // Clear the error when password is valid
+    }
+  };
+
+  const validateUsername = async () => {
+    try {
+      const response = await axios.post("http://localhost:3001/checkUsername", {
+        username: username,
+      });
+
+      if (response.data.error) {
+        // Username is already in use
+        setUsernameError("Username is already taken");
+      } else {
+        // Username is available
+        setUsernameError("");
+      }
+    } catch (error) {
+      console.error("Error during username validation:", error);
+    }
+  };
+
   return (
     <div className="page_container">
       <TopBar />
@@ -46,7 +83,12 @@ function SignUpForm() {
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              onBlur={validateEmail} // Add onBlur event
+              required
             />
+            <div className={`validation_message ${emailError ? "show" : ""}`}>
+              {emailError}
+            </div>
           </div>
           <div className="form_group">
             <label htmlFor="password">Password:</label>
@@ -55,16 +97,29 @@ function SignUpForm() {
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              onBlur={validatePassword} // Add onBlur event
+              minLength="6"
             />
+            <div
+              className={`validation_message ${passwordError ? "show" : ""}`}
+            >
+              {passwordError}
+            </div>
           </div>
           <div className="form_group">
             <label htmlFor="username">Username:</label>
             <input
-              type="username" //TODO: make verification suit DB verificaion (verify if username is taken)
+              type="username"
               id="username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
+              onBlur={validateUsername} // Add onBlur event for username validation
             />
+            <div
+              className={`validation_message ${usernameError ? "show" : ""}`}
+            >
+              {usernameError}
+            </div>
           </div>
           <button className="button" type="submit">
             Sign Up!
