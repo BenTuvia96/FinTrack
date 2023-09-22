@@ -1,15 +1,33 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./sign_in_and_up_form.css";
 import TopBar from "./top_bar";
+import axios from "axios";
 
 function SignInForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle sign-in logic here (e.g., call an API)
+
+    axios
+      .post("http://localhost:3001/login", {
+        email: email,
+        password: password,
+      })
+      .then((response) => {
+        // Store the JWT token in local storage or a cookie
+        localStorage.setItem("token", response.data.token);
+
+        // Navigate to the dashboard or another protected route
+        navigate("/dashboard");
+      })
+      .catch((error) => {
+        console.error("Error during sign-in:", error);
+        // Handle any errors, such as displaying a message to the user
+      });
   };
 
   return (

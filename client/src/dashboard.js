@@ -55,11 +55,13 @@ class Dashboard extends Component {
   };
 
   render() {
+    const userName = "dude";
     const { theme } = this.context;
 
     return (
       <div className={`dashboard_page_container ${theme}`}>
         <TopBar />
+        <h2>hello {userName}</h2>
         <div className="dashboard-container">
           <div className="doughnut-container">
             <DoughnutChart

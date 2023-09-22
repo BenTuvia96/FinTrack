@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const BalancesSchema = new mongoose.Schema({
   user_id: {
+    //TODO: change to Users.user_id
     type: String,
     required: [true, "Please enter a user id"],
   },

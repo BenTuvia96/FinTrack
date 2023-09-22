@@ -5,6 +5,7 @@ const UserModels = require("./models/Users");
 const TransactionsModels = require("./models/Transactions");
 const { BalancesModels, updateBalance } = require("./models/Balances");
 const cors = require("cors");
+require("dotenv").config();
 
 app.use(express.json());
 app.use(cors());
@@ -32,27 +33,55 @@ app.get("/getTransactions", async (req, res) => {
   }
 });
 
+const bcrypt = require("bcryptjs");
+
 app.post("/addUser", async (req, res) => {
   const { username, email, password } = req.body;
-  // Check if the username already exists in the database
   const existingUser = await UserModels.findOne({ username });
 
   if (existingUser) {
-    // Username already exists, send an error response
     return res.status(400).json({ error: "Username already in use" });
   }
+
+  // Hash the password
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(password, salt);
 
   try {
     const newUser = new UserModels({
       username,
       email,
-      password,
+      password: hashedPassword, // Store the hashed password
     });
     await newUser.save();
     res.status(201).json(newUser);
   } catch (err) {
     res.status(500).json({ error: "Error while adding user" });
   }
+});
+
+const jwt = require("jsonwebtoken");
+
+app.post("/login", async (req, res) => {
+  const { email, password } = req.body; // Use email instead of username
+  const user = await UserModels.findOne({ email }); // Find user by email
+
+  if (!user) {
+    return res.status(400).json({ error: "Invalid email or password" });
+  }
+
+  // Check password
+  const validPassword = await bcrypt.compare(password, user.password);
+  if (!validPassword) {
+    return res.status(400).json({ error: "Invalid email or password" });
+  }
+
+  // Create a JWT
+  const token = jwt.sign({ id: user._id }, process.env.SECRET_KEY, {
+    expiresIn: "1h",
+  });
+
+  res.json({ token });
 });
 
 app.post("/checkUsername", async (req, res) => {
@@ -187,6 +216,19 @@ app.get("/getYearlyBalance/:userId/:year", async (req, res) => {
     res.json(err);
   }
 });
+
+function verifyToken(req, res, next) {
+  const token = req.header("Authorization");
+  if (!token) return res.status(401).json({ error: "Access Denied" });
+
+  try {
+    const verified = jwt.verify(token, process.env.SECRET_KEY);
+    req.user = verified;
+    next();
+  } catch (err) {
+    res.status(400).json({ error: "Invalid Token" });
+  }
+}
 
 app.listen(3001, () => {
   console.log("server running on port 3001");
