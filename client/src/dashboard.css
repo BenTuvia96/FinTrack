@@ -165,7 +165,6 @@ div.income-and-outcome-buttons-container
 }
 
 .dashboard_page_container.dark .toggle.income .round {
-  left: calc(3.3vw + 31px); /* reduced from 11vw */
   background: linear-gradient(145deg, #4cbe4c, #037502);
 }
 
