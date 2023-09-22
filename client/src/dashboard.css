@@ -43,11 +43,11 @@
 }
 
 .income-button-container {
-  grid-area: 1 / 1 / 3 / 2;
+  grid-area: 1 / 2 / 3 / 3;
 }
 
 .outcome-button-container {
-  grid-area: 1 / 2 / 3 / 3;
+  grid-area: 1 / 1 / 3 / 2;
 }
 
 /* General style for both buttons */
@@ -109,6 +109,81 @@ div.income-and-outcome-buttons-container
   color: rgba(168, 71, 71);
 }
 
+/* toggle button CSS */
+.toggle-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  margin-left: 10px;
+  height: 20%;
+}
+
+.toggle {
+  position: relative;
+  display: block;
+  width: calc(5vw + 60px); /* reduced from 18vw */
+  height: calc(2.1vw + 20px); /* reduced from 7vw */
+  border: none;
+  border-radius: 160px;
+  background: #ffffff;
+  box-shadow: inset 0.5em 0.5em 1em #d9d9d9, inset -0.5em -0.5em 1em #f5f5f5;
+  cursor: pointer;
+  transition: background-color 0.5s ease;
+}
+
+.toggle .icons {
+  width: 100%;
+  display: inline-flex;
+  justify-content: space-around;
+  font-size: calc(0.75vw + 15px); /* reduced from 2.5vw */
+  opacity: 0.5;
+  transition: all 0.5s ease;
+}
+
+.toggle .round {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: calc(0.75vw + 15px); /* reduced from 2.5vw */
+  position: absolute;
+  top: 0;
+  left: calc(0.03vw + 3px); /* reduced from 0.1vw */
+  width: calc(2.1vw + 20px); /* reduced from 7vw */
+  height: calc(2.1vw + 20px); /* reduced from 7vw */
+  transform: scale(0.9);
+  border-radius: 50%;
+  color: #ffffff;
+  background: linear-gradient(145deg, #ff7f7f, #ff4c4c);
+  box-shadow: 0.2em 0.2em 0.5em #f0f0f0, -0.2em -0.2em 0.5em #f5f5f5;
+  transition: all 0.5s ease;
+}
+
+.toggle.income .round {
+  left: calc(3.3vw + 31px); /* reduced from 11vw */
+  background: linear-gradient(145deg, #7fff7f, #4cff4c);
+}
+
+.dashboard_page_container.dark .toggle.income .round {
+  background: linear-gradient(145deg, #4cbe4c, #037502);
+}
+
+.dashboard_page_container.dark .toggle .round {
+  background: linear-gradient(145deg, #c67575, #c12b2b);
+}
+
+/* Dark theme - Adjusting toggle button colors */
+.dashboard_page_container.dark .toggle {
+  background-color: #4f504f6e;
+  box-shadow: inset 0.5em 0.5em 1em #71717160, inset -0.5em -0.5em 1em #4e4e4e70;
+  color: white;
+}
+
+/* Dark theme - Adjusting toggle.round colors */
+.dashboard_page_container.dark .toggle .round {
+  box-shadow: 0.2em 0.2em 0.5em #b8b8b89a, -0.2em -0.2em 0.5em #b6b6b673;
+}
+
 /* Dark theme - Adjusting income button colors */
 .dashboard_page_container.dark .income-button-container button {
   color: rgb(48, 171, 48); /* Bright green for dark mode */
@@ -127,4 +202,17 @@ div.income-and-outcome-buttons-container
 
 .dashboard_page_container.dark .add-outcome-text {
   color: rgb(168, 84, 84); /* Bright red for dark mode */
+}
+
+.round {
+  transition: opacity 0.5s;
+  position: absolute;
+}
+
+.show {
+  opacity: 1;
+}
+
+.hide {
+  opacity: 0;
 }

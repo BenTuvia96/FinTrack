@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import ThemeContext from "../ThemeContext";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
@@ -23,29 +23,59 @@ const dark_theme_colors = [
   "rgba(255, 159, 64, 0.75)",
 ];
 
-export function DoughnutChart() {
+export function DoughnutChart({ transactionsVersion, kind }) {
   const { theme } = useContext(ThemeContext);
 
-  const data = {
-    labels: ["food", "rent", "bills", "entertainment", "other", "savings"],
-    datasets: [
-      {
-        label: "amount spent in $",
-        data: [12, 19, 3, 5, 2, 3],
-        backgroundColor:
-          theme === "light" ? light_theme_colors : dark_theme_colors,
-        borderColor: [
-          "rgba(255, 99, 132, 1)",
-          "rgba(54, 162, 235, 1)",
-          "rgba(255, 206, 86, 1)",
-          "rgba(75, 192, 192, 1)",
-          "rgba(153, 102, 255, 1)",
-          "rgba(255, 159, 64, 1)",
-        ],
-        borderWidth: 1,
-      },
-    ],
-  };
+  // State for the fetched data
+  const [chartData, setChartData] = useState({ labels: [], datasets: [] });
+
+  useEffect(() => {
+    // Fetch data from the server
+    fetch("/getTransactions")
+      .then((response) => response.json())
+      .then((transactions) => {
+        // Filter out only 'outcome' or transactions
+        const displayedTransactions =
+          kind === "outcome"
+            ? transactions.filter(
+                (transaction) => transaction.kind === "outcome"
+              )
+            : transactions.filter(
+                (transaction) => transaction.kind === "income"
+              );
+
+        // Create an object to tally amounts by category
+        let amountsByCategory = {};
+        displayedTransactions.forEach((transaction) => {
+          if (!amountsByCategory[transaction.category]) {
+            amountsByCategory[transaction.category] = 0;
+          }
+          amountsByCategory[transaction.category] += transaction.amount;
+        });
+
+        // Prepare the data in the format needed by the Doughnut chart
+        setChartData({
+          labels: Object.keys(amountsByCategory),
+          datasets: [
+            {
+              label: kind === "outcome" ? "amount spent" : "amount earned",
+              data: Object.values(amountsByCategory),
+              backgroundColor:
+                theme === "light" ? light_theme_colors : dark_theme_colors,
+              borderColor: [
+                "rgba(255, 99, 132, 1)",
+                "rgba(54, 162, 235, 1)",
+                "rgba(255, 206, 86, 1)",
+                "rgba(75, 192, 192, 1)",
+                "rgba(153, 102, 255, 1)",
+                "rgba(255, 159, 64, 1)",
+              ],
+              borderWidth: 1,
+            },
+          ],
+        });
+      });
+  }, [theme, transactionsVersion, kind]);
 
   const options = {
     responsive: true,
@@ -58,7 +88,7 @@ export function DoughnutChart() {
       },
       title: {
         display: true,
-        text: "Expenses by Category",
+        text: kind === "outcome" ? "Expense by Category" : "Income by Category",
         color: theme === "dark" ? "white" : "black",
       },
       tooltip: {
@@ -69,5 +99,5 @@ export function DoughnutChart() {
     },
   };
 
-  return <Doughnut options={options} data={data} />;
+  return <Doughnut options={options} data={chartData} />;
 }

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import "./add_expanse.css";
+import "./add_income_or_expense_form.css";
 
 class AddExpense extends Component {
   state = {
@@ -37,6 +37,17 @@ class AddExpense extends Component {
     this.setState({ note: event.target.value });
   };
 
+  resetForm = () => {
+    const currentDate = new Date().toISOString().substr(0, 10);
+    this.setState({
+      amount: "",
+      hasEnteredAmount: false,
+      selectedCategory: "",
+      selectedDate: currentDate,
+      note: "",
+    });
+  };
+
   handleFinalSubmit = (event) => {
     event.preventDefault();
 
@@ -53,18 +64,21 @@ class AddExpense extends Component {
       })
       .then((response) => {
         console.log(response.data);
+        this.resetForm();
+        this.props.onFormSubmit && this.props.onFormSubmit();
       })
       .catch((error) => {
         console.error("Error during expense addition:", error);
       });
   };
 
+  // TODO: add back button to go back to the previous form
   render() {
     const { amount, hasEnteredAmount, selectedCategory, selectedDate, note } =
       this.state;
 
     return (
-      <div className="add-expense-container">
+      <div className="income-outcome-form-container">
         {hasEnteredAmount ? (
           <>
             <h2>Choose a Category</h2>
@@ -72,9 +86,11 @@ class AddExpense extends Component {
               <label>
                 Category:
                 <select
+                  className="category-selector"
                   value={selectedCategory}
                   onChange={this.handleCategoryChange}
                 >
+                  <option value=""></option>
                   <option value="food">Food</option>
                   <option value="transportation">Transportation</option>
                   <option value="entertainment">Entertainment</option>
@@ -116,7 +132,7 @@ class AddExpense extends Component {
                   onChange={this.handleAmountChange}
                 />
               </label>
-              <button type="submit">Next</button>
+              <button type="submit"> Next</button>
             </form>
           </>
         )}

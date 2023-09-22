@@ -1,17 +1,21 @@
-import React, { Component, useContext } from "react";
+import React, { Component } from "react";
 import ThemeContext from "./ThemeContext";
 import TopBar from "./top_bar";
 import { DoughnutChart } from "./dashboard_components/doughnut_chart.jsx";
 import { BarChart } from "./dashboard_components/bar_chart";
 import { AreaChart } from "./dashboard_components/area_chart";
-import OutcomeInput from "./dashboard_components/add_expanse";
-import IncomeInput from "./dashboard_components/add_income"; // Create a component for income input
+import { YearlyComparisonChart } from "./dashboard_components/yearly_comparison_chart";
+
+import OutcomeInput from "./dashboard_components/add_expense";
+import IncomeInput from "./dashboard_components/add_income";
 import "./dashboard.css";
 
 class Dashboard extends Component {
   state = {
     showOutcomeInput: false,
     showIncomeInput: false,
+    transactionsVersion: 0,
+    selectedKind: "outcome",
   };
 
   toggleOutcomeInput = () => {
@@ -28,7 +32,27 @@ class Dashboard extends Component {
     }));
   };
 
+  handleOutcomeFormSubmission = () => {
+    this.toggleOutcomeInput();
+    this.setState((prevState) => ({
+      transactionsVersion: prevState.transactionsVersion + 1,
+    }));
+  };
+
+  handleIncomeFormSubmission = () => {
+    this.toggleIncomeInput();
+    this.setState((prevState) => ({
+      transactionsVersion: prevState.transactionsVersion + 1,
+    }));
+  };
+
   static contextType = ThemeContext;
+
+  handleToggleClick = () => {
+    this.setState((prevState) => ({
+      selectedKind: prevState.selectedKind === "income" ? "outcome" : "income",
+    }));
+  };
 
   render() {
     const { theme } = this.context;
@@ -38,17 +62,53 @@ class Dashboard extends Component {
         <TopBar />
         <div className="dashboard-container">
           <div className="doughnut-container">
-            <DoughnutChart />
+            <DoughnutChart
+              transactionsVersion={this.state.transactionsVersion}
+              kind={this.state.selectedKind}
+            />
+            <div className="toggle-container">
+              <button
+                className={`toggle ${
+                  this.state.selectedKind === "income" ? "income" : "outcome"
+                }`}
+                onClick={this.handleToggleClick}
+              >
+                <div className="icons">
+                  <i className="material-icons">remove</i>
+                  <i className="material-icons">add</i>
+                </div>
+                <i
+                  className={`material-icons round ${
+                    this.state.selectedKind === "income" ? "show" : "hide"
+                  }`}
+                >
+                  add
+                </i>
+                <i
+                  className={`material-icons round ${
+                    this.state.selectedKind === "income" ? "hide" : "show"
+                  }`}
+                >
+                  remove
+                </i>
+              </button>
+            </div>
           </div>
           <div className="bar-container">
-            <BarChart />
+            <BarChart transactionsVersion={this.state.transactionsVersion} />
           </div>
           <div className="area-container">
-            <AreaChart />
+            <YearlyComparisonChart
+              transactionsVersion={this.state.transactionsVersion}
+            />
           </div>
           <div className="input-form-container">
-            {this.state.showOutcomeInput && <OutcomeInput />}
-            {this.state.showIncomeInput && <IncomeInput />}
+            {this.state.showOutcomeInput && (
+              <OutcomeInput onFormSubmit={this.handleOutcomeFormSubmission} />
+            )}
+            {this.state.showIncomeInput && (
+              <IncomeInput onFormSubmit={this.handleIncomeFormSubmission} />
+            )}
           </div>
           <div className="income-and-outcome-buttons-container">
             <div className="income-button-container">
