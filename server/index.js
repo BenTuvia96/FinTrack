@@ -24,9 +24,21 @@ app.get("/getUsers", async (req, res) => {
   }
 });
 
-app.get("/getTransactions", async (req, res) => {
+app.get("/getTransactions/:userId", async (req, res) => {
   try {
-    const transactions = await TransactionsModels.find({});
+    let filter = {
+      user_id: req.params.userId,
+    };
+
+    // Optionally filter by date range (startDate and endDate should be in the format 'YYYY-MM-DD')
+    if (req.query.startDate && req.query.endDate) {
+      filter.date = {
+        $gte: new Date(req.query.startDate),
+        $lte: new Date(req.query.endDate),
+      };
+    }
+
+    const transactions = await TransactionsModels.find(filter);
     res.json(transactions);
   } catch (err) {
     res.json(err);

@@ -23,7 +23,7 @@ const dark_theme_colors = [
   "rgba(255, 159, 64, 0.75)",
 ];
 
-export function DoughnutChart({ transactionsVersion, kind }) {
+export function DoughnutChart({ transactionsVersion, kind, userID }) {
   const { theme } = useContext(ThemeContext);
 
   // State for the fetched data
@@ -31,7 +31,7 @@ export function DoughnutChart({ transactionsVersion, kind }) {
 
   useEffect(() => {
     // Fetch data from the server
-    fetch("/getTransactions")
+    fetch(`/getTransactions/${userID}`)
       .then((response) => response.json())
       .then((transactions) => {
         // Filter out only 'outcome' or transactions

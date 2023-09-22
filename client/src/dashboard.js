@@ -5,7 +5,7 @@ import { DoughnutChart } from "./dashboard_components/doughnut_chart.jsx";
 import { BarChart } from "./dashboard_components/bar_chart";
 import { AreaChart } from "./dashboard_components/area_chart";
 import { YearlyComparisonChart } from "./dashboard_components/yearly_comparison_chart";
-
+import jwtDecode from "jwt-decode";
 import OutcomeInput from "./dashboard_components/add_expense";
 import IncomeInput from "./dashboard_components/add_income";
 import "./dashboard.css";
@@ -17,6 +17,7 @@ class Dashboard extends Component {
     transactionsVersion: 0,
     selectedKind: "outcome",
     user: {
+      userID: null,
       username: null,
       email: null,
     },
@@ -27,6 +28,9 @@ class Dashboard extends Component {
     const token = localStorage.getItem("token");
 
     if (token) {
+      const decoded = jwtDecode(token);
+      this.setState({ userID: decoded.id });
+
       fetch("/getUserDetails", {
         headers: {
           Authorization: token,
@@ -94,6 +98,7 @@ class Dashboard extends Component {
         <div className="dashboard-container">
           <div className="doughnut-container">
             <DoughnutChart
+              userID={this.state.userID}
               transactionsVersion={this.state.transactionsVersion}
               kind={this.state.selectedKind}
             />
