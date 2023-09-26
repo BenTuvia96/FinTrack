@@ -46,23 +46,25 @@ const dark_theme_colors = {
   outcome: "rgba(53, 162, 235, 0.9)",
 };
 
-export function BarChart({ transactionsVersion }) {
+export function BarChart({ userID, transactionsVersion }) {
   const { theme } = useContext(ThemeContext);
   const [chartData, setChartData] = useState(null);
 
   useEffect(() => {
-    const fetchChartData = async () => {
-      // Extract the current year
-      const currentYear = new Date().getFullYear();
+    if (userID) {
+      const fetchChartData = async () => {
+        // Extract the current year
+        const currentYear = new Date().getFullYear();
 
-      const response = await axios.get(
-        `/getMonthlyBalances/65087d99df86740bb4873eb8/${currentYear}`
-      );
-      setChartData(response.data);
-    };
+        const response = await axios.get(
+          `/getMonthlyBalances/${userID}/${currentYear}`
+        );
+        setChartData(response.data);
+      };
 
-    fetchChartData();
-  }, [transactionsVersion]);
+      fetchChartData();
+    }
+  }, [transactionsVersion, userID]);
 
   if (!chartData) {
     return null; // or you can return a loader or some placeholder content

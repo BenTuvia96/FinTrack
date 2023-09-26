@@ -30,52 +30,57 @@ export function DoughnutChart({ transactionsVersion, kind, userID }) {
   const [chartData, setChartData] = useState({ labels: [], datasets: [] });
 
   useEffect(() => {
-    // Fetch data from the server
-    fetch(`/getTransactions/${userID}`)
-      .then((response) => response.json())
-      .then((transactions) => {
-        // Filter out only 'outcome' or transactions
-        const displayedTransactions =
-          kind === "outcome"
-            ? transactions.filter(
-                (transaction) => transaction.kind === "outcome"
-              )
-            : transactions.filter(
-                (transaction) => transaction.kind === "income"
-              );
+    if (userID) {
+      // Check for truthy value, so if it's not null, undefined, etc.
+      // Fetch data from the server
+      fetch(`/getTransactions/${userID}`)
+        .then((response) => response.json())
+        .then((transactions) => {
+          console.log("Received transactions:", transactions);
 
-        // Create an object to tally amounts by category
-        let amountsByCategory = {};
-        displayedTransactions.forEach((transaction) => {
-          if (!amountsByCategory[transaction.category]) {
-            amountsByCategory[transaction.category] = 0;
-          }
-          amountsByCategory[transaction.category] += transaction.amount;
-        });
+          // Filter out only 'outcome' or 'income' transactions
+          const displayedTransactions =
+            kind === "outcome"
+              ? transactions.filter(
+                  (transaction) => transaction.kind === "outcome"
+                )
+              : transactions.filter(
+                  (transaction) => transaction.kind === "income"
+                );
 
-        // Prepare the data in the format needed by the Doughnut chart
-        setChartData({
-          labels: Object.keys(amountsByCategory),
-          datasets: [
-            {
-              label: kind === "outcome" ? "amount spent" : "amount earned",
-              data: Object.values(amountsByCategory),
-              backgroundColor:
-                theme === "light" ? light_theme_colors : dark_theme_colors,
-              borderColor: [
-                "rgba(255, 99, 132, 1)",
-                "rgba(54, 162, 235, 1)",
-                "rgba(255, 206, 86, 1)",
-                "rgba(75, 192, 192, 1)",
-                "rgba(153, 102, 255, 1)",
-                "rgba(255, 159, 64, 1)",
-              ],
-              borderWidth: 1,
-            },
-          ],
+          // Create an object to tally amounts by category
+          let amountsByCategory = {};
+          displayedTransactions.forEach((transaction) => {
+            if (!amountsByCategory[transaction.category]) {
+              amountsByCategory[transaction.category] = 0;
+            }
+            amountsByCategory[transaction.category] += transaction.amount;
+          });
+
+          // Prepare the data in the format needed by the Doughnut chart
+          setChartData({
+            labels: Object.keys(amountsByCategory),
+            datasets: [
+              {
+                label: kind === "outcome" ? "amount spent" : "amount earned",
+                data: Object.values(amountsByCategory),
+                backgroundColor:
+                  theme === "light" ? light_theme_colors : dark_theme_colors,
+                borderColor: [
+                  "rgba(255, 99, 132, 1)",
+                  "rgba(54, 162, 235, 1)",
+                  "rgba(255, 206, 86, 1)",
+                  "rgba(75, 192, 192, 1)",
+                  "rgba(153, 102, 255, 1)",
+                  "rgba(255, 159, 64, 1)",
+                ],
+                borderWidth: 1,
+              },
+            ],
+          });
         });
-      });
-  }, [theme, transactionsVersion, kind]);
+    }
+  }, [theme, transactionsVersion, kind, userID]);
 
   const options = {
     responsive: true,

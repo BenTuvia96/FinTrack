@@ -4,7 +4,6 @@ import TopBar from "./top_bar";
 import { DoughnutChart } from "./dashboard_components/doughnut_chart.jsx";
 import { BarChart } from "./dashboard_components/bar_chart";
 import { AreaChart } from "./dashboard_components/area_chart";
-import { YearlyComparisonChart } from "./dashboard_components/yearly_comparison_chart";
 import jwtDecode from "jwt-decode";
 import OutcomeInput from "./dashboard_components/add_expense";
 import IncomeInput from "./dashboard_components/add_income";
@@ -88,6 +87,8 @@ class Dashboard extends Component {
   };
 
   render() {
+    console.log("Dashboard rendered with userID:", this.state.userID);
+
     const userName = "dude";
     const { theme } = this.context;
 
@@ -131,19 +132,29 @@ class Dashboard extends Component {
             </div>
           </div>
           <div className="bar-container">
-            <BarChart transactionsVersion={this.state.transactionsVersion} />
+            <BarChart
+              userID={this.state.userID}
+              transactionsVersion={this.state.transactionsVersion}
+            />
           </div>
           <div className="area-container">
-            <YearlyComparisonChart
+            <AreaChart
+              userID={this.state.userID}
               transactionsVersion={this.state.transactionsVersion}
             />
           </div>
           <div className="input-form-container">
             {this.state.showOutcomeInput && (
-              <OutcomeInput onFormSubmit={this.handleOutcomeFormSubmission} />
+              <OutcomeInput
+                userID={this.state.userID}
+                onFormSubmit={this.handleOutcomeFormSubmission}
+              />
             )}
             {this.state.showIncomeInput && (
-              <IncomeInput onFormSubmit={this.handleIncomeFormSubmission} />
+              <IncomeInput
+                userID={this.state.userID}
+                onFormSubmit={this.handleIncomeFormSubmission}
+              />
             )}
           </div>
           <div className="income-and-outcome-buttons-container">

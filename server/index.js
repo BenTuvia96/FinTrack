@@ -10,10 +10,7 @@ require("dotenv").config();
 app.use(express.json());
 app.use(cors());
 
-mongoose.connect(
-  "mongodb+srv://shaked:Aa123456@fintrack0.njassft.mongodb.net/FinTrack?retryWrites=true&w=majority",
-  {}
-);
+mongoose.connect(process.env.MONGODB_URI, {});
 
 app.get("/getUsers", async (req, res) => {
   try {
