@@ -1,23 +1,28 @@
-import ThemeContext from "../ThemeContext";
 import React, { useContext, useState, useEffect } from "react";
+import ThemeContext from "../ThemeContext";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Filler,
+  Legend,
+} from "chart.js";
 import { Line } from "react-chartjs-2";
 import axios from "axios";
-import {
-  Chart,
-  LineController,
-  LineElement,
-  PointElement,
-  LinearScale,
-  CategoryScale,
-} from "chart.js";
 
-// Register the necessary elements and controllers with Chart.js
-Chart.register(
-  LineController,
-  LineElement,
-  PointElement,
+ChartJS.register(
+  CategoryScale,
   LinearScale,
-  CategoryScale
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Filler,
+  Legend
 );
 
 const labels = [
@@ -36,26 +41,13 @@ const labels = [
 ];
 
 const light_colors = {
-  // create two options for two lines
-  first_line: {
-    borderColor: "rgb(53, 162, 235)",
-    backgroundColor: "rgba(53, 162, 235, 0.5)",
-  },
-  second_line: {
-    borderColor: "rgb(255, 99, 132)",
-    backgroundColor: "rgba(255, 99, 132, 0.5)",
-  },
+  borderColor: "rgb(53, 162, 235)",
+  backgroundColor: "rgba(53, 162, 235, 0.5)",
 };
 
 const dark_colors = {
-  first_line: {
-    borderColor: "rgb(53, 162, 235)",
-    backgroundColor: "rgba(53, 162, 235, 0.5)",
-  },
-  second_line: {
-    borderColor: "rgb(255, 99, 132)",
-    backgroundColor: "rgba(255, 99, 132, 0.8)",
-  },
+  borderColor: "rgb(53, 162, 235)",
+  backgroundColor: "rgba(53, 162, 235, 0.8)",
 };
 
 export function AreaChart({ userID, transactionsVersion }) {
@@ -66,63 +58,41 @@ export function AreaChart({ userID, transactionsVersion }) {
     if (userID) {
       const fetchChartData = async () => {
         const currentYear = new Date().getFullYear();
+
         const response = await axios.get(
-          `/getYearlyComparisonBalances/${userID}/${currentYear}`
+          `/getMonthlyBalances/${userID}/${currentYear}`
         );
         setChartData(response.data);
       };
 
       fetchChartData();
     }
-  }, [transactionsVersion, userID]);
+  }, [userID, transactionsVersion]);
 
   if (!chartData) {
     return null;
   }
 
-  // Extract data for current and previous years
-  const currentYearBalance = labels.map((_, index) => {
-    const monthData = chartData.currentYear.find(
-      (entry) => entry.month === index
-    );
-    return monthData ? monthData.balance : 0;
-  });
-
-  const previousYearBalance = labels.map((_, index) => {
-    const monthData = chartData.previousYear.find(
-      (entry) => entry.month === index
-    );
-    return monthData ? monthData.balance : 0;
+  const balanceData = labels.map((_, index) => {
+    const monthData = chartData.find((entry) => entry.month === index);
+    return monthData ? monthData.balance : 0; // Use the balance if monthData exists, otherwise default to 0
   });
 
   const data = {
     labels,
     datasets: [
       {
-        label: `Balance ${new Date().getFullYear()}`,
-        data: currentYearBalance,
+        fill: true,
+        label: "Monthly Balance",
+        data: balanceData,
         borderColor:
           theme === "light"
-            ? light_colors.first_line.borderColor
-            : dark_colors.first_line.borderColor,
+            ? light_colors.borderColor
+            : dark_colors.borderColor,
         backgroundColor:
           theme === "light"
-            ? light_colors.first_line.backgroundColor
-            : dark_colors.first_line.backgroundColor,
-        fill: true,
-      },
-      {
-        label: `Balance ${new Date().getFullYear() - 1}`,
-        data: previousYearBalance,
-        borderColor:
-          theme === "light"
-            ? light_colors.second_line.borderColor
-            : dark_colors.second_line.borderColor,
-        backgroundColor:
-          theme === "light"
-            ? light_colors.second_line.backgroundColor
-            : dark_colors.second_line.backgroundColor,
-        fill: true,
+            ? light_colors.backgroundColor
+            : dark_colors.backgroundColor,
       },
     ],
   };
@@ -138,7 +108,7 @@ export function AreaChart({ userID, transactionsVersion }) {
       },
       title: {
         display: true,
-        text: "Yearly Comparison of Monthly Balance",
+        text: "Monthly Balance by Month",
         color: theme === "dark" ? "white" : "black",
       },
       tooltip: {
@@ -169,5 +139,3 @@ export function AreaChart({ userID, transactionsVersion }) {
 
   return <Line options={options} data={data} />;
 }
-
-export default AreaChart;
