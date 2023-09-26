@@ -10,6 +10,7 @@ import "./App.css";
 import SignInForm from "./sign_in_form";
 import SignUpForm from "./sign_up_form";
 import Dashboard from "./dashboard";
+import Transactions from "./transactions";
 import Menu from "./Menu";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import "./transitions.css";
@@ -69,6 +70,7 @@ function MainContent({ setLocation }) {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/" element={<HomePage />} />
             <Route path="/sign_up_form" element={<SignUpForm />} />
+            <Route path="/transactions" element={<Transactions />} />
           </Routes>
         </CSSTransition>
       </TransitionGroup>

@@ -29,10 +29,12 @@ function Menu({ theme, toggleTheme }) {
               <i className="material-icons">wallet</i>Dashboard
             </li>
           </Link>
-          <li>
-            <i className="material-icons">paid</i>Transactions{" "}
-            {/* TODO: change to transactions page*/}
-          </li>
+          <Link to="/transactions">
+            <li>
+              <i className="material-icons">paid</i>Transactions{" "}
+              {/* TODO: change to transactions page*/}
+            </li>
+          </Link>
           <li onClick={toggleTheme}>
             <i className="material-icons">
               {theme === "dark" ? "brightness_high" : "brightness_low"}
