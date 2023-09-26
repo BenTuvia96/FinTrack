@@ -30,7 +30,8 @@ function Menu({ theme, toggleTheme }) {
             </li>
           </Link>
           <li>
-            <i className="material-icons">search</i>Search
+            <i className="material-icons">paid</i>Transactions{" "}
+            {/* TODO: change to transactions page*/}
           </li>
           <li onClick={toggleTheme}>
             <i className="material-icons">
