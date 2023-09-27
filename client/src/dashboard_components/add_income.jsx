@@ -66,6 +66,7 @@ const AddIncome = (props) => {
     <div className="income-outcome-form-container">
       {hasEnteredAmount ? (
         <>
+          {/* TODO: add category verification */}
           <h2>Choose a Category</h2>
           <form onSubmit={handleFinalSubmit}>
             <label>

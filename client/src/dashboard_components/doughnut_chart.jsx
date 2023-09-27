@@ -81,7 +81,6 @@ export function DoughnutChart({ transactionsVersion, kind, userID }) {
         });
     }
   }, [theme, transactionsVersion, kind, userID]);
-
   const options = {
     responsive: true,
     plugins: {
@@ -93,6 +92,7 @@ export function DoughnutChart({ transactionsVersion, kind, userID }) {
       },
       title: {
         display: true,
+        // TODO: add precentege
         text: kind === "outcome" ? "Expense by Category" : "Income by Category",
         color: theme === "dark" ? "white" : "black",
       },

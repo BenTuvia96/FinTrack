@@ -61,6 +61,7 @@ function SignInForm() {
         <p>
           New to Fin Track? <Link to="/sign_up_form">Sign up now</Link>
         </p>
+        {/* TODO: forgot your password? */}
       </div>
     </div>
   );

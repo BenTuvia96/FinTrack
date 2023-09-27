@@ -1,3 +1,5 @@
+// TODO: Modify to be Stacked Bar Chart
+
 import React, { useContext, useState, useEffect } from "react";
 import ThemeContext from "../ThemeContext";
 import {
