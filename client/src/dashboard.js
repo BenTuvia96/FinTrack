@@ -27,7 +27,7 @@ class Dashboard extends Component {
     const token = localStorage.getItem("token");
 
     if (token) {
-      const decoded = jwtDecode(token);
+      const decoded = jwtDecode(token); //TODO: use new getUserDetails endpoint to decode token on server side
       this.setState({ userID: decoded.id });
 
       fetch("/getUserDetails", {
@@ -89,13 +89,13 @@ class Dashboard extends Component {
   render() {
     console.log("Dashboard rendered with userID:", this.state.userID);
 
-    const userName = "dude";
     const { theme } = this.context;
 
     return (
       <div className={`dashboard_page_container ${theme}`}>
-        <TopBar />
-        <h2>hello {this.state.user.username || "dude"}</h2>
+        <TopBar
+          header={`Dashboard for ${this.state.user.username || "user"}`}
+        />
         <div className="dashboard-container">
           <div className="doughnut-container">
             <DoughnutChart

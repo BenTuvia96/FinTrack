@@ -87,7 +87,7 @@ app.post("/login", async (req, res) => {
 
   // Create a JWT
   const token = jwt.sign({ id: user._id }, process.env.SECRET_KEY, {
-    expiresIn: "1h",
+    expiresIn: "5h",
   });
 
   res.json({ token });
@@ -253,6 +253,80 @@ app.get("/getUserDetails", verifyToken, async (req, res) => {
     }
   } catch (err) {
     res.json(err);
+  }
+});
+
+// DELETE route to delete a specific transaction
+app.delete("/deleteTransaction/:transactionId", async (req, res) => {
+  try {
+    const deletedTransaction = await TransactionsModels.findByIdAndRemove(
+      req.params.transactionId
+    );
+    if (deletedTransaction) {
+      res.json({ success: true, message: "Transaction deleted successfully" });
+    } else {
+      res.status(404).json({ error: "Transaction not found" });
+    }
+  } catch (err) {
+    res.status(500).json({ error: "Error deleting transaction" });
+  }
+});
+
+// PUT route to edit a specific transaction
+app.put("/editTransaction/:transactionId", async (req, res) => {
+  try {
+    // Get the existing transaction
+    const existingTransaction = await TransactionsModels.findById(
+      req.params.transactionId
+    );
+    if (!existingTransaction) {
+      return res.status(404).json({ error: "Transaction not found" });
+    }
+
+    // Extract valid fields to update
+    const { amount, category, date, note, kind } = req.body;
+    const updatedData = {
+      amount: parseFloat(amount),
+      category,
+      date,
+      note,
+      kind,
+    };
+
+    const updatedTransaction = await TransactionsModels.findByIdAndUpdate(
+      req.params.transactionId,
+      updatedData,
+      { new: true }
+    );
+
+    // Update the user's balance if the amount or kind has changed
+    if (
+      amount !== existingTransaction.amount ||
+      kind !== existingTransaction.kind
+    ) {
+      const difference = amount - existingTransaction.amount;
+      if (kind === "income") {
+        // Adjust balance based on the new income amount
+        await updateBalance(
+          existingTransaction.user_id,
+          difference,
+          new Date(date),
+          "income"
+        );
+      } else if (kind === "outcome") {
+        // Adjust balance based on the new expense amount
+        await updateBalance(
+          existingTransaction.user_id,
+          difference,
+          new Date(date),
+          "expense"
+        );
+      }
+    }
+
+    res.json(updatedTransaction);
+  } catch (err) {
+    res.status(500).json({ error: "Error updating transaction" });
   }
 });
 
