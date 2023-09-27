@@ -243,7 +243,11 @@ app.get("/getUserDetails", verifyToken, async (req, res) => {
   try {
     const user = await UserModels.findById(req.user.id);
     if (user) {
-      res.json({ username: user.username, email: user.email });
+      res.json({
+        username: user.username,
+        email: user.email,
+        userID: req.user.id,
+      });
     } else {
       res.status(404).json({ error: "User not found" });
     }
