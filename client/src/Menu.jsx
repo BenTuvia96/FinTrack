@@ -32,7 +32,6 @@ function Menu({ theme, toggleTheme }) {
           <Link to="/transactions">
             <li>
               <i className="material-icons">paid</i>Transactions{" "}
-              {/* TODO: change to transactions page*/}
             </li>
           </Link>
           <li onClick={toggleTheme}>

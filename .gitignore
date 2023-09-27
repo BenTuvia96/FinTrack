@@ -12,6 +12,9 @@ node_modules/
 # production
 **/build/
 
+# VS code files
+/.vscode
+
 # misc
 **/.DS_Store
 **/.env
