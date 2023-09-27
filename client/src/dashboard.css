@@ -66,6 +66,7 @@
 /* Icon specific styles */
 button.material-icons {
   font-size: 80px; /* Adjust size of the icon */
+  cursor: pointer;
 }
 
 /* Styles for income button only */
