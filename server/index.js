@@ -271,11 +271,8 @@ app.delete("/deleteTransaction/:transactionId", async (req, res) => {
     res.status(500).json({ error: "Error deleting transaction" });
   }
 });
-
-// PUT route to edit a specific transaction
 app.put("/editTransaction/:transactionId", async (req, res) => {
   try {
-    // Get the existing transaction
     const existingTransaction = await TransactionsModels.findById(
       req.params.transactionId
     );
@@ -283,12 +280,11 @@ app.put("/editTransaction/:transactionId", async (req, res) => {
       return res.status(404).json({ error: "Transaction not found" });
     }
 
-    // Extract valid fields to update
-    const { amount, category, date, note, kind } = req.body;
+    const { amount, category, note, kind, time } = req.body;
     const updatedData = {
       amount: parseFloat(amount),
       category,
-      date,
+      time,
       note,
       kind,
     };
@@ -299,30 +295,21 @@ app.put("/editTransaction/:transactionId", async (req, res) => {
       { new: true }
     );
 
-    // Update the user's balance if the amount or kind has changed
-    if (
-      amount !== existingTransaction.amount ||
-      kind !== existingTransaction.kind
-    ) {
-      const difference = amount - existingTransaction.amount;
-      if (kind === "income") {
-        // Adjust balance based on the new income amount
-        await updateBalance(
-          existingTransaction.user_id,
-          difference,
-          new Date(date),
-          "income"
-        );
-      } else if (kind === "outcome") {
-        // Adjust balance based on the new expense amount
-        await updateBalance(
-          existingTransaction.user_id,
-          difference,
-          new Date(date),
-          "expense"
-        );
-      }
-    }
+    // Reverse the effects of the original transaction
+    await updateBalance(
+      existingTransaction.user_id,
+      -existingTransaction.amount,
+      new Date(existingTransaction.time),
+      existingTransaction.kind === "income" ? "income" : "expense"
+    );
+
+    // Apply the effects of the updated transaction
+    await updateBalance(
+      updatedTransaction.user_id,
+      updatedTransaction.amount,
+      new Date(updatedTransaction.time),
+      updatedTransaction.kind === "income" ? "income" : "expense"
+    );
 
     res.json(updatedTransaction);
   } catch (err) {

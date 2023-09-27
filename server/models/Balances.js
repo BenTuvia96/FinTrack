@@ -35,8 +35,6 @@ const BalancesSchema = new mongoose.Schema({
 async function updateBalance(userId, amount, date, kind) {
   const year = date.getFullYear();
   const month = date.getMonth();
-
-  // Ensure amount is a number
   const numericAmount = parseFloat(amount);
 
   let balance = await BalancesModels.findOne({
@@ -50,6 +48,8 @@ async function updateBalance(userId, amount, date, kind) {
       user_id: userId,
       year: year,
       month: month,
+      income: 0,
+      outcome: 0,
     });
   }
 
@@ -61,6 +61,7 @@ async function updateBalance(userId, amount, date, kind) {
 
   balance.balance = balance.income - balance.outcome;
   balance.last_updated = Date.now();
+
   await balance.save();
 }
 
