@@ -256,13 +256,20 @@ app.get("/getUserDetails", verifyToken, async (req, res) => {
   }
 });
 
-// DELETE route to delete a specific transaction
 app.delete("/deleteTransaction/:transactionId", async (req, res) => {
   try {
     const deletedTransaction = await TransactionsModels.findByIdAndRemove(
       req.params.transactionId
     );
     if (deletedTransaction) {
+      // Reverse the effects of the deleted transaction
+      await updateBalance(
+        deletedTransaction.user_id,
+        -deletedTransaction.amount, // Negative because we're removing it
+        new Date(deletedTransaction.time),
+        deletedTransaction.kind === "income" ? "income" : "expense"
+      );
+
       res.json({ success: true, message: "Transaction deleted successfully" });
     } else {
       res.status(404).json({ error: "Transaction not found" });
@@ -271,6 +278,7 @@ app.delete("/deleteTransaction/:transactionId", async (req, res) => {
     res.status(500).json({ error: "Error deleting transaction" });
   }
 });
+
 app.put("/editTransaction/:transactionId", async (req, res) => {
   try {
     const existingTransaction = await TransactionsModels.findById(
