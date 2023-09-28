@@ -1,0 +1,150 @@
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.table_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+.transactions_table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #4d4d4d;
+  font-size: 18px;
+  text-align: center;
+}
+
+table {
+  background: #1671621f;
+  border-radius: 0.25em;
+  border-collapse: collapse;
+  margin: 1em;
+}
+
+th {
+  border-bottom: 1px solid #364043;
+  color: #000000;
+  font-size: 0.85em;
+  font-weight: 600;
+  padding: 0.5em 1em;
+}
+
+td {
+  color: #000000;
+  font-weight: 400;
+  padding: 0.65em 1em;
+}
+.disabled td {
+  color: #4f5f64;
+}
+tbody tr {
+  transition: background 0.25s ease;
+}
+tbody tr:hover {
+  background: #01405556;
+}
+
+/* icons styling */
+.transactions_page_container .material-icons {
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.3s ease, color 0.3s ease;
+}
+
+.transactions_page_container .material-icons:hover {
+  opacity: 1;
+  color: white;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.5s; /* the form will fade in over 0.5 seconds */
+}
+
+.modal-content {
+  background-color: #e6e6e6;
+  padding: 20px;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 500px;
+}
+
+/* change bg color to form fields */
+.modal-content input[type="text"],
+.modal-content select,
+.modal-content input[type="date"],
+.modal-content input[type="number"] {
+  background-color: #e6e6e6;
+}
+
+/* add styling to h2 inside model-content */
+.modal-content h2 {
+  margin-top: 0px;
+  margin-bottom: 20px;
+}
+
+.close-icon-containter {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.close-icon-containter .material-icons.close-icon {
+  color: rgb(0, 0, 0);
+}
+
+.close-icon-containter .material-icons.close-icon:hover {
+  color: rgb(0, 0, 0);
+}
+
+.transactions_page_container.dark .table_container,
+.transactions_page_container.dark .transactions_table,
+.transactions_page_container.dark th,
+.transactions_page_container.dark td {
+  color: #ccc; /* Lighter text for dark mode */
+}
+
+.transactions_page_container.dark .transactions_table {
+  border-color: #555; /* Slightly brighter border for dark mode */
+  background-color: #2f7e7130;
+}
+
+.transactions_page_container.dark tbody tr:hover {
+  background: #3886adbd; /* Slightly darker hue on hover for contrast */
+}
+
+.transactions_page_container.dark .modal-content {
+  background-color: #dedede; /* You might want to adjust this too */
+  color: black; /* Brighter text color */
+}
+
+.transactions_page_container.dark .modal-content input[type="text"],
+.transactions_page_container.dark .modal-content select,
+.transactions_page_container.dark .modal-content input[type="date"],
+.transactions_page_container.dark .modal-content input[type="number"] {
+  background-color: #dedede; /* Darker input background for dark mode */
+  color: black; /* Brighter text color */
+  border-color: #555; /* Slightly brighter border for dark mode */
+}
+
+.transactions_page_container.dark .modal-content h2 {
+  color: black; /* Brighter text for dark mode */
+}
