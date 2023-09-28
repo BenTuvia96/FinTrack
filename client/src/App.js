@@ -5,6 +5,7 @@ import {
   Link,
   Routes,
   useLocation,
+  useNavigate, // Importing the useNavigate hook
 } from "react-router-dom";
 import "./App.css";
 import SignInForm from "./sign_in_form";
@@ -53,13 +54,43 @@ function HomePage() {
   );
 }
 
-function MainContent({ setLocation }) {
+function MainContent({ setLocation, toggleTheme }) {
   const location = useLocation();
+  const navigate = useNavigate(); // Use the navigate function here
 
   // Notify the App about the current location
   useEffect(() => {
     setLocation(location.pathname);
-  }, [location, setLocation]);
+
+    // Add keyboard shortcut listener
+    const handleKeyDown = (event) => {
+      if (event.shiftKey && event.key === "D") {
+        navigate("/dashboard");
+      }
+      if (event.shiftKey && event.key === "A") {
+        navigate("/transactions");
+      }
+      if (event.shiftKey && event.key === "I") {
+        navigate("/sign_in_form");
+      }
+      if (event.shiftKey && event.key === "U") {
+        navigate("/sign_up_form");
+      }
+      if (event.shiftKey && event.key === "M") {
+        navigate("/");
+      }
+      if (event.shiftKey && event.key === "Q") {
+        toggleTheme();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    // Cleanup
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [location, setLocation, navigate, toggleTheme]); // Added navigate to the dependency list
 
   return (
     <div className="app-content">
@@ -89,9 +120,9 @@ function App() {
   };
 
   useEffect(() => {
-    // This will run every time the theme changes
-    document.body.classList.remove("light", "dark"); // Remove both to ensure no overlap
-    document.body.classList.add(currentTheme); // Add the current theme
+    // Existing theme change code
+    document.body.classList.remove("light", "dark");
+    document.body.classList.add(currentTheme);
   }, [currentTheme]);
 
   return (
@@ -100,9 +131,13 @@ function App() {
         {currentLocation !== "/" && (
           <Menu theme={currentTheme} toggleTheme={toggleTheme} />
         )}
-        <MainContent setLocation={setCurrentLocation} />
+        <MainContent
+          setLocation={setCurrentLocation}
+          toggleTheme={toggleTheme}
+        />
       </Router>
     </ThemeContext.Provider>
   );
 }
+
 export default App;
