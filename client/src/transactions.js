@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { useTable, useSortBy } from "react-table";
 import TopBar from "./top_bar";
 import ThemeContext from "./ThemeContext";
@@ -15,6 +15,15 @@ function Transactions() {
   const [isModalOpen, setModalOpen] = useState(false);
   const [editingTransaction, setEditingTransaction] = useState(null);
   const { theme } = React.useContext(ThemeContext);
+
+  const handleKeyDown = useCallback(
+    (event) => {
+      if (event.key === "Escape" && isModalOpen) {
+        setModalOpen(false);
+      }
+    },
+    [isModalOpen]
+  );
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -39,6 +48,15 @@ function Transactions() {
         .catch((error) => console.error("Error fetching user details:", error));
     }
   }, []);
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyDown);
+
+    // Cleanup function
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [handleKeyDown]);
 
   const columns = useMemo(
     () => [
@@ -173,7 +191,16 @@ function Transactions() {
             {rows.map((row) => {
               prepareRow(row);
               return (
-                <tr {...row.getRowProps()}>
+                <tr
+                  {...row.getRowProps()}
+                  className={
+                    row.original.kind === "income"
+                      ? "incomeRow"
+                      : row.original.kind === "outcome"
+                      ? "outcomeRow"
+                      : ""
+                  }
+                >
                   {row.cells.map((cell) => (
                     <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
                   ))}
