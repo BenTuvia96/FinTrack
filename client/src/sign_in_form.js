@@ -43,6 +43,7 @@ function SignInForm() {
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              required={true}
             />
           </div>
           <div className="form_group">
@@ -52,6 +53,7 @@ function SignInForm() {
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              required={true}
             />
           </div>
           <button className="button" type="submit">

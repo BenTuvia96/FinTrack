@@ -74,6 +74,7 @@ function SignUpForm() {
         <h2>Sign Up</h2>
         <form onSubmit={handleSignup}>
           <div className="form_group">
+            {/* TODO: remove our verification? we already have html built in verification with the input tag type and minLength parameters */}
             <label htmlFor="email">Email:</label>
             <input
               type="email" //TODO: make verification suit DB verificaion (.com stuff)
@@ -82,7 +83,7 @@ function SignUpForm() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               onBlur={validateEmail} // Add onBlur event
-              required
+              required={true}
             />
             <div className={`validation_message ${emailError ? "show" : ""}`}>
               {emailError}
@@ -91,12 +92,13 @@ function SignUpForm() {
           <div className="form_group">
             <label htmlFor="password">Password:</label>
             <input
-              type="password" //TODO: make verification suit DB verificaion (at least 6 characters)
+              type="password"
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               onBlur={validatePassword} // Add onBlur event
               minLength="6"
+              required={true}
             />
             <div
               className={`validation_message ${passwordError ? "show" : ""}`}
@@ -112,6 +114,7 @@ function SignUpForm() {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               onBlur={validateUsername} // Add onBlur event for username validation
+              required={true}
             />
             <div
               className={`validation_message ${usernameError ? "show" : ""}`}
