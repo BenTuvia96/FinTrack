@@ -27,11 +27,13 @@ app.get("/getTransactions/:userId", async (req, res) => {
       user_id: req.params.userId,
     };
 
-    // Optionally filter by date range (startDate and endDate should be in the format 'YYYY-MM-DD')
     if (req.query.startDate && req.query.endDate) {
-      filter.date = {
+      let endDate = new Date(req.query.endDate);
+      endDate.setHours(23, 59, 59, 999); // Set time to the end of the day
+
+      filter.time = {
         $gte: new Date(req.query.startDate),
-        $lte: new Date(req.query.endDate),
+        $lte: endDate,
       };
     }
 

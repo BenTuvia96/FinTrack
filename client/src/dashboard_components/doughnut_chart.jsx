@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import ThemeContext from "../ThemeContext";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
+import DateTimeSelector from "./date_time_selector.jsx";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -25,15 +26,22 @@ const dark_theme_colors = [
 
 export function DoughnutChart({ transactionsVersion, kind, userID }) {
   const { theme } = useContext(ThemeContext);
-
-  // State for the fetched data
   const [chartData, setChartData] = useState({ labels: [], datasets: [] });
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
 
   useEffect(() => {
     if (userID) {
-      // Check for truthy value, so if it's not null, undefined, etc.
-      // Fetch data from the server
-      fetch(`/getTransactions/${userID}`)
+      // Constructing the URL with the query parameters
+      const url = `/getTransactions/${userID}${
+        startDate && endDate
+          ? `?startDate=${startDate.toISOString().split("T")[0]}&endDate=${
+              endDate.toISOString().split("T")[0]
+            }`
+          : ""
+      }`;
+
+      fetch(url)
         .then((response) => response.json())
         .then((transactions) => {
           console.log("Received transactions:", transactions);
@@ -80,7 +88,7 @@ export function DoughnutChart({ transactionsVersion, kind, userID }) {
           });
         });
     }
-  }, [theme, transactionsVersion, kind, userID]);
+  }, [theme, transactionsVersion, kind, userID, startDate, endDate]);
   const options = {
     responsive: true,
     plugins: {
@@ -104,5 +112,15 @@ export function DoughnutChart({ transactionsVersion, kind, userID }) {
     },
   };
 
-  return <Doughnut options={options} data={chartData} />;
+  return (
+    <div>
+      <DateTimeSelector
+        onDateChange={(start, end) => {
+          setStartDate(start);
+          setEndDate(end);
+        }}
+      />
+      <Doughnut options={options} data={chartData} />
+    </div>
+  );
 }
