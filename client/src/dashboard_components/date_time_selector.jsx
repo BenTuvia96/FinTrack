@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./date_time_selector.css";
+import ThemeContext from "../ThemeContext";
 
 function DateTimeSelector({ onDateChange }) {
+  const { theme } = useContext(ThemeContext); // Use the ThemeContext to get the current theme
+
   const today = new Date();
   const fiveYearsAgo = new Date();
   fiveYearsAgo.setFullYear(today.getFullYear() - 5);
@@ -53,7 +56,8 @@ function DateTimeSelector({ onDateChange }) {
   };
 
   return (
-    <div className="date-time-selector-container">
+    <div className={`date-time-selector-container ${theme}`}>
+      {" "}
       <div className="date-time-selector-buttons">
         <button onClick={() => selectAllTime()}>All Time</button>
         <button onClick={() => selectRange(365)}>1Y</button>
@@ -64,10 +68,9 @@ function DateTimeSelector({ onDateChange }) {
           onMouseEnter={() => toggleDatePickers(true)}
           onMouseLeave={() => toggleDatePickers(false)}
         >
-          <i className="material-icons">date_range</i>
+          <i className="material-icons">edit_calendar</i>
         </button>
       </div>
-
       <div
         className={`date-time-selector-datepickers ${
           showDatePickers ? "show" : ""
@@ -84,6 +87,7 @@ function DateTimeSelector({ onDateChange }) {
             startDate={startDate}
             endDate={endDate}
             dateFormat="yyyy-MM-dd"
+            showYearDropdown
           />
         </div>
         <div>
@@ -96,6 +100,7 @@ function DateTimeSelector({ onDateChange }) {
             endDate={endDate}
             minDate={startDate}
             dateFormat="yyyy-MM-dd"
+            showYearDropdown
           />
         </div>
       </div>

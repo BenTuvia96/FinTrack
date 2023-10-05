@@ -16,6 +16,16 @@
   transition: all 0.5s, transform 0.2s ease-in-out;
 }
 
+/* Dark theme styles for buttons */
+.date-time-selector-container.dark .date-time-selector-buttons button {
+  color: white;
+  background-color: rgba(41, 41, 41, 0.712);
+}
+
+.date-time-selector-container.dark .date-time-selector-buttons button:hover {
+  background-color: #226cbbc7;
+}
+
 .date-time-selector-buttons button:hover {
   background-color: #226cbbc7;
   color: white;
