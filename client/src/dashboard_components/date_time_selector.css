@@ -41,6 +41,7 @@
 
 .date-time-selector-datepickers > div {
   margin-right: 15px;
+  margin-left: 1px;
 }
 
 .date-time-selector-datepickers label {

@@ -48,8 +48,8 @@ function DateTimeSelector({ onDateChange }) {
     onDateChange(null, null);
   };
 
-  const toggleDatePickers = () => {
-    setShowDatePickers(!showDatePickers);
+  const toggleDatePickers = (show) => {
+    setShowDatePickers(show);
   };
 
   return (
@@ -60,7 +60,10 @@ function DateTimeSelector({ onDateChange }) {
         <button onClick={() => selectRange(30)}>1M</button>
         <button onClick={() => selectRange(7)}>1W</button>
         <button onClick={() => selectRange(1)}>1D</button>
-        <button onClick={() => toggleDatePickers()}>
+        <button
+          onMouseEnter={() => toggleDatePickers(true)}
+          onMouseLeave={() => toggleDatePickers(false)}
+        >
           <i className="material-icons">date_range</i>
         </button>
       </div>
@@ -69,6 +72,8 @@ function DateTimeSelector({ onDateChange }) {
         className={`date-time-selector-datepickers ${
           showDatePickers ? "show" : ""
         }`}
+        onMouseEnter={() => toggleDatePickers(true)}
+        onMouseLeave={() => toggleDatePickers(false)}
       >
         <div>
           <label>Start Date:</label>
