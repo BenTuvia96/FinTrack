@@ -11,6 +11,7 @@ function DateTimeSelector({ onDateChange }) {
   // Initially set the startDate and endDate to null for "All Time"
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState(today);
+  const [showDatePickers, setShowDatePickers] = useState(false);
 
   const handleStartDateChange = (date) => {
     setStartDate(date);
@@ -47,9 +48,28 @@ function DateTimeSelector({ onDateChange }) {
     onDateChange(null, null);
   };
 
+  const toggleDatePickers = () => {
+    setShowDatePickers(!showDatePickers);
+  };
+
   return (
     <div className="date-time-selector-container">
-      <div className="date-time-selector-datepickers">
+      <div className="date-time-selector-buttons">
+        <button onClick={() => selectAllTime()}>All Time</button>
+        <button onClick={() => selectRange(365)}>1Y</button>
+        <button onClick={() => selectRange(30)}>1M</button>
+        <button onClick={() => selectRange(7)}>1W</button>
+        <button onClick={() => selectRange(1)}>1D</button>
+        <button onClick={() => toggleDatePickers()}>
+          <i className="material-icons">date_range</i>
+        </button>
+      </div>
+
+      <div
+        className={`date-time-selector-datepickers ${
+          showDatePickers ? "show" : ""
+        }`}
+      >
         <div>
           <label>Start Date:</label>
           <DatePicker
@@ -73,14 +93,6 @@ function DateTimeSelector({ onDateChange }) {
             dateFormat="yyyy-MM-dd"
           />
         </div>
-      </div>
-
-      <div className="date-time-selector-buttons">
-        <button onClick={() => selectAllTime()}>All Time</button>
-        <button onClick={() => selectRange(365)}>1Y</button>
-        <button onClick={() => selectRange(30)}>1M</button>
-        <button onClick={() => selectRange(7)}>1W</button>
-        <button onClick={() => selectRange(1)}>1D</button>
       </div>
     </div>
   );
