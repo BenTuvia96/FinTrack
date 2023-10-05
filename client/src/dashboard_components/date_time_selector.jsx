@@ -1,0 +1,89 @@
+import React, { useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import "./date_time_selector.css";
+
+function DateTimeSelector({ onDateChange }) {
+  const today = new Date();
+  const fiveYearsAgo = new Date();
+  fiveYearsAgo.setFullYear(today.getFullYear() - 5);
+
+  // Initially set the startDate and endDate to null for "All Time"
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState(today);
+
+  const handleStartDateChange = (date) => {
+    setStartDate(date);
+    if (date <= endDate) {
+      onDateChange(date, endDate);
+    } else {
+      setEndDate(date);
+      onDateChange(date, date);
+    }
+  };
+
+  const handleEndDateChange = (date) => {
+    setEndDate(date);
+    if (date >= startDate) {
+      onDateChange(startDate, date);
+    } else {
+      setStartDate(date);
+      onDateChange(date, date);
+    }
+  };
+
+  const selectRange = (days) => {
+    const end = new Date(today);
+    const start = new Date(today);
+    start.setDate(today.getDate() - days);
+    setStartDate(start);
+    setEndDate(end);
+    onDateChange(start, end);
+  };
+
+  const selectAllTime = () => {
+    setStartDate(null);
+    setEndDate(null);
+    onDateChange(null, null);
+  };
+
+  return (
+    <div className="date-time-selector-container">
+      <div className="date-time-selector-datepickers">
+        <div>
+          <label>Start Date:</label>
+          <DatePicker
+            selected={startDate}
+            onChange={handleStartDateChange}
+            selectsStart
+            startDate={startDate}
+            endDate={endDate}
+            dateFormat="yyyy-MM-dd"
+          />
+        </div>
+        <div>
+          <label>End Date:</label>
+          <DatePicker
+            selected={endDate}
+            onChange={handleEndDateChange}
+            selectsEnd
+            startDate={startDate}
+            endDate={endDate}
+            minDate={startDate}
+            dateFormat="yyyy-MM-dd"
+          />
+        </div>
+      </div>
+
+      <div className="date-time-selector-buttons">
+        <button onClick={() => selectAllTime()}>All Time</button>
+        <button onClick={() => selectRange(365)}>1Y</button>
+        <button onClick={() => selectRange(30)}>1M</button>
+        <button onClick={() => selectRange(7)}>1W</button>
+        <button onClick={() => selectRange(1)}>1D</button>
+      </div>
+    </div>
+  );
+}
+
+export default DateTimeSelector;

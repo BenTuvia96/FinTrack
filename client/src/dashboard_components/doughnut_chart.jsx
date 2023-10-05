@@ -27,9 +27,11 @@ const dark_theme_colors = [
 export function DoughnutChart({ transactionsVersion, kind, userID }) {
   const { theme } = useContext(ThemeContext);
   const [chartData, setChartData] = useState({ labels: [], datasets: [] });
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
 
+  const fiveYearsAgo = new Date();
+  fiveYearsAgo.setFullYear(fiveYearsAgo.getFullYear() - 5);
+  const [startDate, setStartDate] = useState(fiveYearsAgo);
+  const [endDate, setEndDate] = useState(new Date());
   useEffect(() => {
     if (userID) {
       // Constructing the URL with the query parameters
