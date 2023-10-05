@@ -26,10 +26,10 @@
   display: flex;
   align-items: center;
   opacity: 0;
-  max-height: 0; /* Updated from height */
+  max-height: 0;
   overflow: hidden;
-  visibility: hidden; /* Add this */
-  transition: opacity 0.5s ease-in-out, max-height 0.5s ease-in-out,
+  visibility: hidden;
+  transition: opacity 0.7s ease-in-out, max-height 0.5s ease-in-out,
     visibility 0.5s ease-in-out;
 }
 
