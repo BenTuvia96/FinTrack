@@ -88,6 +88,7 @@ function DateTimeSelector({ onDateChange }) {
             endDate={endDate}
             dateFormat="yyyy-MM-dd"
             showYearDropdown
+            scrollableYearDropdown
           />
         </div>
         <div>
@@ -101,6 +102,7 @@ function DateTimeSelector({ onDateChange }) {
             minDate={startDate}
             dateFormat="yyyy-MM-dd"
             showYearDropdown
+            scrollableYearDropdown
           />
         </div>
       </div>

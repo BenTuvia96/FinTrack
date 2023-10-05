@@ -151,20 +151,20 @@ tbody tr:hover {
 
 /* Bright green for income */
 .incomeRow {
-  background-color: rgba(
-    90,
-    170,
-    110,
-    0.275
-  ); /* or any other shade of bright green you prefer */
+  background-color: rgba(90, 170, 110, 0.275);
 }
 
 /* Bright red for outcome */
 .outcomeRow {
-  background-color: rgba(
-    184,
-    84,
-    84,
-    0.339
-  ); /* or any other shade of bright red you prefer */
+  background-color: rgba(184, 84, 84, 0.339);
+}
+
+/* dark mode for income row */
+.transactions_page_container.dark .incomeRow {
+  background-color: rgba(102, 165, 117, 0.4);
+}
+
+/* dark mode for outcome row */
+.transactions_page_container.dark .outcomeRow {
+  background-color: rgba(184, 84, 84, 0.4);
 }
