@@ -64,6 +64,9 @@ function MainContent({ setLocation, toggleTheme }) {
 
     // Add keyboard shortcut listener
     const handleKeyDown = (event) => {
+      if (document.activeElement.tagName === "INPUT") {
+        return; // Do nothing if an input field is focused
+      }
       if (event.shiftKey && event.key === "D") {
         navigate("/dashboard");
       }
@@ -83,7 +86,6 @@ function MainContent({ setLocation, toggleTheme }) {
         toggleTheme();
       }
     };
-
     window.addEventListener("keydown", handleKeyDown);
 
     // Cleanup
