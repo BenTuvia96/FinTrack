@@ -151,12 +151,12 @@ tbody tr:hover {
 
 /* Bright green for income */
 .incomeRow {
-  background-color: rgba(90, 170, 110, 0.275);
+  background-color: rgba(90, 170, 110, 0.409);
 }
 
 /* Bright red for outcome */
 .outcomeRow {
-  background-color: rgba(184, 84, 84, 0.339);
+  background-color: rgba(184, 84, 84, 0.463);
 }
 
 /* dark mode for income row */
