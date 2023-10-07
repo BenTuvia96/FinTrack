@@ -46,6 +46,14 @@ app.get("/getTransactions/:userId", async (req, res) => {
 
 const bcrypt = require("bcryptjs");
 
+async function isCategoryValid(userId, category) {
+  const user = await UserModels.findById(userId);
+  if (!user) {
+    return false;
+  }
+  return user.categories.some((cat) => cat.name === category);
+}
+
 app.post("/addUser", async (req, res) => {
   const { username, email, password } = req.body;
   const existingUser = await UserModels.findOne({ username });
@@ -115,6 +123,14 @@ app.post("/checkUsername", async (req, res) => {
 
 app.post("/addExpense", async (req, res) => {
   try {
+    const isValidCategory = await isCategoryValid(
+      req.body.user_id,
+      req.body.category
+    );
+    if (!isValidCategory) {
+      return res.status(400).json({ error: "Invalid category" });
+    }
+
     const newExpense = new TransactionsModels({
       user_id: req.body.user_id,
       amount: req.body.amount,
@@ -141,6 +157,14 @@ app.post("/addExpense", async (req, res) => {
 
 app.post("/addIncome", async (req, res) => {
   try {
+    const isValidCategory = await isCategoryValid(
+      req.body.user_id,
+      req.body.category
+    );
+    if (!isValidCategory) {
+      return res.status(400).json({ error: "Invalid category" });
+    }
+
     const newIncome = new TransactionsModels({
       user_id: req.body.user_id,
       amount: req.body.amount,
@@ -283,6 +307,14 @@ app.delete("/deleteTransaction/:transactionId", async (req, res) => {
 
 app.put("/editTransaction/:transactionId", async (req, res) => {
   try {
+    const isValidCategory = await isCategoryValid(
+      req.body.user_id,
+      req.body.category
+    );
+    if (!isValidCategory) {
+      return res.status(400).json({ error: "Invalid category" });
+    }
+
     const existingTransaction = await TransactionsModels.findById(
       req.params.transactionId
     );
@@ -324,6 +356,73 @@ app.put("/editTransaction/:transactionId", async (req, res) => {
     res.json(updatedTransaction);
   } catch (err) {
     res.status(500).json({ error: "Error updating transaction" });
+  }
+});
+
+app.post("/addCategory/:userId", async (req, res) => {
+  const { name, type } = req.body;
+  if (!name || !type || (type !== "income" && type !== "outcome")) {
+    return res.status(400).json({ error: "Invalid category data" });
+  }
+
+  try {
+    const user = await UserModels.findById(req.params.userId);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Check if category already exists
+    const categoryExists = user.categories.some((cat) => cat.name === name);
+    if (categoryExists) {
+      return res.status(400).json({ error: "Category already exists" });
+    }
+
+    user.categories.push({ name, type });
+    await user.save();
+
+    res.status(201).json({ success: true, category: { name, type } });
+  } catch (err) {
+    res.status(500).json({ error: "Error adding category" });
+  }
+});
+
+app.delete("/removeCategory/:userId", async (req, res) => {
+  const { name } = req.body;
+  if (!name) {
+    return res.status(400).json({ error: "Category name required" });
+  }
+
+  try {
+    const user = await UserModels.findById(req.params.userId);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const categoryIndex = user.categories.findIndex((cat) => cat.name === name);
+    if (categoryIndex === -1) {
+      return res.status(404).json({ error: "Category not found" });
+    }
+
+    user.categories.splice(categoryIndex, 1);
+    await user.save();
+
+    res.status(200).json({ success: true, message: "Category removed" });
+  } catch (err) {
+    res.status(500).json({ error: "Error removing category" });
+  }
+});
+
+// getCategories
+app.get("/getCategories/:userId", async (req, res) => {
+  try {
+    const user = await UserModels.findById(req.params.userId);
+    if (user) {
+      res.json(user.categories);
+    } else {
+      res.status(404).json({ error: "User not found" });
+    }
+  } catch (err) {
+    res.status(500).json(err);
   }
 });
 
