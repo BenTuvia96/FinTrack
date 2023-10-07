@@ -117,7 +117,7 @@ function Transactions() {
             </span>
             <span
               className="material-icons"
-              onClick={() => deleteTransaction(row.original._id)}
+              onClick={(e) => deleteTransaction(row.original._id, e)}
             >
               delete
             </span>
@@ -140,7 +140,9 @@ function Transactions() {
       .catch((error) => console.error("Error fetching transactions:", error));
   };
 
-  const deleteTransaction = (transactionId) => {
+  const deleteTransaction = (transactionId, e) => {
+    e.stopPropagation();
+
     fetch(`/deleteTransaction/${transactionId}`, {
       method: "DELETE",
     })
@@ -186,16 +188,26 @@ function Transactions() {
     return d.toISOString().split("T")[0];
   };
 
+  const handleModalClick = (e) => {
+    if (e.target.className === "modal") {
+      setModalOpen(false);
+    }
+  };
+
   return (
     <div className={`transactions_page_container ${theme}`}>
       <TopBar header={`Transactions for ${user.username || "user"}`} />
       <div className="table_container">
-        <button
-          className="share-button"
-          onClick={() => exportToCSV(transactions)}
-        >
-          <i class="material-icons">ios_share</i>
-        </button>
+        <div className="export_button_container">
+          <button
+            className="share-button"
+            onClick={() => exportToCSV(transactions)}
+          >
+            <i class="material-icons">ios_share</i>
+          </button>
+          <label className="export_label">Export to CSV</label>
+        </div>
+
         <table {...getTableProps()} className="transactions_table">
           <thead>
             {headerGroups.map((headerGroup) => (
@@ -229,6 +241,7 @@ function Transactions() {
                       ? "outcomeRow"
                       : ""
                   }
+                  onClick={() => startEditing(row.original)}
                 >
                   {row.cells.map((cell) => (
                     <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
@@ -240,7 +253,7 @@ function Transactions() {
         </table>
       </div>
       {isModalOpen && editingTransaction && (
-        <div className="modal">
+        <div className="modal" onClick={handleModalClick}>
           <div className="modal-content">
             <div className="close-icon-containter">
               <span

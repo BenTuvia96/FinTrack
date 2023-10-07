@@ -53,6 +53,7 @@ tbody tr {
 }
 tbody tr:hover {
   background: #01405556;
+  cursor: pointer;
 }
 
 /* icons styling */
@@ -191,4 +192,28 @@ tbody tr:hover {
 /* change color of share button to white on hover when dark mode is on */
 .transactions_page_container.dark .share-button i.material-icons:hover {
   color: #ffffff;
+}
+
+.export_button_container {
+  display: flex;
+  margin-left: auto;
+}
+
+.share-button {
+  order: 2; /* This will keep the button on the left */
+}
+
+.export_label {
+  order: 1;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  transition-delay: 0.2s;
+  /* unbold text */
+  font-weight: 550;
+}
+
+.share-button:hover + .export_label {
+  opacity: 1;
+  transform: translateX(0px);
+  transition-delay: 0.4s;
 }
