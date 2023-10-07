@@ -55,12 +55,6 @@ body.dark .app_description {
   color: rgb(231, 231, 231);
 }
 
-.button-container {
-  display: flex;
-  justify-content: center;
-  gap: 5rem;
-}
-
 .button {
   font-size: 1.5rem;
   border-radius: 20px;
@@ -92,4 +86,13 @@ body.dark .app_description {
 
 body.dark .App-logo {
   content: url("../public/Black_Logo.svg");
+}
+
+.sign-in-container {
+  /* items should be side by side */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 4rem;
 }

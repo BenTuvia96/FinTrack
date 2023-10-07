@@ -30,18 +30,29 @@ function Description() {
 }
 
 function SignInButtons() {
+  const token = localStorage.getItem("token");
+
   return (
-    <div className="button-container">
-      <Link to="/sign_in_form" className="button">
-        Sign In
-      </Link>
-      <Link to="/sign_up_form" className="button">
-        Sign Up
-      </Link>
+    <div>
+      {token ? (
+        <div className="sign-in-container">
+          <Link className="button" to="/dashboard">
+            Continue
+          </Link>
+        </div>
+      ) : (
+        <div className="sign-in-container">
+          <Link to="/sign_in_form" className="button">
+            Sign In
+          </Link>
+          <Link to="/sign_up_form" className="button">
+            Sign Up
+          </Link>
+        </div>
+      )}
     </div>
   );
 }
-
 function HomePage() {
   return (
     <div className="App">
@@ -49,11 +60,11 @@ function HomePage() {
       <p className="app_description">
         <Description />
       </p>
+
       <SignInButtons />
     </div>
   );
 }
-
 function MainContent({ setLocation, toggleTheme }) {
   const location = useLocation();
   const navigate = useNavigate(); // Use the navigate function here
