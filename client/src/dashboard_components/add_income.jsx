@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./add_income_or_expense_form.css";
 
@@ -10,6 +10,9 @@ const AddIncome = (props) => {
     new Date().toISOString().substr(0, 10)
   );
   const [note, setNote] = useState("");
+  const [categories, setCategories] = useState([]);
+  const [showNewCategoryField, setShowNewCategoryField] = useState(false);
+  const [newCategoryName, setNewCategoryName] = useState("");
 
   const handleAmountChange = (event) => {
     setAmount(event.target.value);
@@ -22,6 +25,15 @@ const AddIncome = (props) => {
 
   const handleCategoryChange = (event) => {
     setSelectedCategory(event.target.value);
+    if (event.target.value === "add-category") {
+      setShowNewCategoryField(true);
+    } else {
+      setShowNewCategoryField(false);
+    }
+  };
+
+  const handleNewCategoryNameChange = (event) => {
+    setNewCategoryName(event.target.value);
   };
 
   const handleDateChange = (event) => {
@@ -43,30 +55,63 @@ const AddIncome = (props) => {
   const handleFinalSubmit = (event) => {
     event.preventDefault();
 
+    const addIncome = (categoryOverride) => {
+      axios
+        .post("http://localhost:3001/AddIncome", {
+          user_id: props.userID,
+          amount: amount,
+          category: categoryOverride || selectedCategory,
+          date: selectedDate,
+          note: note,
+          kind: "income",
+        })
+        .then((response) => {
+          console.log(response.data);
+          resetForm();
+          props.onFormSubmit && props.onFormSubmit();
+        })
+        .catch((error) => {
+          console.error("Error during income addition:", error);
+        });
+    };
+
+    if (showNewCategoryField) {
+      axios
+        .post(`http://localhost:3001/addCategory/${props.userID}`, {
+          name: newCategoryName,
+          type: "income",
+        })
+        .then((response) => {
+          addIncome(newCategoryName);
+        })
+        .catch((error) => {
+          console.error("Error adding new category:", error);
+        });
+    } else {
+      addIncome();
+    }
+  };
+
+  useEffect(() => {
+    // Fetch user categories on component mount using the dedicated endpoint
     axios
-      .post("http://localhost:3001/AddIncome", {
-        user_id: props.userID,
-        amount: amount,
-        category: selectedCategory,
-        date: selectedDate,
-        note: note,
-        kind: "outcome",
-      })
+      .get(`http://localhost:3001/getCategories/${props.userID}`)
       .then((response) => {
-        console.log(response.data);
-        resetForm();
-        props.onFormSubmit && props.onFormSubmit();
+        // Filter out only the "income" categories
+        const incomeCategories = response.data.filter(
+          (category) => category.type === "income"
+        );
+        setCategories(incomeCategories);
       })
       .catch((error) => {
-        console.error("Error during income addition:", error);
+        console.error("Error fetching user categories:", error);
       });
-  };
+  }, [props.userID]);
 
   return (
     <div className="income-outcome-form-container">
       {hasEnteredAmount ? (
         <>
-          {/* TODO: add category verification */}
           <h2>Choose a Category</h2>
           <form onSubmit={handleFinalSubmit}>
             <label>
@@ -77,14 +122,26 @@ const AddIncome = (props) => {
                 onChange={handleCategoryChange}
               >
                 <option value=""></option>
-                <option value="salary">Salary</option>
-                <option value="deposit">Deposit</option>
-                <option value="savings">Savings</option>
-                <option value="gift">Gift</option>
-                <option value="other">Other</option>
+                {categories.map((category) => (
+                  <option key={category.name} value={category.name}>
+                    {category.name}
+                  </option>
+                ))}
                 <option value="add-category">Add</option>
               </select>
             </label>
+            {showNewCategoryField && (
+              <label>
+                New Category Name:
+                <input
+                  type="text"
+                  value={newCategoryName}
+                  onChange={handleNewCategoryNameChange}
+                  required
+                />
+              </label>
+            )}
+
             <label>
               Date (optional):
               <input
