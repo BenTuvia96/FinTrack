@@ -1,9 +1,32 @@
 import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { useTable, useSortBy } from "react-table";
+import Papa from "papaparse";
 import TopBar from "./top_bar";
 import ThemeContext from "./ThemeContext";
 import "./transactions.css";
 
+const exportToCSV = (transactions) => {
+  const fieldsToExclude = ["_id", "user_id", "__v"];
+  const filteredTransactions = transactions.map((transaction) => {
+    const filteredTransaction = {};
+    for (const key in transaction) {
+      if (!fieldsToExclude.includes(key)) {
+        filteredTransaction[key] = transaction[key];
+      }
+    }
+    return filteredTransaction;
+  });
+  const csv = Papa.unparse(filteredTransactions);
+  const blob = new Blob([csv], { type: "text/csv" });
+  const url = window.URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.setAttribute("hidden", "");
+  a.setAttribute("href", url);
+  a.setAttribute("download", "transactions.csv");
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+};
 function Transactions() {
   const [user, setUser] = useState({
     username: "",
@@ -167,6 +190,12 @@ function Transactions() {
     <div className={`transactions_page_container ${theme}`}>
       <TopBar header={`Transactions for ${user.username || "user"}`} />
       <div className="table_container">
+        <button
+          className="share-button"
+          onClick={() => exportToCSV(transactions)}
+        >
+          <i class="material-icons">ios_share</i>
+        </button>
         <table {...getTableProps()} className="transactions_table">
           <thead>
             {headerGroups.map((headerGroup) => (

@@ -168,3 +168,27 @@ tbody tr:hover {
 .transactions_page_container.dark .outcomeRow {
   background-color: rgba(184, 84, 84, 0.4);
 }
+
+.share-button {
+  margin-right: 0px;
+  margin-left: auto;
+  /* bg transparent */
+  background-color: transparent;
+  /* remove border */
+  border: none;
+}
+
+.share-button i.material-icons {
+  transition: transform 0.3s ease-in-out;
+}
+
+.share-button i.material-icons:hover {
+  color: #000000;
+  /* move up 5px */
+  transform: translateY(-5px);
+}
+
+/* change color of share button to white on hover when dark mode is on */
+.transactions_page_container.dark .share-button i.material-icons:hover {
+  color: #ffffff;
+}
