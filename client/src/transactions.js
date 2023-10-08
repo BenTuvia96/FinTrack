@@ -6,6 +6,14 @@ import ThemeContext from "./ThemeContext";
 import DateTimeSelector from "./date_time_selector";
 import "./transactions.css";
 
+const getQueryParams = () => {
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  return {
+    category: urlParams.get("category") || "All",
+  };
+};
+
 const exportToCSV = (transactions) => {
   const fieldsToExclude = ["_id", "user_id", "__v"];
   const filteredTransactions = transactions.map((transaction) => {
@@ -83,6 +91,9 @@ function Transactions() {
   );
 
   useEffect(() => {
+    const params = getQueryParams();
+    setSelectedCategory(params.category);
+
     const token = localStorage.getItem("token");
 
     const fetchUserDetails = async () => {
@@ -127,6 +138,15 @@ function Transactions() {
       });
     }
   }, [fetchUserTransactions]);
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyDown);
+
+    // Cleanup function
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [handleKeyDown]);
 
   const columns = useMemo(
     () => [
@@ -255,6 +275,7 @@ function Transactions() {
         </div>
 
         <div className="date_time_selector_container">
+          {/* TODO: add dark mode support for date selector text */}
           <DateTimeSelector
             className="date_time_selector"
             onDateChange={handleDateChange}

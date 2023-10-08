@@ -112,6 +112,13 @@ export function DoughnutChart({ transactionsVersion, kind, userID }) {
         footerFontColor: theme === "dark" ? "white" : "black",
       },
     },
+    onClick: (event, element, chart) => {
+      if (element.length > 0) {
+        const categoryLabel = chart.data.labels[element[0].index];
+        // Use categoryLabel to redirect to the transactions page with the filter
+        window.location.href = `/transactions?category=${categoryLabel}`;
+      }
+    },
   };
 
   return (
