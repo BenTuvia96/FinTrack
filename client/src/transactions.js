@@ -333,7 +333,9 @@ function Transactions() {
                   }
                 />
               </label>
-              <button type="submit">Update</button>
+              <button className="submit-button" type="submit">
+                Update
+              </button>
             </form>
           </div>
         </div>

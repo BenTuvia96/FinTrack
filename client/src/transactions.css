@@ -217,3 +217,7 @@ tbody tr:hover {
   transform: translateX(0px);
   transition-delay: 0.4s;
 }
+
+.submit-button {
+  cursor: pointer;
+}
