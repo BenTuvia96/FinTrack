@@ -203,6 +203,11 @@ tbody tr:hover {
   font-weight: 550;
 }
 
+/* make the label color white on dark mode */
+.transactions_page_container.dark .export_label {
+  color: #ffffffdd;
+}
+
 .share-button:hover + .export_label {
   opacity: 1;
   transform: translateX(0px);
