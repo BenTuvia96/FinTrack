@@ -3,6 +3,7 @@ import { useTable, useSortBy } from "react-table";
 import Papa from "papaparse";
 import TopBar from "./top_bar";
 import ThemeContext from "./ThemeContext";
+import DateTimeSelector from "./date_time_selector";
 import "./transactions.css";
 
 const exportToCSV = (transactions) => {
@@ -38,6 +39,9 @@ function Transactions() {
   const [isModalOpen, setModalOpen] = useState(false);
   const [editingTransaction, setEditingTransaction] = useState(null);
   const { theme } = React.useContext(ThemeContext);
+  const handleDateChange = (startDate, endDate) => {
+    fetchUserTransactions(user.userID, startDate, endDate);
+  };
 
   const handleKeyDown = useCallback(
     (event) => {
@@ -131,8 +135,13 @@ function Transactions() {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({ columns, data: transactions }, useSortBy);
 
-  const fetchUserTransactions = (userID) => {
-    fetch(`/getTransactions/${userID}`)
+  const fetchUserTransactions = (userID, startDate, endDate) => {
+    let url = `/getTransactions/${userID}`;
+    if (startDate && endDate) {
+      url += `?startDate=${startDate.toISOString()}&endDate=${endDate.toISOString()}`;
+    }
+
+    fetch(url)
       .then((res) => res.json())
       .then((data) => {
         setTransactions(data);
@@ -197,8 +206,14 @@ function Transactions() {
   return (
     <div className={`transactions_page_container ${theme}`}>
       <TopBar header={`Transactions for ${user.username || "user"}`} />
-      <div className="table_container">
-        <div className="export_button_container">
+      <div className="table_controls_container">
+        <div className="date_time_selector_container">
+          <DateTimeSelector
+            className="date_time_selector"
+            onDateChange={handleDateChange}
+          />
+        </div>
+        <div className="share_button_container">
           <button
             className="share-button"
             onClick={() => exportToCSV(transactions)}
@@ -207,7 +222,8 @@ function Transactions() {
           </button>
           <label className="export_label">Export to CSV</label>
         </div>
-
+      </div>
+      <div className="table_container">
         <table {...getTableProps()} className="transactions_table">
           <thead>
             {headerGroups.map((headerGroup) => (

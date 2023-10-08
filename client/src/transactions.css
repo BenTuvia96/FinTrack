@@ -194,17 +194,8 @@ tbody tr:hover {
   color: #ffffff;
 }
 
-.export_button_container {
-  display: flex;
-  margin-left: auto;
-}
-
-.share-button {
-  order: 2; /* This will keep the button on the left */
-}
-
 .export_label {
-  order: 1;
+  order: -1;
   opacity: 0;
   transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
   transition-delay: 0.2s;
@@ -220,4 +211,27 @@ tbody tr:hover {
 
 .submit-button {
   cursor: pointer;
+}
+
+.date_time_selector_container {
+  /* make this div the second item on the grid row (center) */
+  grid-column: 2;
+  transform: translateY(5px);
+}
+
+.table_controls_container {
+  /* make the div grid with 1 row and 3 columns */
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  /* center vertically */
+  align-items: center;
+  /* center horizontally */
+  justify-items: center;
+}
+
+.share_button_container {
+  /* center everything inside div */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

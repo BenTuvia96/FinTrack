@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import ThemeContext from "../ThemeContext";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
-import DateTimeSelector from "./date_time_selector.jsx";
+import DateTimeSelector from "../date_time_selector.jsx";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 

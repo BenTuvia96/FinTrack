@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./date_time_selector.css";
-import ThemeContext from "../ThemeContext";
+import ThemeContext from "./ThemeContext";
 
 function DateTimeSelector({ onDateChange }) {
   const { theme } = useContext(ThemeContext); // Use the ThemeContext to get the current theme
