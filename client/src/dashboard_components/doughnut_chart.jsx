@@ -3,6 +3,7 @@ import ThemeContext from "../ThemeContext";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 import DateTimeSelector from "../date_time_selector.jsx";
+import { useNavigate } from "react-router-dom";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -25,6 +26,8 @@ const dark_theme_colors = [
 ];
 
 export function DoughnutChart({ transactionsVersion, kind, userID }) {
+  const navigate = useNavigate();
+
   const { theme } = useContext(ThemeContext);
   const [chartData, setChartData] = useState({ labels: [], datasets: [] });
 
@@ -115,8 +118,8 @@ export function DoughnutChart({ transactionsVersion, kind, userID }) {
     onClick: (event, element, chart) => {
       if (element.length > 0) {
         const categoryLabel = chart.data.labels[element[0].index];
-        // Use categoryLabel to redirect to the transactions page with the filter
-        window.location.href = `/transactions?category=${categoryLabel}`;
+        // Use the navigate function to redirect without a full page refresh
+        navigate(`/transactions?category=${categoryLabel}`);
       }
     },
   };

@@ -6,6 +6,7 @@ import ThemeContext from "./ThemeContext";
 import DateTimeSelector from "./date_time_selector";
 import "./transactions.css";
 
+// TODO: fix the fact that the transactions are fetched twice on page load
 const getQueryParams = () => {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
@@ -49,11 +50,13 @@ function Transactions() {
   const [editingTransaction, setEditingTransaction] = useState(null);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [isLoading, setIsLoading] = useState(false);
 
   const { theme } = React.useContext(ThemeContext);
 
   const fetchUserTransactions = useCallback(
     (userID, startDate, endDate) => {
+      setIsLoading(true);
       let url = `/getTransactions/${userID}`;
       let queryParts = [];
       if (startDate && endDate) {
@@ -71,8 +74,12 @@ function Transactions() {
         .then((res) => res.json())
         .then((data) => {
           setTransactions(data);
+          setIsLoading(false);
         })
-        .catch((error) => console.error("Error fetching transactions:", error));
+        .catch((error) => {
+          console.error("Error fetching transactions:", error);
+          setIsLoading(false);
+        });
     },
     [selectedCategory]
   );
@@ -291,50 +298,58 @@ function Transactions() {
           <label className="export_label">Export to CSV</label>
         </div>
       </div>
-      <div className="table_container">
-        <table {...getTableProps()} className="transactions_table">
-          <thead>
-            {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map((column) => (
-                  <th {...column.getHeaderProps(column.getSortByToggleProps())}>
-                    {column.render("Header")}
-                    {/* Add a sort direction indicator */}
-                    <span>
-                      {column.isSorted
-                        ? column.isSortedDesc
-                          ? " 🔽"
-                          : " 🔼"
-                        : ""}
-                    </span>
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody {...getTableBodyProps()}>
-            {rows.map((row) => {
-              prepareRow(row);
-              return (
-                <tr
-                  {...row.getRowProps()}
-                  className={
-                    row.original.kind === "income"
-                      ? "incomeRow"
-                      : row.original.kind === "outcome"
-                      ? "outcomeRow"
-                      : ""
-                  }
-                  onClick={() => startEditing(row.original)}
-                >
-                  {row.cells.map((cell) => (
-                    <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+      <div className={`table_container ${isLoading ? "hide" : ""}`}>
+        {isLoading ? (
+          <div className={`loader-container ${isLoading ? "" : "hide"}`}>
+            <div className="loader"></div>
+          </div>
+        ) : (
+          <table {...getTableProps()} className="transactions_table">
+            <thead>
+              {headerGroups.map((headerGroup) => (
+                <tr {...headerGroup.getHeaderGroupProps()}>
+                  {headerGroup.headers.map((column) => (
+                    <th
+                      {...column.getHeaderProps(column.getSortByToggleProps())}
+                    >
+                      {column.render("Header")}
+                      {/* Add a sort direction indicator */}
+                      <span>
+                        {column.isSorted
+                          ? column.isSortedDesc
+                            ? " 🔽"
+                            : " 🔼"
+                          : ""}
+                      </span>
+                    </th>
                   ))}
                 </tr>
-              );
-            })}
-          </tbody>
-        </table>
+              ))}
+            </thead>
+            <tbody {...getTableBodyProps()}>
+              {rows.map((row) => {
+                prepareRow(row);
+                return (
+                  <tr
+                    {...row.getRowProps()}
+                    className={
+                      row.original.kind === "income"
+                        ? "incomeRow"
+                        : row.original.kind === "outcome"
+                        ? "outcomeRow"
+                        : ""
+                    }
+                    onClick={() => startEditing(row.original)}
+                  >
+                    {row.cells.map((cell) => (
+                      <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                    ))}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        )}
       </div>
       {isModalOpen && editingTransaction && (
         <div className="modal" onClick={handleModalClick}>

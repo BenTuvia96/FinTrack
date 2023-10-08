@@ -123,13 +123,21 @@ function MainContent({ setLocation, toggleTheme }) {
 }
 
 function App() {
+  // Initialization: Check localStorage for a saved theme, default to "light" if none found
   const [currentLocation, setCurrentLocation] = useState("/");
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
 
   const currentTheme = theme;
 
   const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === "dark" ? "light" : "dark"));
+    setTheme((prevTheme) => {
+      const newTheme = prevTheme === "dark" ? "light" : "dark";
+
+      // Save the new theme to localStorage
+      localStorage.setItem("theme", newTheme);
+
+      return newTheme;
+    });
   };
 
   useEffect(() => {
