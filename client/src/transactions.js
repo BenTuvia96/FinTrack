@@ -28,6 +28,7 @@ const exportToCSV = (transactions) => {
   a.click();
   document.body.removeChild(a);
 };
+
 function Transactions() {
   const [user, setUser] = useState({
     username: "",
@@ -38,7 +39,36 @@ function Transactions() {
   const [transactions, setTransactions] = useState([]);
   const [isModalOpen, setModalOpen] = useState(false);
   const [editingTransaction, setEditingTransaction] = useState(null);
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("All");
+
   const { theme } = React.useContext(ThemeContext);
+
+  const fetchUserTransactions = useCallback(
+    (userID, startDate, endDate) => {
+      let url = `/getTransactions/${userID}`;
+      let queryParts = [];
+      if (startDate && endDate) {
+        queryParts.push(`startDate=${startDate.toISOString()}`);
+        queryParts.push(`endDate=${endDate.toISOString()}`);
+      }
+      if (selectedCategory !== "All") {
+        queryParts.push(`category=${selectedCategory}`);
+      }
+      if (queryParts.length > 0) {
+        url += "?" + queryParts.join("&");
+      }
+
+      fetch(url)
+        .then((res) => res.json())
+        .then((data) => {
+          setTransactions(data);
+        })
+        .catch((error) => console.error("Error fetching transactions:", error));
+    },
+    [selectedCategory]
+  );
+
   const handleDateChange = (startDate, endDate) => {
     fetchUserTransactions(user.userID, startDate, endDate);
   };
@@ -55,35 +85,48 @@ function Transactions() {
   useEffect(() => {
     const token = localStorage.getItem("token");
 
-    if (token) {
-      fetch("/getUserDetails", {
-        headers: {
-          Authorization: token,
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.username) {
-            setUser({
-              username: data.username,
-              email: data.email,
-              userID: data.userID,
-            });
-            fetchUserTransactions(data.userID);
-          }
-        })
-        .catch((error) => console.error("Error fetching user details:", error));
-    }
-  }, []);
+    const fetchUserDetails = async () => {
+      try {
+        const response = await fetch("/getUserDetails", {
+          headers: {
+            Authorization: token,
+          },
+        });
+        const data = await response.json();
 
-  useEffect(() => {
-    document.addEventListener("keydown", handleKeyDown);
+        if (data.username) {
+          setUser({
+            username: data.username,
+            email: data.email,
+            userID: data.userID,
+          });
+        }
 
-    // Cleanup function
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
+        return data;
+      } catch (error) {
+        console.error("Error fetching user details:", error);
+      }
     };
-  }, [handleKeyDown]);
+
+    const fetchCategories = async (userID) => {
+      try {
+        const response = await fetch(`/getCategories/${userID}`);
+        const categories = await response.json();
+        setCategories(categories);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
+    if (token) {
+      fetchUserDetails().then((data) => {
+        if (data && data.userID) {
+          fetchUserTransactions(data.userID);
+          fetchCategories(data.userID);
+        }
+      });
+    }
+  }, [fetchUserTransactions]);
 
   const columns = useMemo(
     () => [
@@ -134,20 +177,6 @@ function Transactions() {
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({ columns, data: transactions }, useSortBy);
-
-  const fetchUserTransactions = (userID, startDate, endDate) => {
-    let url = `/getTransactions/${userID}`;
-    if (startDate && endDate) {
-      url += `?startDate=${startDate.toISOString()}&endDate=${endDate.toISOString()}`;
-    }
-
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => {
-        setTransactions(data);
-      })
-      .catch((error) => console.error("Error fetching transactions:", error));
-  };
 
   const deleteTransaction = (transactionId, e) => {
     e.stopPropagation();
@@ -207,6 +236,24 @@ function Transactions() {
     <div className={`transactions_page_container ${theme}`}>
       <TopBar header={`Transactions for ${user.username || "user"}`} />
       <div className="table_controls_container">
+        <div className="category_selector_container">
+          <select
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+          >
+            <option value="All">All Categories</option>
+            {categories.map((category) => (
+              <option
+                key={category._id}
+                value={category.name}
+                style={{ color: category.type === "income" ? "green" : "red" }}
+              >
+                {category.name}
+              </option>
+            ))}
+          </select>{" "}
+        </div>
+
         <div className="date_time_selector_container">
           <DateTimeSelector
             className="date_time_selector"

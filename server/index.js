@@ -23,24 +23,27 @@ app.get("/getUsers", async (req, res) => {
 
 app.get("/getTransactions/:userId", async (req, res) => {
   try {
-    let filter = {
-      user_id: req.params.userId,
-    };
-
-    if (req.query.startDate && req.query.endDate) {
-      let endDate = new Date(req.query.endDate);
-      endDate.setHours(23, 59, 59, 999); // Set time to the end of the day
-
-      filter.time = {
-        $gte: new Date(req.query.startDate),
-        $lte: endDate,
+      let filter = {
+          user_id: req.params.userId,
       };
-    }
 
-    const transactions = await TransactionsModels.find(filter);
-    res.json(transactions);
+      if (req.query.startDate && req.query.endDate) {
+          let endDate = new Date(req.query.endDate);
+          endDate.setHours(23, 59, 59, 999); // Set time to the end of the day
+          filter.time = {
+              $gte: new Date(req.query.startDate),
+              $lte: endDate,
+          };
+      }
+
+      if (req.query.category) {
+          filter.category = req.query.category;
+      }
+
+      const transactions = await TransactionsModels.find(filter);
+      res.json(transactions);
   } catch (err) {
-    res.json(err);
+      res.json(err);
   }
 });
 

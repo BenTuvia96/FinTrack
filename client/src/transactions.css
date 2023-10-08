@@ -240,3 +240,7 @@ tbody tr:hover {
   align-items: center;
   justify-content: center;
 }
+
+.category_selector_container {
+  transform: translateY(5px);
+}
