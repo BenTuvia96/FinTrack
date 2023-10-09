@@ -1,5 +1,3 @@
-// TODO: Modify to be Stacked Bar Chart
-
 import React, { useContext, useState, useEffect } from "react";
 import ThemeContext from "../ThemeContext";
 import {
@@ -55,9 +53,7 @@ export function BarChart({ userID, transactionsVersion }) {
   useEffect(() => {
     if (userID) {
       const fetchChartData = async () => {
-        // Extract the current year
         const currentYear = new Date().getFullYear();
-
         const response = await axios.get(
           `/getMonthlyBalances/${userID}/${currentYear}`
         );
@@ -69,18 +65,16 @@ export function BarChart({ userID, transactionsVersion }) {
   }, [transactionsVersion, userID]);
 
   if (!chartData) {
-    return null; // or you can return a loader or some placeholder content
+    return null;
   }
 
-  // Prepare data arrays for income and outcome
   const incomeData = new Array(12).fill(0);
   const outcomeData = new Array(12).fill(0);
 
   chartData.forEach((entry) => {
     if (entry.month >= 0 && entry.month <= 11) {
-      // To ensure month index is valid
       incomeData[entry.month] = entry.income;
-      outcomeData[entry.month] = entry.outcome;
+      outcomeData[entry.month] = -entry.outcome; // Convert outcome to negative
     }
   });
 
@@ -88,7 +82,7 @@ export function BarChart({ userID, transactionsVersion }) {
     labels,
     datasets: [
       {
-        label: "income",
+        label: "Income",
         data: incomeData,
         backgroundColor:
           theme === "light"
@@ -96,7 +90,7 @@ export function BarChart({ userID, transactionsVersion }) {
             : dark_theme_colors.income,
       },
       {
-        label: "outcome",
+        label: "Outcome",
         data: outcomeData,
         backgroundColor:
           theme === "light"
@@ -123,6 +117,7 @@ export function BarChart({ userID, transactionsVersion }) {
     },
     scales: {
       x: {
+        stacked: true,
         ticks: {
           color: theme === "dark" ? "white" : "black",
         },
@@ -131,6 +126,7 @@ export function BarChart({ userID, transactionsVersion }) {
         },
       },
       y: {
+        stacked: true, // This makes the bar chart stacked
         ticks: {
           color: theme === "dark" ? "white" : "black",
         },

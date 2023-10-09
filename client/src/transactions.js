@@ -11,6 +11,8 @@ const getQueryParams = () => {
   const urlParams = new URLSearchParams(queryString);
   return {
     category: urlParams.get("category") || "All",
+    startDate: urlParams.get("startDate") || null,
+    endDate: urlParams.get("endDate") || null,
   };
 };
 
@@ -50,21 +52,30 @@ function Transactions() {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [isLoading, setIsLoading] = useState(false);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
 
   const { theme } = React.useContext(ThemeContext);
 
   const fetchUserTransactions = useCallback(
-    (userID, startDate, endDate) => {
+    (userID, startDateOverride, endDateOverride) => {
       setIsLoading(true);
       let url = `/getTransactions/${userID}`;
       let queryParts = [];
-      if (startDate && endDate) {
-        queryParts.push(`startDate=${startDate.toISOString()}`);
-        queryParts.push(`endDate=${endDate.toISOString()}`);
+
+      // Use passed dates (from handleDateChange) or the state dates
+      const useStartDate = startDateOverride || startDate;
+      const useEndDate = endDateOverride || endDate;
+
+      if (useStartDate && useEndDate) {
+        queryParts.push(`startDate=${useStartDate.toISOString()}`);
+        queryParts.push(`endDate=${useEndDate.toISOString()}`);
       }
+
       if (selectedCategory !== "All") {
         queryParts.push(`category=${selectedCategory}`);
       }
+
       if (queryParts.length > 0) {
         url += "?" + queryParts.join("&");
       }
@@ -80,11 +91,13 @@ function Transactions() {
           setIsLoading(false);
         });
     },
-    [selectedCategory]
+    [selectedCategory, startDate, endDate]
   );
 
-  const handleDateChange = (startDate, endDate) => {
-    fetchUserTransactions(user.userID, startDate, endDate);
+  const handleDateChange = (newStartDate, newEndDate) => {
+    setStartDate(newStartDate);
+    setEndDate(newEndDate);
+    fetchUserTransactions(user.userID, newStartDate, newEndDate);
   };
 
   const handleKeyDown = useCallback(
@@ -99,6 +112,13 @@ function Transactions() {
   useEffect(() => {
     const params = getQueryParams();
     setSelectedCategory(params.category);
+    // Use the dates from the URL if they exist
+    if (params.startDate) {
+      setStartDate(new Date(params.startDate));
+    }
+    if (params.endDate) {
+      setEndDate(new Date(params.endDate));
+    }
 
     const token = localStorage.getItem("token");
 
@@ -147,6 +167,12 @@ function Transactions() {
           if (params.category !== "All") {
             queryParts.push(`category=${params.category}`);
           }
+          // Move this block before appending query parameters to the URL
+          if (params.startDate && params.endDate) {
+            queryParts.push(`startDate=${params.startDate}`);
+            queryParts.push(`endDate=${params.endDate}`);
+          }
+
           if (queryParts.length > 0) {
             url += "?" + queryParts.join("&");
           }
