@@ -23,27 +23,32 @@ app.get("/getUsers", async (req, res) => {
 
 app.get("/getTransactions/:userId", async (req, res) => {
   try {
-      let filter = {
-          user_id: req.params.userId,
+    let filter = {
+      user_id: req.params.userId,
+    };
+
+    if (req.query.startDate && req.query.endDate) {
+      let endDate = new Date(req.query.endDate);
+      endDate.setHours(23, 59, 59, 999); // Set time to the end of the day
+      filter.time = {
+        $gte: new Date(req.query.startDate),
+        $lte: endDate,
       };
+    }
 
-      if (req.query.startDate && req.query.endDate) {
-          let endDate = new Date(req.query.endDate);
-          endDate.setHours(23, 59, 59, 999); // Set time to the end of the day
-          filter.time = {
-              $gte: new Date(req.query.startDate),
-              $lte: endDate,
-          };
-      }
+    if (req.query.category) {
+      filter.category = req.query.category;
+    }
 
-      if (req.query.category) {
-          filter.category = req.query.category;
-      }
+    // Add this to handle the kind query parameter
+    if (req.query.kind) {
+      filter.kind = req.query.kind;
+    }
 
-      const transactions = await TransactionsModels.find(filter);
-      res.json(transactions);
+    const transactions = await TransactionsModels.find(filter);
+    res.json(transactions);
   } catch (err) {
-      res.json(err);
+    res.json(err);
   }
 });
 
@@ -143,6 +148,8 @@ app.post("/addExpense", async (req, res) => {
       kind: req.body.kind,
     });
     await newExpense.save();
+    console.log("newExpense:", newExpense);
+    console.log("new Date(newExpense.date):", new Date(newExpense.date));
 
     // Update balance after adding an expense
     await updateBalance(

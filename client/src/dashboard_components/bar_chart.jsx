@@ -11,6 +11,7 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 ChartJS.register(
   CategoryScale,
@@ -47,6 +48,7 @@ const dark_theme_colors = {
 };
 
 export function BarChart({ userID, transactionsVersion }) {
+  const navigate = useNavigate();
   const { theme } = useContext(ThemeContext);
   const [chartData, setChartData] = useState(null);
 
@@ -134,6 +136,25 @@ export function BarChart({ userID, transactionsVersion }) {
           color: theme === "dark" ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)",
         },
       },
+    },
+    onClick: (event, element, chart) => {
+      if (element.length > 0) {
+        const monthLabel = chart.data.labels[element[0].index];
+        const currentYear = new Date().getFullYear();
+        const date = new Date(`${monthLabel} 1, ${currentYear}`);
+        const startDate = date.toISOString().split("T")[0];
+        date.setMonth(date.getMonth() + 1);
+        date.setDate(0);
+        const endDate = date.toISOString().split("T")[0];
+
+        // Check whether the clicked bar is income or outcome
+        const kind =
+          chart.data.datasets[element[0].datasetIndex].label.toLowerCase(); // This will be "income" or "outcome"
+
+        navigate(
+          `/transactions?startDate=${startDate}&endDate=${endDate}&kind=${kind}`
+        );
+      }
     },
   };
 

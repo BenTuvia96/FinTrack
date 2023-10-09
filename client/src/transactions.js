@@ -13,6 +13,7 @@ const getQueryParams = () => {
     category: urlParams.get("category") || "All",
     startDate: urlParams.get("startDate") || null,
     endDate: urlParams.get("endDate") || null,
+    kind: urlParams.get("kind") || null,
   };
 };
 
@@ -54,8 +55,42 @@ function Transactions() {
   const [isLoading, setIsLoading] = useState(false);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+  const [kind, setKind] = useState(null);
 
   const { theme } = React.useContext(ThemeContext);
+
+  const fetchTransactionsWithParams = (
+    userID,
+    category,
+    startDate,
+    endDate,
+    kind
+  ) => {
+    let url = `/getTransactions/${userID}`;
+    let queryParts = [];
+    if (category && category !== "All") {
+      queryParts.push(`category=${category}`);
+    }
+    if (startDate && endDate) {
+      queryParts.push(`startDate=${startDate}`);
+      queryParts.push(`endDate=${endDate}`);
+    }
+    if (kind) {
+      queryParts.push(`kind=${kind}`);
+    }
+    if (queryParts.length > 0) {
+      url += "?" + queryParts.join("&");
+    }
+
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => {
+        setTransactions(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching transactions:", error);
+      });
+  };
 
   const fetchUserTransactions = useCallback(
     (userID, startDateOverride, endDateOverride) => {
@@ -120,6 +155,10 @@ function Transactions() {
       setEndDate(new Date(params.endDate));
     }
 
+    if (params.kind) {
+      setKind(params.kind);
+    }
+
     const token = localStorage.getItem("token");
 
     const fetchUserDetails = async () => {
@@ -159,36 +198,18 @@ function Transactions() {
       fetchUserDetails().then((data) => {
         if (data && data.userID) {
           fetchCategories(data.userID);
-          // Fetch transactions directly here
-          const userID = data.userID;
-          let url = `/getTransactions/${userID}`;
-          let queryParts = [];
-          // Here, you can use the params.category directly since it's already fetched
-          if (params.category !== "All") {
-            queryParts.push(`category=${params.category}`);
-          }
-          // Move this block before appending query parameters to the URL
-          if (params.startDate && params.endDate) {
-            queryParts.push(`startDate=${params.startDate}`);
-            queryParts.push(`endDate=${params.endDate}`);
-          }
-
-          if (queryParts.length > 0) {
-            url += "?" + queryParts.join("&");
-          }
-
-          fetch(url)
-            .then((res) => res.json())
-            .then((data) => {
-              setTransactions(data);
-            })
-            .catch((error) => {
-              console.error("Error fetching transactions:", error);
-            });
+          // Fetch transactions directly here using the new function
+          fetchTransactionsWithParams(
+            data.userID,
+            params.category,
+            params.startDate,
+            params.endDate,
+            params.kind // Ensure kind is passed here
+          );
         }
       });
     }
-  }, []);
+  }, []); // Dependency array remains empty
 
   useEffect(() => {
     if (user.userID) {
