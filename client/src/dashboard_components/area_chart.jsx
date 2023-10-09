@@ -13,6 +13,7 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 ChartJS.register(
   CategoryScale,
@@ -51,6 +52,7 @@ const dark_colors = {
 };
 
 export function AreaChart({ userID, transactionsVersion }) {
+  const navigate = useNavigate();
   const { theme } = useContext(ThemeContext);
   const [chartData, setChartData] = useState(null);
 
@@ -134,6 +136,22 @@ export function AreaChart({ userID, transactionsVersion }) {
           color: theme === "dark" ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)",
         },
       },
+    },
+    onClick: (event, element, chart) => {
+      if (element.length > 0) {
+        const monthLabel = chart.data.labels[element[0].index];
+        const currentYear = new Date().getFullYear();
+
+        // Convert month label to date range
+        const date = new Date(`${monthLabel} 1, ${currentYear}`);
+        const startDate = date.toISOString().split("T")[0];
+        date.setMonth(date.getMonth() + 1);
+        date.setDate(0); // Setting the day to 0 will set the date to the last day of the previous month
+        const endDate = date.toISOString().split("T")[0];
+
+        // Use the navigate function to redirect with the appropriate date filtering
+        navigate(`/transactions?startDate=${startDate}&endDate=${endDate}`);
+      }
     },
   };
 

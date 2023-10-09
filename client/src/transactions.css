@@ -231,6 +231,7 @@ tbody tr:hover {
   /* make this div the second item on the grid row (center) */
   grid-column: 2;
   transform: translateY(5px);
+  z-index: 9999;
 }
 
 .table_controls_container {
@@ -241,6 +242,8 @@ tbody tr:hover {
   align-items: center;
   /* center horizontally */
   justify-items: center;
+  /* make it above everythong else */
+  z-index: 9999;
 }
 
 .share_button_container {
