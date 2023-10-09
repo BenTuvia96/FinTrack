@@ -6,7 +6,6 @@ import ThemeContext from "./ThemeContext";
 import DateTimeSelector from "./date_time_selector";
 import "./transactions.css";
 
-// TODO: fix the fact that the transactions are fetched twice on page load
 const getQueryParams = () => {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
@@ -139,12 +138,31 @@ function Transactions() {
     if (token) {
       fetchUserDetails().then((data) => {
         if (data && data.userID) {
-          fetchUserTransactions(data.userID);
           fetchCategories(data.userID);
+          // Fetch transactions directly here
+          const userID = data.userID;
+          let url = `/getTransactions/${userID}`;
+          let queryParts = [];
+          // Here, you can use the params.category directly since it's already fetched
+          if (params.category !== "All") {
+            queryParts.push(`category=${params.category}`);
+          }
+          if (queryParts.length > 0) {
+            url += "?" + queryParts.join("&");
+          }
+
+          fetch(url)
+            .then((res) => res.json())
+            .then((data) => {
+              setTransactions(data);
+            })
+            .catch((error) => {
+              console.error("Error fetching transactions:", error);
+            });
         }
       });
     }
-  }, [fetchUserTransactions]);
+  }, []);
 
   useEffect(() => {
     document.addEventListener("keydown", handleKeyDown);
