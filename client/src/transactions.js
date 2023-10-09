@@ -165,6 +165,12 @@ function Transactions() {
   }, []);
 
   useEffect(() => {
+    if (user.userID) {
+      fetchUserTransactions(user.userID);
+    }
+  }, [selectedCategory, user.userID, fetchUserTransactions]);
+
+  useEffect(() => {
     document.addEventListener("keydown", handleKeyDown);
 
     // Cleanup function
